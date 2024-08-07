@@ -15,7 +15,10 @@ import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.activities.SimpleActivity
 
 class ContactsAdapter(
-    activity: SimpleActivity, var contacts: ArrayList<SimpleContact>, recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
+    activity: SimpleActivity,
+    var contacts: ArrayList<SimpleContact>,
+    recyclerView: MyRecyclerView,
+    itemClick: (Any) -> Unit
 ) : MyRecyclerViewAdapter(activity, recyclerView, itemClick) {
     private var fontSize = activity.getTextSize()
 
@@ -75,7 +78,11 @@ class ContactsAdapter(
                 setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize)
             }
 
-            SimpleContactsHelper(activity).loadContactImage(contact.photoUri, itemContactImage, contact.name)
+            SimpleContactsHelper(activity).loadContactImage(
+                contact.photoUri,
+                itemContactImage,
+                contact.name
+            )
         }
     }
 

@@ -1,11 +1,11 @@
 package com.simplemobiletools.smsmessenger.helpers
 
 import com.simplemobiletools.smsmessenger.models.Events
+import kotlin.math.abs
+import kotlin.random.Random
 import org.greenrobot.eventbus.EventBus
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
-import kotlin.math.abs
-import kotlin.random.Random
 
 const val THREAD_ID = "thread_id"
 const val THREAD_TITLE = "thread_title"

@@ -11,7 +11,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.simplemobiletools.commons.extensions.getMyContactsCursor
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.smsmessenger.extensions.*
+import com.simplemobiletools.smsmessenger.extensions.getMessageRecipientAddress
+import com.simplemobiletools.smsmessenger.extensions.getNameFromAddress
+import com.simplemobiletools.smsmessenger.extensions.getThreadId
+import com.simplemobiletools.smsmessenger.extensions.messagesDB
+import com.simplemobiletools.smsmessenger.extensions.messagingUtils
+import com.simplemobiletools.smsmessenger.extensions.notificationHelper
 import com.simplemobiletools.smsmessenger.helpers.refreshMessages
 
 /** Handles updating databases and states when a SMS message is sent. */

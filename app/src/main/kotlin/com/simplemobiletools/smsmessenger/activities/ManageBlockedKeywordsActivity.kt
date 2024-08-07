@@ -39,7 +39,10 @@ class ManageBlockedKeywordsActivity : BaseSimpleActivity(), RefreshRecyclerViewL
             useTransparentNavigation = true,
             useTopSearchMenu = false
         )
-        setupMaterialScrollListener(scrollingView = binding.manageBlockedKeywordsList, toolbar = binding.blockKeywordsToolbar)
+        setupMaterialScrollListener(
+            scrollingView = binding.manageBlockedKeywordsList,
+            toolbar = binding.blockKeywordsToolbar
+        )
         updateTextColors(binding.manageBlockedKeywordsWrapper)
 
         binding.manageBlockedKeywordsPlaceholder2.apply {
@@ -77,7 +80,12 @@ class ManageBlockedKeywordsActivity : BaseSimpleActivity(), RefreshRecyclerViewL
         ensureBackgroundThread {
             val blockedKeywords = config.blockedKeywords
             runOnUiThread {
-                ManageBlockedKeywordsAdapter(this, blockedKeywords.toArrayList(), this, binding.manageBlockedKeywordsList) {
+                ManageBlockedKeywordsAdapter(
+                    this,
+                    blockedKeywords.toArrayList(),
+                    this,
+                    binding.manageBlockedKeywordsList
+                ) {
                     addOrEditBlockedKeyword(it as String)
                 }.apply {
                     binding.manageBlockedKeywordsList.adapter = this

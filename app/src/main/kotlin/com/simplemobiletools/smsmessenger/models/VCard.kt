@@ -6,7 +6,13 @@ import com.simplemobiletools.smsmessenger.extensions.config
 import com.simplemobiletools.smsmessenger.extensions.format
 import com.simplemobiletools.smsmessenger.helpers.parseNameFromVCard
 import ezvcard.VCard
-import ezvcard.property.*
+import ezvcard.property.Anniversary
+import ezvcard.property.Birthday
+import ezvcard.property.Email
+import ezvcard.property.Note
+import ezvcard.property.Organization
+import ezvcard.property.Telephone
+import ezvcard.property.VCardProperty
 
 private val displayedPropertyClasses = arrayOf(
     Telephone::class.java, Email::class.java, Organization::class.java, Birthday::class.java, Anniversary::class.java, Note::class.java

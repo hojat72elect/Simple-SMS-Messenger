@@ -1,6 +1,10 @@
 package com.simplemobiletools.smsmessenger.dialogs
 
-import android.view.*
+import android.view.ContextThemeWrapper
+import android.view.Gravity
+import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
 import android.widget.PopupMenu
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
@@ -15,8 +19,11 @@ import com.simplemobiletools.smsmessenger.databinding.ItemManageBlockedKeywordBi
 import com.simplemobiletools.smsmessenger.extensions.config
 
 class ManageBlockedKeywordsAdapter(
-    activity: BaseSimpleActivity, var blockedKeywords: ArrayList<String>, val listener: RefreshRecyclerViewListener?,
-    recyclerView: MyRecyclerView, itemClick: (Any) -> Unit
+    activity: BaseSimpleActivity,
+    var blockedKeywords: ArrayList<String>,
+    val listener: RefreshRecyclerViewListener?,
+    recyclerView: MyRecyclerView,
+    itemClick: (Any) -> Unit
 ) : MyRecyclerViewAdapter(activity, recyclerView, itemClick) {
     init {
         setupDragListener(true)
@@ -45,9 +52,11 @@ class ManageBlockedKeywordsAdapter(
 
     override fun getIsItemSelectable(position: Int) = true
 
-    override fun getItemSelectionKey(position: Int) = blockedKeywords.getOrNull(position)?.hashCode()
+    override fun getItemSelectionKey(position: Int) =
+        blockedKeywords.getOrNull(position)?.hashCode()
 
-    override fun getItemKeyPosition(key: Int) = blockedKeywords.indexOfFirst { it.hashCode() == key }
+    override fun getItemKeyPosition(key: Int) =
+        blockedKeywords.indexOfFirst { it.hashCode() == key }
 
     override fun onActionModeCreated() {}
 
@@ -60,7 +69,11 @@ class ManageBlockedKeywordsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val blockedKeyword = blockedKeywords[position]
-        holder.bindView(blockedKeyword, allowSingleClick = true, allowLongClick = true) { itemView, _ ->
+        holder.bindView(
+            blockedKeyword,
+            allowSingleClick = true,
+            allowLongClick = true
+        ) { itemView, _ ->
             setupView(itemView, blockedKeyword)
         }
         bindViewHolder(holder)

@@ -13,7 +13,18 @@ import com.simplemobiletools.commons.helpers.SimpleContactsHelper
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.models.PhoneNumber
 import com.simplemobiletools.commons.models.SimpleContact
-import com.simplemobiletools.smsmessenger.extensions.*
+import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.conversationsDB
+import com.simplemobiletools.smsmessenger.extensions.getConversations
+import com.simplemobiletools.smsmessenger.extensions.getNameFromAddress
+import com.simplemobiletools.smsmessenger.extensions.getNotificationBitmap
+import com.simplemobiletools.smsmessenger.extensions.getThreadId
+import com.simplemobiletools.smsmessenger.extensions.insertNewSMS
+import com.simplemobiletools.smsmessenger.extensions.insertOrUpdateConversation
+import com.simplemobiletools.smsmessenger.extensions.messagesDB
+import com.simplemobiletools.smsmessenger.extensions.showReceivedMessageNotification
+import com.simplemobiletools.smsmessenger.extensions.updateConversationArchivedStatus
+import com.simplemobiletools.smsmessenger.extensions.updateUnreadCountBadge
 import com.simplemobiletools.smsmessenger.helpers.refreshMessages
 import com.simplemobiletools.smsmessenger.models.Message
 

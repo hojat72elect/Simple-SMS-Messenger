@@ -14,14 +14,21 @@ import com.simplemobiletools.commons.helpers.SimpleContactsHelper
 import com.simplemobiletools.commons.models.SimpleContact
 import com.simplemobiletools.smsmessenger.activities.SimpleActivity
 
-class AutoCompleteTextViewAdapter(val activity: SimpleActivity, val contacts: ArrayList<SimpleContact>) : ArrayAdapter<SimpleContact>(activity, 0, contacts) {
+class AutoCompleteTextViewAdapter(
+    val activity: SimpleActivity,
+    val contacts: ArrayList<SimpleContact>
+) : ArrayAdapter<SimpleContact>(activity, 0, contacts) {
     var resultList = ArrayList<SimpleContact>()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val contact = resultList.getOrNull(position)
         var listItem = convertView
         if (listItem == null || listItem.tag != contact?.name?.isNotEmpty()) {
-            listItem = ItemContactWithNumberBinding.inflate(LayoutInflater.from(activity), parent, false).root
+            listItem = ItemContactWithNumberBinding.inflate(
+                LayoutInflater.from(activity),
+                parent,
+                false
+            ).root
         }
 
         listItem.tag = contact?.name?.isNotEmpty()
@@ -40,7 +47,11 @@ class AutoCompleteTextViewAdapter(val activity: SimpleActivity, val contacts: Ar
             if (contact != null) {
                 itemContactName.text = contact.name
                 itemContactNumber.text = contact.phoneNumbers.first().normalizedNumber
-                SimpleContactsHelper(context).loadContactImage(contact.photoUri, itemContactImage, contact.name)
+                SimpleContactsHelper(context).loadContactImage(
+                    contact.photoUri,
+                    itemContactImage,
+                    contact.name
+                )
             }
         }
 
@@ -54,7 +65,11 @@ class AutoCompleteTextViewAdapter(val activity: SimpleActivity, val contacts: Ar
                 val results = mutableListOf<SimpleContact>()
                 val searchString = constraint.toString().normalizeString()
                 contacts.forEach {
-                    if (it.doesContainPhoneNumber(searchString) || it.name.contains(searchString, true)) {
+                    if (it.doesContainPhoneNumber(searchString) || it.name.contains(
+                            searchString,
+                            true
+                        )
+                    ) {
                         results.add(it)
                     }
                 }
@@ -78,7 +93,8 @@ class AutoCompleteTextViewAdapter(val activity: SimpleActivity, val contacts: Ar
             }
         }
 
-        override fun convertResultToString(resultValue: Any?) = (resultValue as? SimpleContact)?.name
+        override fun convertResultToString(resultValue: Any?) =
+            (resultValue as? SimpleContact)?.name
     }
 
     override fun getItem(index: Int) = resultList[index]

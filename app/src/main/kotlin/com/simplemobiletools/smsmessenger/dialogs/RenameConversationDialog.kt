@@ -33,7 +33,11 @@ class RenameConversationDialog(
             .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
             .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
             .apply {
-                activity.setupDialogStuff(binding.root, this, R.string.rename_conversation) { alertDialog ->
+                activity.setupDialogStuff(
+                    binding.root,
+                    this,
+                    R.string.rename_conversation
+                ) { alertDialog ->
                     dialog = alertDialog
                     alertDialog.showKeyboard(binding.renameConvEditText)
                     alertDialog.getButton(BUTTON_POSITIVE).apply {

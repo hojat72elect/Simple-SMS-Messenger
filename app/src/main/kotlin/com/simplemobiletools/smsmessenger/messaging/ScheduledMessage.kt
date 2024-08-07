@@ -28,7 +28,12 @@ fun Context.scheduleMessage(message: Message) {
     val triggerAtMillis = message.millis()
 
     val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    AlarmManagerCompat.setExactAndAllowWhileIdle(alarmManager, AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
+    AlarmManagerCompat.setExactAndAllowWhileIdle(
+        alarmManager,
+        AlarmManager.RTC_WAKEUP,
+        triggerAtMillis,
+        pendingIntent
+    )
 }
 
 fun Context.cancelScheduleSendPendingIntent(messageId: Long) {

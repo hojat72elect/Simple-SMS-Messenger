@@ -10,7 +10,16 @@ import androidx.core.app.RemoteInput
 import com.simplemobiletools.commons.extensions.showErrorToast
 import com.simplemobiletools.commons.helpers.SimpleContactsHelper
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.smsmessenger.extensions.*
+import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.conversationsDB
+import com.simplemobiletools.smsmessenger.extensions.getMessages
+import com.simplemobiletools.smsmessenger.extensions.getNotificationBitmap
+import com.simplemobiletools.smsmessenger.extensions.markThreadMessagesRead
+import com.simplemobiletools.smsmessenger.extensions.messagesDB
+import com.simplemobiletools.smsmessenger.extensions.notificationHelper
+import com.simplemobiletools.smsmessenger.extensions.removeDiacriticsIfNeeded
+import com.simplemobiletools.smsmessenger.extensions.subscriptionManagerCompat
+import com.simplemobiletools.smsmessenger.extensions.updateLastConversationMessage
 import com.simplemobiletools.smsmessenger.helpers.REPLY
 import com.simplemobiletools.smsmessenger.helpers.THREAD_ID
 import com.simplemobiletools.smsmessenger.helpers.THREAD_NUMBER

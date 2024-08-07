@@ -5,7 +5,13 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.provider.ContactsContract
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.getMimeType
+import com.simplemobiletools.commons.extensions.hideKeyboard
+import com.simplemobiletools.commons.extensions.isPackageInstalled
+import com.simplemobiletools.commons.extensions.launchActivityIntent
+import com.simplemobiletools.commons.extensions.launchViewContactIntent
+import com.simplemobiletools.commons.extensions.showErrorToast
+import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.commons.helpers.CONTACT_ID
 import com.simplemobiletools.commons.helpers.IS_PRIVATE
 import com.simplemobiletools.commons.helpers.SimpleContactsHelper
@@ -62,13 +68,18 @@ fun Activity.startContactDetailsIntent(contact: SimpleContact) {
             putExtra(CONTACT_ID, contact.rawId)
             putExtra(IS_PRIVATE, true)
             setPackage(if (isPackageInstalled(simpleContacts)) simpleContacts else simpleContactsDebug)
-            setDataAndType(ContactsContract.Contacts.CONTENT_LOOKUP_URI, "vnd.android.cursor.dir/person")
+            setDataAndType(
+                ContactsContract.Contacts.CONTENT_LOOKUP_URI,
+                "vnd.android.cursor.dir/person"
+            )
             launchActivityIntent(this)
         }
     } else {
         ensureBackgroundThread {
-            val lookupKey = SimpleContactsHelper(this).getContactLookupKey((contact).rawId.toString())
-            val publicUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey)
+            val lookupKey =
+                SimpleContactsHelper(this).getContactLookupKey((contact).rawId.toString())
+            val publicUri =
+                Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey)
             runOnUiThread {
                 launchViewContactIntent(publicUri)
             }

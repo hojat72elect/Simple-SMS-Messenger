@@ -45,8 +45,15 @@ class MmsReceiver : MmsReceivedReceiver() {
             }
 
             Handler(Looper.getMainLooper()).post {
-                context.showReceivedMessageNotification(mms.id, address, mms.body, mms.threadId, glideBitmap)
-                val conversation = context.getConversations(mms.threadId).firstOrNull() ?: return@post
+                context.showReceivedMessageNotification(
+                    mms.id,
+                    address,
+                    mms.body,
+                    mms.threadId,
+                    glideBitmap
+                )
+                val conversation =
+                    context.getConversations(mms.threadId).firstOrNull() ?: return@post
                 ensureBackgroundThread {
                     context.insertOrUpdateConversation(conversation)
                     context.updateUnreadCountBadge(context.conversationsDB.getUnreadConversations())
@@ -56,5 +63,6 @@ class MmsReceiver : MmsReceivedReceiver() {
         }
     }
 
-    override fun onError(context: Context, error: String) = context.showErrorToast(context.getString(R.string.couldnt_download_mms))
+    override fun onError(context: Context, error: String) =
+        context.showErrorToast(context.getString(R.string.couldnt_download_mms))
 }

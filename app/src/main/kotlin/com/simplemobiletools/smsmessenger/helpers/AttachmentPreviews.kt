@@ -2,7 +2,13 @@ package com.simplemobiletools.smsmessenger.helpers
 
 import android.app.Activity
 import android.net.Uri
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.commons.extensions.applyColorFilter
+import com.simplemobiletools.commons.extensions.beGone
+import com.simplemobiletools.commons.extensions.beVisible
+import com.simplemobiletools.commons.extensions.darkenColor
+import com.simplemobiletools.commons.extensions.formatSize
+import com.simplemobiletools.commons.extensions.getProperPrimaryColor
+import com.simplemobiletools.commons.extensions.getProperTextColor
 import com.simplemobiletools.commons.helpers.SimpleContactsHelper
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.R
@@ -10,7 +16,11 @@ import com.simplemobiletools.smsmessenger.databinding.ItemAttachmentDocumentBind
 import com.simplemobiletools.smsmessenger.databinding.ItemAttachmentDocumentPreviewBinding
 import com.simplemobiletools.smsmessenger.databinding.ItemAttachmentVcardBinding
 import com.simplemobiletools.smsmessenger.databinding.ItemAttachmentVcardPreviewBinding
-import com.simplemobiletools.smsmessenger.extensions.*
+import com.simplemobiletools.smsmessenger.extensions.getFileSizeFromUri
+import com.simplemobiletools.smsmessenger.extensions.isAudioMimeType
+import com.simplemobiletools.smsmessenger.extensions.isCalendarMimeType
+import com.simplemobiletools.smsmessenger.extensions.isPdfMimeType
+import com.simplemobiletools.smsmessenger.extensions.isZipMimeType
 
 fun ItemAttachmentDocumentPreviewBinding.setupDocumentPreview(
     uri: Uri,
@@ -86,7 +96,13 @@ fun ItemAttachmentVcardPreviewBinding.setupVCardPreview(
     onRemoveButtonClicked: (() -> Unit)? = null,
 ) {
     vcardProgress.beVisible()
-    vcardAttachmentHolder.setupVCardPreview(activity = activity, uri = uri, attachment = true, onClick = onClick, onLongClick = onLongClick) {
+    vcardAttachmentHolder.setupVCardPreview(
+        activity = activity,
+        uri = uri,
+        attachment = true,
+        onClick = onClick,
+        onLongClick = onLongClick
+    ) {
         vcardProgress.beGone()
         removeAttachmentButtonHolder.removeAttachmentButton.apply {
             beVisible()
@@ -124,7 +140,8 @@ fun ItemAttachmentVcardBinding.setupVCardPreview(
         activity.runOnUiThread {
             if (vCards.isEmpty()) {
                 vcardTitle.beVisible()
-                vcardTitle.text = context.getString(com.simplemobiletools.commons.R.string.unknown_error_occurred)
+                vcardTitle.text =
+                    context.getString(com.simplemobiletools.commons.R.string.unknown_error_occurred)
                 return@runOnUiThread
             }
 
@@ -145,7 +162,11 @@ fun ItemAttachmentVcardBinding.setupVCardPreview(
             if (vCards.size > 1) {
                 vcardSubtitle.beVisible()
                 val quantity = vCards.size - 1
-                vcardSubtitle.text = context.resources.getQuantityString(R.plurals.and_other_contacts, quantity, quantity)
+                vcardSubtitle.text = context.resources.getQuantityString(
+                    R.plurals.and_other_contacts,
+                    quantity,
+                    quantity
+                )
             } else {
                 vcardSubtitle.beGone()
             }

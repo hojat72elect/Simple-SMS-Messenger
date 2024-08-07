@@ -13,7 +13,10 @@ import com.simplemobiletools.smsmessenger.helpers.refreshMessages
 import com.simplemobiletools.smsmessenger.models.Conversation
 
 class RecycleBinConversationsAdapter(
-    activity: SimpleActivity, recyclerView: MyRecyclerView, onRefresh: () -> Unit, itemClick: (Any) -> Unit
+    activity: SimpleActivity,
+    recyclerView: MyRecyclerView,
+    onRefresh: () -> Unit,
+    itemClick: (Any) -> Unit
 ) : BaseConversationsAdapter(activity, recyclerView, onRefresh, itemClick) {
     override fun getActionMenuId() = R.menu.cab_recycle_bin_conversations
 
@@ -50,7 +53,8 @@ class RecycleBinConversationsAdapter(
             return
         }
 
-        val conversationsToRemove = currentList.filter { selectedKeys.contains(it.hashCode()) } as ArrayList<Conversation>
+        val conversationsToRemove =
+            currentList.filter { selectedKeys.contains(it.hashCode()) } as ArrayList<Conversation>
         conversationsToRemove.forEach {
             activity.deleteConversation(it.threadId)
             activity.notificationManager.cancel(it.threadId.hashCode())
@@ -78,7 +82,8 @@ class RecycleBinConversationsAdapter(
             return
         }
 
-        val conversationsToRemove = currentList.filter { selectedKeys.contains(it.hashCode()) } as ArrayList<Conversation>
+        val conversationsToRemove =
+            currentList.filter { selectedKeys.contains(it.hashCode()) } as ArrayList<Conversation>
         conversationsToRemove.forEach {
             activity.restoreAllMessagesFromRecycleBinForConversation(it.threadId)
         }
