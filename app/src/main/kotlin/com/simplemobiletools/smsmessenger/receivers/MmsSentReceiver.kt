@@ -8,14 +8,16 @@ import android.database.sqlite.SQLiteException
 import android.net.Uri
 import android.provider.Telephony
 import android.widget.Toast
-import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.extensions.deleteMessage
+import com.simplemobiletools.smsmessenger.extensions.showErrorToast
+import com.simplemobiletools.smsmessenger.extensions.toast
 import com.simplemobiletools.smsmessenger.helpers.refreshMessages
 import java.io.File
 
-/** Handles updating databases and states when a MMS message is sent. */
+/**
+ * Handles updating databases and states when a MMS message is sent.
+ */
 class MmsSentReceiver : SendStatusReceiver() {
 
     override fun updateAndroidDatabase(context: Context, intent: Intent, receiverResultCode: Int) {

@@ -2,12 +2,12 @@ package com.simplemobiletools.smsmessenger.adapters
 
 import android.view.Menu
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
-import com.simplemobiletools.commons.extensions.notificationManager
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.SimpleActivity
 import com.simplemobiletools.smsmessenger.extensions.deleteConversation
+import com.simplemobiletools.smsmessenger.extensions.notificationManager
 import com.simplemobiletools.smsmessenger.extensions.restoreAllMessagesFromRecycleBinForConversation
 import com.simplemobiletools.smsmessenger.helpers.refreshMessages
 import com.simplemobiletools.smsmessenger.models.Conversation

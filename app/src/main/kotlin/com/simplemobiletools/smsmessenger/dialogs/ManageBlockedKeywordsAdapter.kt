@@ -8,15 +8,15 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.copyToClipboard
-import com.simplemobiletools.commons.extensions.getPopupMenuTheme
-import com.simplemobiletools.commons.extensions.getProperTextColor
-import com.simplemobiletools.commons.extensions.setupViewBackground
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.ItemManageBlockedKeywordBinding
 import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.copyToClipboard
+import com.simplemobiletools.smsmessenger.extensions.getPopupMenuTheme
+import com.simplemobiletools.smsmessenger.extensions.getProperTextColor
+import com.simplemobiletools.smsmessenger.extensions.setupViewBackground
 
 class ManageBlockedKeywordsAdapter(
     activity: BaseSimpleActivity,

@@ -9,16 +9,16 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.beGone
-import com.simplemobiletools.commons.extensions.getProperTextColor
-import com.simplemobiletools.commons.extensions.getTextSize
-import com.simplemobiletools.commons.extensions.onGlobalLayout
+import com.simplemobiletools.smsmessenger.extensions.getProperTextColor
+import com.simplemobiletools.smsmessenger.extensions.getTextSize
 import com.simplemobiletools.commons.helpers.SimpleContactsHelper
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.SimpleActivity
 import com.simplemobiletools.smsmessenger.databinding.ItemVcardContactBinding
 import com.simplemobiletools.smsmessenger.databinding.ItemVcardContactPropertyBinding
+import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
+import com.simplemobiletools.smsmessenger.extensions.beGone
+import com.simplemobiletools.smsmessenger.extensions.onGlobalLayout
 import com.simplemobiletools.smsmessenger.models.VCardPropertyWrapper
 import com.simplemobiletools.smsmessenger.models.VCardWrapper
 

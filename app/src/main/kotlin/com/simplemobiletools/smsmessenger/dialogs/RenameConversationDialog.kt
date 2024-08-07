@@ -3,12 +3,12 @@ package com.simplemobiletools.smsmessenger.dialogs
 import android.app.Activity
 import android.content.DialogInterface.BUTTON_POSITIVE
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
-import com.simplemobiletools.commons.extensions.setupDialogStuff
-import com.simplemobiletools.commons.extensions.showKeyboard
-import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.smsmessenger.extensions.showKeyboard
+import com.simplemobiletools.smsmessenger.extensions.toast
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.DialogRenameConversationBinding
+import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
+import com.simplemobiletools.smsmessenger.extensions.setupDialogStuff
 import com.simplemobiletools.smsmessenger.models.Conversation
 
 class RenameConversationDialog(

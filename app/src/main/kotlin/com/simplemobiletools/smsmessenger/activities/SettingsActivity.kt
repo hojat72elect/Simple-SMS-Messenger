@@ -1,30 +1,17 @@
 package com.simplemobiletools.smsmessenger.activities
 
-import android.annotation.TargetApi
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import com.simplemobiletools.commons.activities.ManageBlockedNumbersActivity
 import com.simplemobiletools.commons.dialogs.ChangeDateTimeFormatDialog
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.FeatureLockedDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.dialogs.SecurityDialog
-import com.simplemobiletools.commons.extensions.addLockedLabelIfNeeded
-import com.simplemobiletools.commons.extensions.beGoneIf
-import com.simplemobiletools.commons.extensions.beVisibleIf
-import com.simplemobiletools.commons.extensions.getBlockedNumbers
-import com.simplemobiletools.commons.extensions.getCustomizeColorsString
-import com.simplemobiletools.commons.extensions.getFontSizeText
-import com.simplemobiletools.commons.extensions.getProperPrimaryColor
-import com.simplemobiletools.commons.extensions.isOrWasThankYouInstalled
-import com.simplemobiletools.commons.extensions.launchPurchaseThankYouIntent
-import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.extensions.toast
-import com.simplemobiletools.commons.extensions.updateTextColors
-import com.simplemobiletools.commons.extensions.viewBinding
 import com.simplemobiletools.commons.helpers.FONT_SIZE_EXTRA_LARGE
 import com.simplemobiletools.commons.helpers.FONT_SIZE_LARGE
 import com.simplemobiletools.commons.helpers.FONT_SIZE_MEDIUM
@@ -40,9 +27,22 @@ import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.ActivitySettingsBinding
 import com.simplemobiletools.smsmessenger.dialogs.ExportMessagesDialog
+import com.simplemobiletools.smsmessenger.extensions.addLockedLabelIfNeeded
+import com.simplemobiletools.smsmessenger.extensions.beGoneIf
+import com.simplemobiletools.smsmessenger.extensions.beVisibleIf
 import com.simplemobiletools.smsmessenger.extensions.config
 import com.simplemobiletools.smsmessenger.extensions.emptyMessagesRecycleBin
+import com.simplemobiletools.smsmessenger.extensions.getBlockedNumbers
+import com.simplemobiletools.smsmessenger.extensions.getCustomizeColorsString
+import com.simplemobiletools.smsmessenger.extensions.getFontSizeText
+import com.simplemobiletools.smsmessenger.extensions.getProperPrimaryColor
+import com.simplemobiletools.smsmessenger.extensions.isOrWasThankYouInstalled
+import com.simplemobiletools.smsmessenger.extensions.launchPurchaseThankYouIntent
 import com.simplemobiletools.smsmessenger.extensions.messagesDB
+import com.simplemobiletools.smsmessenger.extensions.showErrorToast
+import com.simplemobiletools.smsmessenger.extensions.toast
+import com.simplemobiletools.smsmessenger.extensions.updateTextColors
+import com.simplemobiletools.smsmessenger.extensions.viewBinding
 import com.simplemobiletools.smsmessenger.helpers.FILE_SIZE_100_KB
 import com.simplemobiletools.smsmessenger.helpers.FILE_SIZE_1_MB
 import com.simplemobiletools.smsmessenger.helpers.FILE_SIZE_200_KB
@@ -61,6 +61,7 @@ import kotlin.system.exitProcess
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class SettingsActivity : SimpleActivity() {
     private var blockedNumbersAtPause = -1
     private var recycleBinMessages = 0
@@ -230,8 +231,6 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
-    // support for device-wise blocking came on Android 7, rely only on that
-    @TargetApi(Build.VERSION_CODES.N)
     private fun setupManageBlockedNumbers() = binding.apply {
         settingsManageBlockedNumbers.text =
             addLockedLabelIfNeeded(com.simplemobiletools.commons.R.string.manage_blocked_numbers)

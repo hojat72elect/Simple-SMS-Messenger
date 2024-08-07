@@ -9,17 +9,17 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
-import com.simplemobiletools.commons.extensions.getDatePickerDialogTheme
-import com.simplemobiletools.commons.extensions.getProperTextColor
-import com.simplemobiletools.commons.extensions.getTimeFormat
-import com.simplemobiletools.commons.extensions.setupDialogStuff
-import com.simplemobiletools.commons.extensions.toast
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.ScheduleMessageDialogBinding
+import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
 import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
+import com.simplemobiletools.smsmessenger.extensions.getDatePickerDialogTheme
+import com.simplemobiletools.smsmessenger.extensions.getProperTextColor
+import com.simplemobiletools.smsmessenger.extensions.getTimeFormat
 import com.simplemobiletools.smsmessenger.extensions.roundToClosestMultipleOf
+import com.simplemobiletools.smsmessenger.extensions.setupDialogStuff
+import com.simplemobiletools.smsmessenger.extensions.toast
 import java.util.Calendar
 import org.joda.time.DateTime
 

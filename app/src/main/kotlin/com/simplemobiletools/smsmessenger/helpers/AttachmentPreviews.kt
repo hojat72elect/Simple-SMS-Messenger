@@ -2,13 +2,13 @@ package com.simplemobiletools.smsmessenger.helpers
 
 import android.app.Activity
 import android.net.Uri
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.beGone
-import com.simplemobiletools.commons.extensions.beVisible
-import com.simplemobiletools.commons.extensions.darkenColor
-import com.simplemobiletools.commons.extensions.formatSize
-import com.simplemobiletools.commons.extensions.getProperPrimaryColor
-import com.simplemobiletools.commons.extensions.getProperTextColor
+import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
+import com.simplemobiletools.smsmessenger.extensions.beGone
+import com.simplemobiletools.smsmessenger.extensions.beVisible
+import com.simplemobiletools.smsmessenger.extensions.darkenColor
+import com.simplemobiletools.smsmessenger.extensions.formatSize
+import com.simplemobiletools.smsmessenger.extensions.getProperPrimaryColor
+import com.simplemobiletools.smsmessenger.extensions.getProperTextColor
 import com.simplemobiletools.commons.helpers.SimpleContactsHelper
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.R

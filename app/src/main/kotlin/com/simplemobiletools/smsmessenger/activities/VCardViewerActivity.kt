@@ -3,9 +3,9 @@ package com.simplemobiletools.smsmessenger.activities
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import com.simplemobiletools.commons.extensions.normalizePhoneNumber
-import com.simplemobiletools.commons.extensions.sendEmailIntent
-import com.simplemobiletools.commons.extensions.viewBinding
+import com.simplemobiletools.smsmessenger.extensions.normalizePhoneNumber
+import com.simplemobiletools.smsmessenger.extensions.sendEmailIntent
+import com.simplemobiletools.smsmessenger.extensions.viewBinding
 import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.adapters.VCardViewerAdapter

@@ -6,9 +6,10 @@ import android.os.Handler
 import android.os.Looper
 import com.bumptech.glide.Glide
 import com.klinker.android.send_message.MmsReceivedReceiver
-import com.simplemobiletools.commons.extensions.isNumberBlocked
-import com.simplemobiletools.commons.extensions.normalizePhoneNumber
-import com.simplemobiletools.commons.extensions.showErrorToast
+import com.simplemobiletools.smsmessenger.extensions.showErrorToast
+import com.simplemobiletools.smsmessenger.extensions.isNumberBlocked
+import com.simplemobiletools.smsmessenger.extensions.normalizePhoneNumber
+import com.simplemobiletools.smsmessenger.extensions.showErrorToast
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.extensions.conversationsDB

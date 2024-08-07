@@ -4,8 +4,8 @@ import android.content.Context
 import android.telephony.SmsMessage
 import android.widget.Toast.LENGTH_LONG
 import com.klinker.android.send_message.Settings
-import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.smsmessenger.extensions.showErrorToast
+import com.simplemobiletools.smsmessenger.extensions.toast
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.extensions.config
 import com.simplemobiletools.smsmessenger.extensions.messagingUtils

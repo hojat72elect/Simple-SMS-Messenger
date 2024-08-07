@@ -2,10 +2,10 @@ package com.simplemobiletools.smsmessenger.dialogs
 
 import android.app.Activity
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.extensions.beGoneIf
-import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
-import com.simplemobiletools.commons.extensions.setupDialogStuff
+import com.simplemobiletools.smsmessenger.extensions.beGoneIf
 import com.simplemobiletools.smsmessenger.databinding.DialogDeleteConfirmationBinding
+import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
+import com.simplemobiletools.smsmessenger.extensions.setupDialogStuff
 
 class DeleteConfirmationDialog(
     private val activity: Activity,

@@ -7,7 +7,7 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import androidx.core.app.RemoteInput
-import com.simplemobiletools.commons.extensions.showErrorToast
+import com.simplemobiletools.smsmessenger.extensions.showErrorToast
 import com.simplemobiletools.commons.helpers.SimpleContactsHelper
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.extensions.config

@@ -10,18 +10,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.adapters.MyRecyclerViewListAdapter
-import com.simplemobiletools.commons.extensions.applyColorFilter
-import com.simplemobiletools.commons.extensions.beVisibleIf
-import com.simplemobiletools.commons.extensions.formatDateOrTime
-import com.simplemobiletools.commons.extensions.getTextSize
-import com.simplemobiletools.commons.extensions.setupViewBackground
 import com.simplemobiletools.commons.helpers.SimpleContactsHelper
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.activities.SimpleActivity
 import com.simplemobiletools.smsmessenger.databinding.ItemConversationBinding
+import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
+import com.simplemobiletools.smsmessenger.extensions.beVisibleIf
 import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.formatDateOrTime
 import com.simplemobiletools.smsmessenger.extensions.getAllDrafts
+import com.simplemobiletools.smsmessenger.extensions.getTextSize
+import com.simplemobiletools.smsmessenger.extensions.setupViewBackground
 import com.simplemobiletools.smsmessenger.models.Conversation
 
 @Suppress("LeakingThis")

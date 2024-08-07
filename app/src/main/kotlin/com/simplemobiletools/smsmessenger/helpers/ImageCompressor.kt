@@ -6,12 +6,12 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
-import com.simplemobiletools.commons.extensions.getCompressionFormat
-import com.simplemobiletools.commons.extensions.getMyFileUri
 import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.extensions.extension
+import com.simplemobiletools.smsmessenger.extensions.getCompressionFormat
 import com.simplemobiletools.smsmessenger.extensions.getExtensionFromMimeType
 import com.simplemobiletools.smsmessenger.extensions.getFileSizeFromUri
+import com.simplemobiletools.smsmessenger.extensions.getMyFileUri
 import com.simplemobiletools.smsmessenger.extensions.isImageMimeType
 import java.io.File
 import java.io.FileOutputStream

@@ -14,14 +14,14 @@ import android.media.RingtoneManager
 import androidx.core.app.NotificationCompat
 import androidx.core.app.Person
 import androidx.core.app.RemoteInput
-import com.simplemobiletools.commons.extensions.getProperPrimaryColor
-import com.simplemobiletools.commons.extensions.notificationManager
 import com.simplemobiletools.commons.helpers.SimpleContactsHelper
 import com.simplemobiletools.commons.helpers.isNougatPlus
 import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.ThreadActivity
 import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.getProperPrimaryColor
+import com.simplemobiletools.smsmessenger.extensions.notificationManager
 import com.simplemobiletools.smsmessenger.messaging.isShortCodeWithLetters
 import com.simplemobiletools.smsmessenger.receivers.DeleteSmsReceiver
 import com.simplemobiletools.smsmessenger.receivers.DirectReplyReceiver
