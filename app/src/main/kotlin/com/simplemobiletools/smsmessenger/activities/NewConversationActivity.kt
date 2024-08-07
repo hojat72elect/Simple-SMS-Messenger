@@ -8,17 +8,45 @@ import android.widget.Toast
 import com.google.gson.Gson
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
-import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.smsmessenger.helpers.MyContactsContentProvider
+import com.simplemobiletools.commons.helpers.NavigationIcon
+import com.simplemobiletools.smsmessenger.helpers.PERMISSION_READ_CONTACTS
+import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.models.RadioItem
-import com.simplemobiletools.commons.models.SimpleContact
+import com.simplemobiletools.smsmessenger.models.SimpleContact
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.adapters.ContactsAdapter
 import com.simplemobiletools.smsmessenger.databinding.ActivityNewConversationBinding
 import com.simplemobiletools.smsmessenger.databinding.ItemSuggestedContactBinding
+import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
+import com.simplemobiletools.smsmessenger.extensions.areSystemAnimationsEnabled
+import com.simplemobiletools.smsmessenger.extensions.beGone
+import com.simplemobiletools.smsmessenger.extensions.beVisible
+import com.simplemobiletools.smsmessenger.extensions.beVisibleIf
+import com.simplemobiletools.smsmessenger.extensions.getColorStateList
+import com.simplemobiletools.smsmessenger.extensions.getContrastColor
+import com.simplemobiletools.smsmessenger.extensions.getMyContactsCursor
+import com.simplemobiletools.smsmessenger.extensions.getPhoneNumberTypeText
+import com.simplemobiletools.smsmessenger.extensions.getProperPrimaryColor
+import com.simplemobiletools.smsmessenger.extensions.getProperTextColor
 import com.simplemobiletools.smsmessenger.extensions.getSuggestedContacts
 import com.simplemobiletools.smsmessenger.extensions.getThreadId
-import com.simplemobiletools.smsmessenger.helpers.*
+import com.simplemobiletools.smsmessenger.extensions.hasPermission
+import com.simplemobiletools.smsmessenger.extensions.hideKeyboard
+import com.simplemobiletools.smsmessenger.extensions.normalizeString
+import com.simplemobiletools.smsmessenger.extensions.onTextChangeListener
+import com.simplemobiletools.smsmessenger.extensions.toast
+import com.simplemobiletools.smsmessenger.extensions.underlineText
+import com.simplemobiletools.smsmessenger.extensions.updateTextColors
+import com.simplemobiletools.smsmessenger.extensions.value
+import com.simplemobiletools.smsmessenger.extensions.viewBinding
+import com.simplemobiletools.smsmessenger.helpers.THREAD_ATTACHMENT_URI
+import com.simplemobiletools.smsmessenger.helpers.THREAD_ATTACHMENT_URIS
+import com.simplemobiletools.smsmessenger.helpers.THREAD_ID
+import com.simplemobiletools.smsmessenger.helpers.THREAD_NUMBER
+import com.simplemobiletools.smsmessenger.helpers.THREAD_TEXT
+import com.simplemobiletools.smsmessenger.helpers.THREAD_TITLE
 import com.simplemobiletools.smsmessenger.messaging.isShortCodeWithLetters
 import java.net.URLDecoder
 import java.util.Locale
@@ -42,7 +70,10 @@ class NewConversationActivity : SimpleActivity() {
             useTransparentNavigation = true,
             useTopSearchMenu = false
         )
-        setupMaterialScrollListener(scrollingView = binding.contactsList, toolbar = binding.newConversationToolbar)
+        setupMaterialScrollListener(
+            scrollingView = binding.contactsList,
+            toolbar = binding.newConversationToolbar
+        )
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         binding.newConversationAddress.requestFocus()
@@ -113,7 +144,9 @@ class NewConversationActivity : SimpleActivity() {
 
     private fun isThirdPartyIntent(): Boolean {
         if ((intent.action == Intent.ACTION_SENDTO || intent.action == Intent.ACTION_SEND || intent.action == Intent.ACTION_VIEW) && intent.dataString != null) {
-            val number = intent.dataString!!.removePrefix("sms:").removePrefix("smsto:").removePrefix("mms").removePrefix("mmsto:").replace("+", "%2b").trim()
+            val number =
+                intent.dataString!!.removePrefix("sms:").removePrefix("smsto:").removePrefix("mms")
+                    .removePrefix("mmsto:").replace("+", "%2b").trim()
             launchThreadActivity(URLDecoder.decode(number), "")
             finish()
             return true
@@ -142,7 +175,11 @@ class NewConversationActivity : SimpleActivity() {
         val hasContacts = contacts.isNotEmpty()
         binding.contactsList.beVisibleIf(hasContacts)
         binding.noContactsPlaceholder.beVisibleIf(!hasContacts)
-        binding.noContactsPlaceholder2.beVisibleIf(!hasContacts && !hasPermission(PERMISSION_READ_CONTACTS))
+        binding.noContactsPlaceholder2.beVisibleIf(
+            !hasContacts && !hasPermission(
+                PERMISSION_READ_CONTACTS
+            )
+        )
 
         if (!hasContacts) {
             val placeholderText = if (hasPermission(PERMISSION_READ_CONTACTS)) {
@@ -168,7 +205,13 @@ class NewConversationActivity : SimpleActivity() {
                         val items = ArrayList<RadioItem>()
                         phoneNumbers.forEachIndexed { index, phoneNumber ->
                             val type = getPhoneNumberTypeText(phoneNumber.type, phoneNumber.label)
-                            items.add(RadioItem(index, "${phoneNumber.normalizedNumber} ($type)", phoneNumber.normalizedNumber))
+                            items.add(
+                                RadioItem(
+                                    index,
+                                    "${phoneNumber.normalizedNumber} ($type)",
+                                    phoneNumber.normalizedNumber
+                                )
+                            )
                         }
 
                         RadioGroupDialog(this, items) {
@@ -212,10 +255,17 @@ class NewConversationActivity : SimpleActivity() {
                             suggestedContactName.setTextColor(getProperTextColor())
 
                             if (!isDestroyed) {
-                                SimpleContactsHelper(this@NewConversationActivity).loadContactImage(contact.photoUri, suggestedContactImage, contact.name)
+                                SimpleContactsHelper(this@NewConversationActivity).loadContactImage(
+                                    contact.photoUri,
+                                    suggestedContactImage,
+                                    contact.name
+                                )
                                 binding.suggestionsHolder.addView(root)
                                 root.setOnClickListener {
-                                    launchThreadActivity(contact.phoneNumbers.first().normalizedNumber, contact.name)
+                                    launchThreadActivity(
+                                        contact.phoneNumbers.first().normalizedNumber,
+                                        contact.name
+                                    )
                                 }
                             }
                         }
@@ -231,7 +281,9 @@ class NewConversationActivity : SimpleActivity() {
             try {
                 val name = contacts[position].name
                 val character = if (name.isNotEmpty()) name.substring(0, 1) else ""
-                FastScrollItemIndicator.Text(character.uppercase(Locale.getDefault()).normalizeString())
+                FastScrollItemIndicator.Text(
+                    character.uppercase(Locale.getDefault()).normalizeString()
+                )
             } catch (e: Exception) {
                 FastScrollItemIndicator.Text("")
             }
@@ -240,7 +292,8 @@ class NewConversationActivity : SimpleActivity() {
 
     private fun launchThreadActivity(phoneNumber: String, name: String) {
         hideKeyboard()
-        val text = intent.getStringExtra(Intent.EXTRA_TEXT) ?: intent.getStringExtra("sms_body") ?: ""
+        val text =
+            intent.getStringExtra(Intent.EXTRA_TEXT) ?: intent.getStringExtra("sms_body") ?: ""
         val numbers = phoneNumber.split(";").toSet()
         val number = if (numbers.size == 1) phoneNumber else Gson().toJson(numbers)
         Intent(this, ThreadActivity::class.java).apply {
@@ -252,7 +305,10 @@ class NewConversationActivity : SimpleActivity() {
             if (intent.action == Intent.ACTION_SEND && intent.extras?.containsKey(Intent.EXTRA_STREAM) == true) {
                 val uri = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
                 putExtra(THREAD_ATTACHMENT_URI, uri?.toString())
-            } else if (intent.action == Intent.ACTION_SEND_MULTIPLE && intent.extras?.containsKey(Intent.EXTRA_STREAM) == true) {
+            } else if (intent.action == Intent.ACTION_SEND_MULTIPLE && intent.extras?.containsKey(
+                    Intent.EXTRA_STREAM
+                ) == true
+            ) {
                 val uris = intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)
                 putExtra(THREAD_ATTACHMENT_URIS, uris)
             }

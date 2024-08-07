@@ -1,8 +1,12 @@
 package com.simplemobiletools.smsmessenger.interfaces
 
-import androidx.room.*
-import com.simplemobiletools.smsmessenger.models.RecycleBinMessage
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Transaction
 import com.simplemobiletools.smsmessenger.models.Message
+import com.simplemobiletools.smsmessenger.models.RecycleBinMessage
 
 @Dao
 interface MessagesDao {

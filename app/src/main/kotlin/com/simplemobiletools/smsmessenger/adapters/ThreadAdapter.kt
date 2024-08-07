@@ -30,25 +30,64 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.simplemobiletools.commons.adapters.MyRecyclerViewListAdapter
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
-import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.SimpleContactsHelper
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.NewConversationActivity
 import com.simplemobiletools.smsmessenger.activities.SimpleActivity
 import com.simplemobiletools.smsmessenger.activities.ThreadActivity
 import com.simplemobiletools.smsmessenger.activities.VCardViewerActivity
-import com.simplemobiletools.smsmessenger.databinding.*
+import com.simplemobiletools.smsmessenger.databinding.ItemAttachmentDocumentBinding
+import com.simplemobiletools.smsmessenger.databinding.ItemAttachmentImageBinding
+import com.simplemobiletools.smsmessenger.databinding.ItemAttachmentVcardBinding
+import com.simplemobiletools.smsmessenger.databinding.ItemMessageBinding
+import com.simplemobiletools.smsmessenger.databinding.ItemThreadDateTimeBinding
+import com.simplemobiletools.smsmessenger.databinding.ItemThreadErrorBinding
+import com.simplemobiletools.smsmessenger.databinding.ItemThreadLoadingBinding
+import com.simplemobiletools.smsmessenger.databinding.ItemThreadSendingBinding
+import com.simplemobiletools.smsmessenger.databinding.ItemThreadSuccessBinding
 import com.simplemobiletools.smsmessenger.dialogs.DeleteConfirmationDialog
 import com.simplemobiletools.smsmessenger.dialogs.MessageDetailsDialog
 import com.simplemobiletools.smsmessenger.dialogs.SelectTextDialog
-import com.simplemobiletools.smsmessenger.extensions.*
-import com.simplemobiletools.smsmessenger.helpers.*
+import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
+import com.simplemobiletools.smsmessenger.extensions.beGone
+import com.simplemobiletools.smsmessenger.extensions.beVisible
+import com.simplemobiletools.smsmessenger.extensions.beVisibleIf
+import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.copyToClipboard
+import com.simplemobiletools.smsmessenger.extensions.formatDateOrTime
+import com.simplemobiletools.smsmessenger.extensions.getContactFromAddress
+import com.simplemobiletools.smsmessenger.extensions.getContrastColor
+import com.simplemobiletools.smsmessenger.extensions.getProperPrimaryColor
+import com.simplemobiletools.smsmessenger.extensions.getTextSize
+import com.simplemobiletools.smsmessenger.extensions.isImageMimeType
+import com.simplemobiletools.smsmessenger.extensions.isVCardMimeType
+import com.simplemobiletools.smsmessenger.extensions.isVideoMimeType
+import com.simplemobiletools.smsmessenger.extensions.launchViewIntent
+import com.simplemobiletools.smsmessenger.extensions.shareTextIntent
+import com.simplemobiletools.smsmessenger.extensions.showErrorToast
+import com.simplemobiletools.smsmessenger.extensions.startContactDetailsIntent
+import com.simplemobiletools.smsmessenger.extensions.subscriptionManagerCompat
+import com.simplemobiletools.smsmessenger.extensions.usableScreenSize
+import com.simplemobiletools.smsmessenger.helpers.EXTRA_VCARD_URI
+import com.simplemobiletools.smsmessenger.helpers.THREAD_DATE_TIME
+import com.simplemobiletools.smsmessenger.helpers.THREAD_LOADING
+import com.simplemobiletools.smsmessenger.helpers.THREAD_RECEIVED_MESSAGE
+import com.simplemobiletools.smsmessenger.helpers.THREAD_SENT_MESSAGE
+import com.simplemobiletools.smsmessenger.helpers.THREAD_SENT_MESSAGE_ERROR
+import com.simplemobiletools.smsmessenger.helpers.THREAD_SENT_MESSAGE_SENDING
+import com.simplemobiletools.smsmessenger.helpers.THREAD_SENT_MESSAGE_SENT
+import com.simplemobiletools.smsmessenger.helpers.setupDocumentPreview
+import com.simplemobiletools.smsmessenger.helpers.setupVCardPreview
 import com.simplemobiletools.smsmessenger.models.Attachment
 import com.simplemobiletools.smsmessenger.models.Message
 import com.simplemobiletools.smsmessenger.models.ThreadItem
-import com.simplemobiletools.smsmessenger.models.ThreadItem.*
+import com.simplemobiletools.smsmessenger.models.ThreadItem.ThreadDateTime
+import com.simplemobiletools.smsmessenger.models.ThreadItem.ThreadError
+import com.simplemobiletools.smsmessenger.models.ThreadItem.ThreadLoading
+import com.simplemobiletools.smsmessenger.models.ThreadItem.ThreadSending
+import com.simplemobiletools.smsmessenger.models.ThreadItem.ThreadSent
 
 class ThreadAdapter(
     activity: SimpleActivity,
@@ -56,11 +95,17 @@ class ThreadAdapter(
     itemClick: (Any) -> Unit,
     val isRecycleBin: Boolean,
     val deleteMessages: (messages: List<Message>, toRecycleBin: Boolean, fromRecycleBin: Boolean) -> Unit
-) : MyRecyclerViewListAdapter<ThreadItem>(activity, recyclerView, ThreadItemDiffCallback(), itemClick) {
+) : MyRecyclerViewListAdapter<ThreadItem>(
+    activity,
+    recyclerView,
+    ThreadItemDiffCallback(),
+    itemClick
+) {
     private var fontSize = activity.getTextSize()
 
     @SuppressLint("MissingPermission")
-    private val hasMultipleSIMCards = (activity.subscriptionManagerCompat().activeSubscriptionInfoList?.size ?: 0) > 1
+    private val hasMultipleSIMCards =
+        (activity.subscriptionManagerCompat().activeSubscriptionInfoList?.size ?: 0) > 1
     private val maxChatBubbleWidth = activity.usableScreenSize.x * 0.8f
 
     init {
@@ -76,7 +121,8 @@ class ThreadAdapter(
         val hasText = selectedItem?.body != null && selectedItem.body != ""
         menu.apply {
             findItem(R.id.cab_copy_to_clipboard).isVisible = isOneItemSelected && hasText
-            findItem(R.id.cab_save_as).isVisible = isOneItemSelected && selectedItem?.attachment?.attachments?.size == 1
+            findItem(R.id.cab_save_as).isVisible =
+                isOneItemSelected && selectedItem?.attachment?.attachments?.size == 1
             findItem(R.id.cab_share).isVisible = isOneItemSelected && hasText
             findItem(R.id.cab_forward_message).isVisible = isOneItemSelected
             findItem(R.id.cab_select_text).isVisible = isOneItemSelected && hasText
@@ -107,9 +153,11 @@ class ThreadAdapter(
 
     override fun getIsItemSelectable(position: Int) = !isThreadDateTime(position)
 
-    override fun getItemSelectionKey(position: Int) = (currentList.getOrNull(position) as? Message)?.hashCode()
+    override fun getItemSelectionKey(position: Int) =
+        (currentList.getOrNull(position) as? Message)?.hashCode()
 
-    override fun getItemKeyPosition(key: Int) = currentList.indexOfFirst { (it as? Message)?.hashCode() == key }
+    override fun getItemKeyPosition(key: Int) =
+        currentList.indexOfFirst { (it as? Message)?.hashCode() == key }
 
     override fun onActionModeCreated() {}
 
@@ -119,9 +167,24 @@ class ThreadAdapter(
         val binding = when (viewType) {
             THREAD_LOADING -> ItemThreadLoadingBinding.inflate(layoutInflater, parent, false)
             THREAD_DATE_TIME -> ItemThreadDateTimeBinding.inflate(layoutInflater, parent, false)
-            THREAD_SENT_MESSAGE_ERROR -> ItemThreadErrorBinding.inflate(layoutInflater, parent, false)
-            THREAD_SENT_MESSAGE_SENT -> ItemThreadSuccessBinding.inflate(layoutInflater, parent, false)
-            THREAD_SENT_MESSAGE_SENDING -> ItemThreadSendingBinding.inflate(layoutInflater, parent, false)
+            THREAD_SENT_MESSAGE_ERROR -> ItemThreadErrorBinding.inflate(
+                layoutInflater,
+                parent,
+                false
+            )
+
+            THREAD_SENT_MESSAGE_SENT -> ItemThreadSuccessBinding.inflate(
+                layoutInflater,
+                parent,
+                false
+            )
+
+            THREAD_SENT_MESSAGE_SENDING -> ItemThreadSendingBinding.inflate(
+                layoutInflater,
+                parent,
+                false
+            )
+
             else -> ItemMessageBinding.inflate(layoutInflater, parent, false)
         }
 
@@ -209,12 +272,21 @@ class ThreadAdapter(
         }
         val question = String.format(resources.getString(baseString), items)
 
-        DeleteConfirmationDialog(activity, question, activity.config.useRecycleBin && !isRecycleBin) { skipRecycleBin ->
+        DeleteConfirmationDialog(
+            activity,
+            question,
+            activity.config.useRecycleBin && !isRecycleBin
+        ) { skipRecycleBin ->
             ensureBackgroundThread {
                 val messagesToRemove = getSelectedItems()
                 if (messagesToRemove.isNotEmpty()) {
-                    val toRecycleBin = !skipRecycleBin && activity.config.useRecycleBin && !isRecycleBin
-                    deleteMessages(messagesToRemove.filterIsInstance<Message>(), toRecycleBin, false)
+                    val toRecycleBin =
+                        !skipRecycleBin && activity.config.useRecycleBin && !isRecycleBin
+                    deleteMessages(
+                        messagesToRemove.filterIsInstance<Message>(),
+                        toRecycleBin,
+                        false
+                    )
                 }
             }
         }
@@ -259,7 +331,11 @@ class ThreadAdapter(
         }
     }
 
-    private fun getSelectedItems() = currentList.filter { selectedKeys.contains((it as? Message)?.hashCode() ?: 0) } as ArrayList<ThreadItem>
+    private fun getSelectedItems() = currentList.filter {
+        selectedKeys.contains(
+            (it as? Message)?.hashCode() ?: 0
+        )
+    } as ArrayList<ThreadItem>
 
     private fun isThreadDateTime(position: Int) = currentList.getOrNull(position) is ThreadDateTime
 
@@ -301,9 +377,26 @@ class ThreadAdapter(
                 for (attachment in message.attachment.attachments) {
                     val mimetype = attachment.mimetype
                     when {
-                        mimetype.isImageMimeType() || mimetype.isVideoMimeType() -> setupImageView(holder, binding = this, message, attachment)
-                        mimetype.isVCardMimeType() -> setupVCardView(holder, threadMessageAttachmentsHolder, message, attachment)
-                        else -> setupFileView(holder, threadMessageAttachmentsHolder, message, attachment)
+                        mimetype.isImageMimeType() || mimetype.isVideoMimeType() -> setupImageView(
+                            holder,
+                            binding = this,
+                            message,
+                            attachment
+                        )
+
+                        mimetype.isVCardMimeType() -> setupVCardView(
+                            holder,
+                            threadMessageAttachmentsHolder,
+                            message,
+                            attachment
+                        )
+
+                        else -> setupFileView(
+                            holder,
+                            threadMessageAttachmentsHolder,
+                            message,
+                            attachment
+                        )
                     }
 
                     threadMessagePlayOutline.beVisibleIf(mimetype.startsWith("video/"))
@@ -320,7 +413,12 @@ class ThreadAdapter(
             with(ConstraintSet()) {
                 clone(threadMessageHolder)
                 clear(threadMessageWrapper.id, ConstraintSet.END)
-                connect(threadMessageWrapper.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
+                connect(
+                    threadMessageWrapper.id,
+                    ConstraintSet.START,
+                    ConstraintSet.PARENT_ID,
+                    ConstraintSet.START
+                )
                 applyTo(threadMessageHolder)
             }
 
@@ -335,13 +433,15 @@ class ThreadAdapter(
             }
 
             threadMessageBody.apply {
-                background = AppCompatResources.getDrawable(activity, R.drawable.item_received_background)
+                background =
+                    AppCompatResources.getDrawable(activity, R.drawable.item_received_background)
                 setTextColor(textColor)
                 setLinkTextColor(activity.getProperPrimaryColor())
             }
 
             if (!activity.isFinishing && !activity.isDestroyed) {
-                val contactLetterIcon = SimpleContactsHelper(activity).getContactLetterIcon(message.senderName)
+                val contactLetterIcon =
+                    SimpleContactsHelper(activity).getContactLetterIcon(message.senderName)
                 val placeholder = BitmapDrawable(activity.resources, contactLetterIcon)
 
                 val options = RequestOptions()
@@ -364,7 +464,12 @@ class ThreadAdapter(
             with(ConstraintSet()) {
                 clone(threadMessageHolder)
                 clear(threadMessageWrapper.id, ConstraintSet.START)
-                connect(threadMessageWrapper.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
+                connect(
+                    threadMessageWrapper.id,
+                    ConstraintSet.END,
+                    ConstraintSet.PARENT_ID,
+                    ConstraintSet.END
+                )
                 applyTo(threadMessageHolder)
             }
 
@@ -377,14 +482,18 @@ class ThreadAdapter(
                     addRule(RelativeLayout.ALIGN_PARENT_END)
                 }
 
-                background = AppCompatResources.getDrawable(activity, R.drawable.item_sent_background)
+                background =
+                    AppCompatResources.getDrawable(activity, R.drawable.item_sent_background)
                 background.applyColorFilter(primaryColor)
                 setTextColor(contrastColor)
                 setLinkTextColor(contrastColor)
 
                 if (message.isScheduled) {
                     typeface = Typeface.create(Typeface.DEFAULT, Typeface.ITALIC)
-                    val scheduledDrawable = AppCompatResources.getDrawable(activity, com.simplemobiletools.commons.R.drawable.ic_clock_vector)?.apply {
+                    val scheduledDrawable = AppCompatResources.getDrawable(
+                        activity,
+                        com.simplemobiletools.commons.R.drawable.ic_clock_vector
+                    )?.apply {
                         applyColorFilter(contrastColor)
                         val size = lineHeight
                         setBounds(0, 0, size, size)
@@ -399,7 +508,12 @@ class ThreadAdapter(
         }
     }
 
-    private fun setupImageView(holder: ViewHolder, binding: ItemMessageBinding, message: Message, attachment: Attachment) = binding.apply {
+    private fun setupImageView(
+        holder: ViewHolder,
+        binding: ItemMessageBinding,
+        message: Message,
+        attachment: Attachment
+    ) = binding.apply {
         val mimetype = attachment.mimetype
         val uri = attachment.getUri()
 
@@ -418,19 +532,31 @@ class ThreadAdapter(
             .load(uri)
             .apply(options)
             .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>,
+                    isFirstResource: Boolean
+                ): Boolean {
                     threadMessagePlayOutline.beGone()
                     threadMessageAttachmentsHolder.removeView(imageView.root)
                     return false
                 }
 
-                override fun onResourceReady(dr: Drawable, a: Any, t: Target<Drawable>, d: DataSource, i: Boolean) = false
+                override fun onResourceReady(
+                    dr: Drawable,
+                    a: Any,
+                    t: Target<Drawable>,
+                    d: DataSource,
+                    i: Boolean
+                ) = false
             })
 
         // limit attachment sizes to avoid causing OOM
         var wantedAttachmentSize = Size(attachment.width, attachment.height)
         if (wantedAttachmentSize.width > maxChatBubbleWidth) {
-            val newHeight = wantedAttachmentSize.height / (wantedAttachmentSize.width / maxChatBubbleWidth)
+            val newHeight =
+                wantedAttachmentSize.height / (wantedAttachmentSize.width / maxChatBubbleWidth)
             wantedAttachmentSize = Size(maxChatBubbleWidth.toInt(), newHeight.toInt())
         }
 
@@ -458,7 +584,12 @@ class ThreadAdapter(
         }
     }
 
-    private fun setupVCardView(holder: ViewHolder, parent: LinearLayout, message: Message, attachment: Attachment) {
+    private fun setupVCardView(
+        holder: ViewHolder,
+        parent: LinearLayout,
+        message: Message,
+        attachment: Attachment
+    ) {
         val uri = attachment.getUri()
         val vCardView = ItemAttachmentVcardBinding.inflate(layoutInflater).apply {
             setupVCardPreview(
@@ -481,7 +612,12 @@ class ThreadAdapter(
         parent.addView(vCardView)
     }
 
-    private fun setupFileView(holder: ViewHolder, parent: LinearLayout, message: Message, attachment: Attachment) {
+    private fun setupFileView(
+        holder: ViewHolder,
+        parent: LinearLayout,
+        message: Message,
+        attachment: Attachment
+    ) {
         val mimetype = attachment.mimetype
         val uri = attachment.getUri()
         val attachmentView = ItemAttachmentDocumentBinding.inflate(layoutInflater).apply {
@@ -506,7 +642,11 @@ class ThreadAdapter(
     private fun setupDateTime(view: View, dateTime: ThreadDateTime) {
         ItemThreadDateTimeBinding.bind(view).apply {
             threadDateTime.apply {
-                text = dateTime.date.formatDateOrTime(context, hideTimeAtOtherDays = false, showYearEvenIfCurrent = false)
+                text = dateTime.date.formatDateOrTime(
+                    context,
+                    hideTimeAtOtherDays = false,
+                    showYearEvenIfCurrent = false
+                )
                 setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize)
             }
             threadDateTime.setTextColor(textColor)

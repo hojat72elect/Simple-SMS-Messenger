@@ -51,6 +51,7 @@ data class MmsPart(
     }
 
     fun isNonText(): Boolean {
-        return !(text != null || contentType.lowercase().startsWith("text") || contentType.lowercase() == "application/smil")
+        return !(text != null || contentType.lowercase()
+            .startsWith("text") || contentType.lowercase() == "application/smil")
     }
 }

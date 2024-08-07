@@ -4,13 +4,24 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
-import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.adapters.ArchivedConversationsAdapter
 import com.simplemobiletools.smsmessenger.databinding.ActivityArchivedConversationsBinding
-import com.simplemobiletools.smsmessenger.extensions.*
-import com.simplemobiletools.smsmessenger.helpers.*
+import com.simplemobiletools.smsmessenger.extensions.areSystemAnimationsEnabled
+import com.simplemobiletools.smsmessenger.extensions.beGoneIf
+import com.simplemobiletools.smsmessenger.extensions.beVisibleIf
+import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.conversationsDB
+import com.simplemobiletools.smsmessenger.extensions.getProperBackgroundColor
+import com.simplemobiletools.smsmessenger.extensions.getProperTextColor
+import com.simplemobiletools.smsmessenger.extensions.hideKeyboard
+import com.simplemobiletools.smsmessenger.extensions.removeAllArchivedConversations
+import com.simplemobiletools.smsmessenger.extensions.viewBinding
+import com.simplemobiletools.smsmessenger.helpers.THREAD_ID
+import com.simplemobiletools.smsmessenger.helpers.THREAD_TITLE
+import com.simplemobiletools.smsmessenger.helpers.WAS_PROTECTION_HANDLED
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.models.Conversation
 import com.simplemobiletools.smsmessenger.models.Events
 import org.greenrobot.eventbus.EventBus
@@ -34,7 +45,10 @@ class ArchivedConversationsActivity : SimpleActivity() {
             useTransparentNavigation = true,
             useTopSearchMenu = false
         )
-        setupMaterialScrollListener(scrollingView = binding.conversationsList, toolbar = binding.archiveToolbar)
+        setupMaterialScrollListener(
+            scrollingView = binding.conversationsList,
+            toolbar = binding.archiveToolbar
+        )
 
         loadArchivedConversations()
     }

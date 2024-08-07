@@ -13,8 +13,19 @@ import android.provider.Telephony
 import android.text.TextUtils
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
-import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.smsmessenger.helpers.LICENSE_EVENT_BUS
+import com.simplemobiletools.smsmessenger.helpers.LICENSE_INDICATOR_FAST_SCROLL
+import com.simplemobiletools.smsmessenger.helpers.LICENSE_SMS_MMS
+import com.simplemobiletools.smsmessenger.helpers.LOWER_ALPHA
+import com.simplemobiletools.smsmessenger.helpers.MyContactsContentProvider
+import com.simplemobiletools.smsmessenger.helpers.PERMISSION_READ_CONTACTS
+import com.simplemobiletools.smsmessenger.helpers.PERMISSION_READ_SMS
+import com.simplemobiletools.smsmessenger.helpers.PERMISSION_SEND_SMS
+import com.simplemobiletools.smsmessenger.helpers.SHORT_ANIMATION_DURATION
+import com.simplemobiletools.smsmessenger.helpers.WAS_PROTECTION_HANDLED
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
+import com.simplemobiletools.smsmessenger.helpers.isNougatMR1Plus
+import com.simplemobiletools.smsmessenger.helpers.isQPlus
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.smsmessenger.BuildConfig
@@ -22,8 +33,45 @@ import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.adapters.ConversationsAdapter
 import com.simplemobiletools.smsmessenger.adapters.SearchResultsAdapter
 import com.simplemobiletools.smsmessenger.databinding.ActivityMainBinding
-import com.simplemobiletools.smsmessenger.extensions.*
-import com.simplemobiletools.smsmessenger.helpers.*
+import com.simplemobiletools.smsmessenger.extensions.adjustAlpha
+import com.simplemobiletools.smsmessenger.extensions.appLaunched
+import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
+import com.simplemobiletools.smsmessenger.extensions.areSystemAnimationsEnabled
+import com.simplemobiletools.smsmessenger.extensions.beGone
+import com.simplemobiletools.smsmessenger.extensions.beGoneIf
+import com.simplemobiletools.smsmessenger.extensions.beVisible
+import com.simplemobiletools.smsmessenger.extensions.beVisibleIf
+import com.simplemobiletools.smsmessenger.extensions.checkAndDeleteOldRecycleBinMessages
+import com.simplemobiletools.smsmessenger.extensions.checkAppSideloading
+import com.simplemobiletools.smsmessenger.extensions.checkWhatsNew
+import com.simplemobiletools.smsmessenger.extensions.clearAllMessagesIfNeeded
+import com.simplemobiletools.smsmessenger.extensions.clearExpiredScheduledMessages
+import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.conversationsDB
+import com.simplemobiletools.smsmessenger.extensions.convertToBitmap
+import com.simplemobiletools.smsmessenger.extensions.fadeIn
+import com.simplemobiletools.smsmessenger.extensions.formatDateOrTime
+import com.simplemobiletools.smsmessenger.extensions.getConversations
+import com.simplemobiletools.smsmessenger.extensions.getMessages
+import com.simplemobiletools.smsmessenger.extensions.getMyContactsCursor
+import com.simplemobiletools.smsmessenger.extensions.getProperBackgroundColor
+import com.simplemobiletools.smsmessenger.extensions.getProperPrimaryColor
+import com.simplemobiletools.smsmessenger.extensions.getProperTextColor
+import com.simplemobiletools.smsmessenger.extensions.handleAppPasswordProtection
+import com.simplemobiletools.smsmessenger.extensions.hideKeyboard
+import com.simplemobiletools.smsmessenger.extensions.insertOrUpdateConversation
+import com.simplemobiletools.smsmessenger.extensions.launchMoreAppsFromUsIntent
+import com.simplemobiletools.smsmessenger.extensions.messagesDB
+import com.simplemobiletools.smsmessenger.extensions.navigationBarHeight
+import com.simplemobiletools.smsmessenger.extensions.openNotificationSettings
+import com.simplemobiletools.smsmessenger.extensions.toast
+import com.simplemobiletools.smsmessenger.extensions.underlineText
+import com.simplemobiletools.smsmessenger.extensions.updateTextColors
+import com.simplemobiletools.smsmessenger.extensions.updateUnreadCountBadge
+import com.simplemobiletools.smsmessenger.extensions.viewBinding
+import com.simplemobiletools.smsmessenger.helpers.SEARCHED_MESSAGE_ID
+import com.simplemobiletools.smsmessenger.helpers.THREAD_ID
+import com.simplemobiletools.smsmessenger.helpers.THREAD_TITLE
 import com.simplemobiletools.smsmessenger.models.Conversation
 import com.simplemobiletools.smsmessenger.models.Events
 import com.simplemobiletools.smsmessenger.models.Message
@@ -106,7 +154,8 @@ class MainActivity : SimpleActivity() {
         binding.conversationsProgressBar.trackColor = properPrimaryColor.adjustAlpha(LOWER_ALPHA)
         checkShortcut()
         (binding.conversationsFab.layoutParams as? CoordinatorLayout.LayoutParams)?.bottomMargin =
-            navigationBarHeight + resources.getDimension(com.simplemobiletools.commons.R.dimen.activity_margin).toInt()
+            navigationBarHeight + resources.getDimension(com.simplemobiletools.commons.R.dimen.activity_margin)
+                .toInt()
     }
 
     override fun onPause() {
@@ -185,7 +234,8 @@ class MainActivity : SimpleActivity() {
 
     private fun refreshMenuItems() {
         binding.mainMenu.getToolbar().menu.apply {
-            findItem(R.id.more_apps_from_us).isVisible = !resources.getBoolean(com.simplemobiletools.commons.R.bool.hide_google_relations)
+            findItem(R.id.more_apps_from_us).isVisible =
+                !resources.getBoolean(com.simplemobiletools.commons.R.bool.hide_google_relations)
             findItem(R.id.show_recycle_bin).isVisible = config.useRecycleBin
             findItem(R.id.show_archived).isVisible = config.isArchiveAvailable
         }
@@ -332,7 +382,8 @@ class MainActivity : SimpleActivity() {
                     conversationsDB.deleteThreadId(threadId)
                 }
 
-                val newConversation = conversations.find { it.phoneNumber == cachedConversation.phoneNumber }
+                val newConversation =
+                    conversations.find { it.phoneNumber == cachedConversation.phoneNumber }
                 if (isTemporaryThread && newConversation != null) {
                     // delete the original temporary thread and move any scheduled messages to the new thread
                     conversationsDB.deleteThreadId(threadId)
@@ -346,7 +397,10 @@ class MainActivity : SimpleActivity() {
 
             cachedConversations.forEach { cachedConv ->
                 val conv = conversations.find {
-                    it.threadId == cachedConv.threadId && !Conversation.areContentsTheSame(cachedConv, it)
+                    it.threadId == cachedConv.threadId && !Conversation.areContentsTheSame(
+                        cachedConv,
+                        it
+                    )
                 }
                 if (conv != null) {
                     val lastModified = maxOf(cachedConv.date, conv.date)
@@ -362,7 +416,11 @@ class MainActivity : SimpleActivity() {
 
             if (config.appRunCount == 1) {
                 conversations.map { it.threadId }.forEach { threadId ->
-                    val messages = getMessages(threadId, getImageResolutions = false, includeScheduledMessages = false)
+                    val messages = getMessages(
+                        threadId,
+                        getImageResolutions = false,
+                        includeScheduledMessages = false
+                    )
                     messages.chunked(30).forEach { currentMessages ->
                         messagesDB.insertMessages(*currentMessages.toTypedArray())
                     }
@@ -390,7 +448,10 @@ class MainActivity : SimpleActivity() {
         return currAdapter as ConversationsAdapter
     }
 
-    private fun setupConversations(conversations: ArrayList<Conversation>, cached: Boolean = false) {
+    private fun setupConversations(
+        conversations: ArrayList<Conversation>,
+        cached: Boolean = false
+    ) {
         val sortedConversations = conversations.sortedWith(
             compareByDescending<Conversation> { config.pinnedConversations.contains(it.threadId.toString()) }
                 .thenByDescending { it.date }
@@ -435,10 +496,11 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun fadeOutSearch() {
-        binding.searchHolder.animate().alpha(0f).setDuration(SHORT_ANIMATION_DURATION).withEndAction {
-            binding.searchHolder.beGone()
-            searchTextChanged("", true)
-        }.start()
+        binding.searchHolder.animate().alpha(0f).setDuration(SHORT_ANIMATION_DURATION)
+            .withEndAction {
+                binding.searchHolder.beGone()
+                searchTextChanged("", true)
+            }.start()
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -482,7 +544,8 @@ class MainActivity : SimpleActivity() {
     private fun getCreateNewContactShortcut(appIconColor: Int): ShortcutInfo {
         val newEvent = getString(R.string.new_conversation)
         val drawable = resources.getDrawable(com.simplemobiletools.commons.R.drawable.shortcut_plus)
-        (drawable as LayerDrawable).findDrawableByLayerId(com.simplemobiletools.commons.R.id.shortcut_plus_background).applyColorFilter(appIconColor)
+        (drawable as LayerDrawable).findDrawableByLayerId(com.simplemobiletools.commons.R.id.shortcut_plus_background)
+            .applyColorFilter(appIconColor)
         val bmp = drawable.convertToBitmap()
 
         val intent = Intent(this, NewConversationActivity::class.java)
@@ -517,11 +580,22 @@ class MainActivity : SimpleActivity() {
         }
     }
 
-    private fun showSearchResults(messages: List<Message>, conversations: List<Conversation>, searchedText: String) {
+    private fun showSearchResults(
+        messages: List<Message>,
+        conversations: List<Conversation>,
+        searchedText: String
+    ) {
         val searchResults = ArrayList<SearchResult>()
         conversations.forEach { conversation ->
             val date = conversation.date.formatDateOrTime(this, true, true)
-            val searchResult = SearchResult(-1, conversation.title, conversation.phoneNumber, date, conversation.threadId, conversation.photoUri)
+            val searchResult = SearchResult(
+                -1,
+                conversation.title,
+                conversation.phoneNumber,
+                date,
+                conversation.threadId,
+                conversation.photoUri
+            )
             searchResults.add(searchResult)
         }
 
@@ -533,7 +607,14 @@ class MainActivity : SimpleActivity() {
             }
 
             val date = message.date.formatDateOrTime(this, true, true)
-            val searchResult = SearchResult(message.id, recipient, message.body, date, message.threadId, message.senderPhotoUri)
+            val searchResult = SearchResult(
+                message.id,
+                recipient,
+                message.body,
+                date,
+                message.threadId,
+                message.senderPhotoUri
+            )
             searchResults.add(searchResult)
         }
 
@@ -581,12 +662,25 @@ class MainActivity : SimpleActivity() {
         val faqItems = arrayListOf(
             FAQItem(R.string.faq_2_title, R.string.faq_2_text),
             FAQItem(R.string.faq_3_title, R.string.faq_3_text),
-            FAQItem(com.simplemobiletools.commons.R.string.faq_9_title_commons, com.simplemobiletools.commons.R.string.faq_9_text_commons)
+            FAQItem(
+                com.simplemobiletools.commons.R.string.faq_9_title_commons,
+                com.simplemobiletools.commons.R.string.faq_9_text_commons
+            )
         )
 
         if (!resources.getBoolean(com.simplemobiletools.commons.R.bool.hide_google_relations)) {
-            faqItems.add(FAQItem(com.simplemobiletools.commons.R.string.faq_2_title_commons, com.simplemobiletools.commons.R.string.faq_2_text_commons))
-            faqItems.add(FAQItem(com.simplemobiletools.commons.R.string.faq_6_title_commons, com.simplemobiletools.commons.R.string.faq_6_text_commons))
+            faqItems.add(
+                FAQItem(
+                    com.simplemobiletools.commons.R.string.faq_2_title_commons,
+                    com.simplemobiletools.commons.R.string.faq_2_text_commons
+                )
+            )
+            faqItems.add(
+                FAQItem(
+                    com.simplemobiletools.commons.R.string.faq_6_title_commons,
+                    com.simplemobiletools.commons.R.string.faq_6_text_commons
+                )
+            )
         }
 
         startAboutActivity(R.string.app_name, licenses, BuildConfig.VERSION_NAME, faqItems, true)

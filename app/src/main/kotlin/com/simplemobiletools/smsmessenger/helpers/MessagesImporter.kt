@@ -2,17 +2,21 @@ package com.simplemobiletools.smsmessenger.helpers
 
 import android.net.Uri
 import android.util.Xml
-import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.extensions.toast
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.smsmessenger.extensions.showErrorToast
+import com.simplemobiletools.smsmessenger.extensions.toast
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.activities.SimpleActivity
 import com.simplemobiletools.smsmessenger.dialogs.ImportMessagesDialog
 import com.simplemobiletools.smsmessenger.extensions.config
-import com.simplemobiletools.smsmessenger.models.*
+import com.simplemobiletools.smsmessenger.models.BackupType
+import com.simplemobiletools.smsmessenger.models.ImportResult
+import com.simplemobiletools.smsmessenger.models.MessagesBackup
+import com.simplemobiletools.smsmessenger.models.MmsBackup
+import com.simplemobiletools.smsmessenger.models.SmsBackup
+import java.io.InputStream
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import org.xmlpull.v1.XmlPullParser
-import java.io.InputStream
 
 
 class MessagesImporter(private val activity: SimpleActivity) {
@@ -25,7 +29,8 @@ class MessagesImporter(private val activity: SimpleActivity) {
     fun importMessages(uri: Uri) {
         try {
             val fileType = activity.contentResolver.getType(uri).orEmpty()
-            val isXml = isXmlMimeType(fileType) || (uri.path?.endsWith("txt") == true && isFileXml(uri))
+            val isXml =
+                isXmlMimeType(fileType) || (uri.path?.endsWith("txt") == true && isFileXml(uri))
             if (isXml) {
                 activity.toast(com.simplemobiletools.commons.R.string.importing)
                 getInputStreamFromUri(uri)!!.importXml()
@@ -188,7 +193,10 @@ class MessagesImporter(private val activity: SimpleActivity) {
     }
 
     private fun isXmlMimeType(mimeType: String): Boolean {
-        return mimeType.equals("application/xml", ignoreCase = true) || mimeType.equals("text/xml", ignoreCase = true)
+        return mimeType.equals("application/xml", ignoreCase = true) || mimeType.equals(
+            "text/xml",
+            ignoreCase = true
+        )
     }
 
     private fun isJsonMimeType(mimeType: String): Boolean {

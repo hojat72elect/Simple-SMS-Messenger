@@ -2,14 +2,18 @@ package com.simplemobiletools.smsmessenger.dialogs
 
 import androidx.appcompat.app.AlertDialog
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
-import com.simplemobiletools.commons.extensions.setupDialogStuff
-import com.simplemobiletools.commons.extensions.showKeyboard
-import com.simplemobiletools.commons.extensions.value
+import com.simplemobiletools.smsmessenger.extensions.value
 import com.simplemobiletools.smsmessenger.databinding.DialogAddBlockedKeywordBinding
 import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
+import com.simplemobiletools.smsmessenger.extensions.setupDialogStuff
+import com.simplemobiletools.smsmessenger.extensions.showKeyboard
 
-class AddBlockedKeywordDialog(val activity: BaseSimpleActivity, private val originalKeyword: String? = null, val callback: () -> Unit) {
+class AddBlockedKeywordDialog(
+    val activity: BaseSimpleActivity,
+    private val originalKeyword: String? = null,
+    val callback: () -> Unit
+) {
     init {
         val binding = DialogAddBlockedKeywordBinding.inflate(activity.layoutInflater).apply {
             if (originalKeyword != null) {

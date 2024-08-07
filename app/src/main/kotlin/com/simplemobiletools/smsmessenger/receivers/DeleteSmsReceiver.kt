@@ -3,10 +3,10 @@ package com.simplemobiletools.smsmessenger.receivers
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.simplemobiletools.commons.extensions.notificationManager
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.extensions.conversationsDB
 import com.simplemobiletools.smsmessenger.extensions.deleteMessage
+import com.simplemobiletools.smsmessenger.extensions.notificationManager
 import com.simplemobiletools.smsmessenger.extensions.updateLastConversationMessage
 import com.simplemobiletools.smsmessenger.extensions.updateUnreadCountBadge
 import com.simplemobiletools.smsmessenger.helpers.IS_MMS
@@ -14,7 +14,7 @@ import com.simplemobiletools.smsmessenger.helpers.MESSAGE_ID
 import com.simplemobiletools.smsmessenger.helpers.THREAD_ID
 import com.simplemobiletools.smsmessenger.helpers.refreshMessages
 
-class DeleteSmsReceiver: BroadcastReceiver() {
+class DeleteSmsReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val threadId = intent.getLongExtra(THREAD_ID, 0L)

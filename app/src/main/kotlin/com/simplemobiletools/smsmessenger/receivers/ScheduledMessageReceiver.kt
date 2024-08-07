@@ -6,8 +6,8 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
-import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.smsmessenger.extensions.showErrorToast
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.extensions.conversationsDB
 import com.simplemobiletools.smsmessenger.extensions.deleteScheduledMessage
 import com.simplemobiletools.smsmessenger.extensions.getAddresses
@@ -21,7 +21,10 @@ class ScheduledMessageReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
-        val wakelock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "simple.messenger:scheduled.message.receiver")
+        val wakelock = powerManager.newWakeLock(
+            PowerManager.PARTIAL_WAKE_LOCK,
+            "simple.messenger:scheduled.message.receiver"
+        )
         wakelock.acquire(3000)
 
 
@@ -45,7 +48,12 @@ class ScheduledMessageReceiver : BroadcastReceiver() {
 
         try {
             Handler(Looper.getMainLooper()).post {
-                context.sendMessageCompat(message.body, addresses, message.subscriptionId, attachments)
+                context.sendMessageCompat(
+                    message.body,
+                    addresses,
+                    message.subscriptionId,
+                    attachments
+                )
             }
 
             // delete temporary conversation and message as it's already persisted to the telephony db now
@@ -55,7 +63,10 @@ class ScheduledMessageReceiver : BroadcastReceiver() {
         } catch (e: Exception) {
             context.showErrorToast(e)
         } catch (e: Error) {
-            context.showErrorToast(e.localizedMessage ?: context.getString(com.simplemobiletools.commons.R.string.unknown_error_occurred))
+            context.showErrorToast(
+                e.localizedMessage
+                    ?: context.getString(com.simplemobiletools.commons.R.string.unknown_error_occurred)
+            )
         }
     }
 }

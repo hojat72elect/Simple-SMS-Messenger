@@ -38,7 +38,11 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.*
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsAnimationCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -47,11 +51,11 @@ import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.FeatureLockedDialog
 import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
-import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.smsmessenger.helpers.ExportResult
+import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.models.PhoneNumber
 import com.simplemobiletools.commons.models.RadioItem
-import com.simplemobiletools.commons.models.SimpleContact
+import com.simplemobiletools.smsmessenger.models.SimpleContact
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.BuildConfig
 import com.simplemobiletools.smsmessenger.R
@@ -63,18 +67,135 @@ import com.simplemobiletools.smsmessenger.databinding.ItemSelectedContactBinding
 import com.simplemobiletools.smsmessenger.dialogs.InvalidNumberDialog
 import com.simplemobiletools.smsmessenger.dialogs.RenameConversationDialog
 import com.simplemobiletools.smsmessenger.dialogs.ScheduleMessageDialog
-import com.simplemobiletools.smsmessenger.extensions.*
-import com.simplemobiletools.smsmessenger.helpers.*
-import com.simplemobiletools.smsmessenger.messaging.*
-import com.simplemobiletools.smsmessenger.models.*
-import com.simplemobiletools.smsmessenger.models.ThreadItem.*
+import com.simplemobiletools.smsmessenger.extensions.addBlockedNumber
+import com.simplemobiletools.smsmessenger.extensions.addLockedLabelIfNeeded
+import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
+import com.simplemobiletools.smsmessenger.extensions.baseConfig
+import com.simplemobiletools.smsmessenger.extensions.beGone
+import com.simplemobiletools.smsmessenger.extensions.beVisible
+import com.simplemobiletools.smsmessenger.extensions.beVisibleIf
+import com.simplemobiletools.smsmessenger.extensions.clearAllMessagesIfNeeded
+import com.simplemobiletools.smsmessenger.extensions.clearExpiredScheduledMessages
+import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.conversationsDB
+import com.simplemobiletools.smsmessenger.extensions.createTemporaryThread
+import com.simplemobiletools.smsmessenger.extensions.darkenColor
+import com.simplemobiletools.smsmessenger.extensions.deleteConversation
+import com.simplemobiletools.smsmessenger.extensions.deleteMessage
+import com.simplemobiletools.smsmessenger.extensions.deleteScheduledMessage
+import com.simplemobiletools.smsmessenger.extensions.deleteSmsDraft
+import com.simplemobiletools.smsmessenger.extensions.dialNumber
+import com.simplemobiletools.smsmessenger.extensions.emptyMessagesRecycleBinForConversation
+import com.simplemobiletools.smsmessenger.extensions.formatDate
+import com.simplemobiletools.smsmessenger.extensions.getAddresses
+import com.simplemobiletools.smsmessenger.extensions.getBottomNavigationBackgroundColor
+import com.simplemobiletools.smsmessenger.extensions.getContrastColor
+import com.simplemobiletools.smsmessenger.extensions.getDefaultKeyboardHeight
+import com.simplemobiletools.smsmessenger.extensions.getFileSizeFromUri
+import com.simplemobiletools.smsmessenger.extensions.getFilenameFromUri
+import com.simplemobiletools.smsmessenger.extensions.getMessages
+import com.simplemobiletools.smsmessenger.extensions.getMyContactsCursor
+import com.simplemobiletools.smsmessenger.extensions.getMyFileUri
+import com.simplemobiletools.smsmessenger.extensions.getProperBackgroundColor
+import com.simplemobiletools.smsmessenger.extensions.getProperPrimaryColor
+import com.simplemobiletools.smsmessenger.extensions.getProperTextColor
+import com.simplemobiletools.smsmessenger.extensions.getSmsDraft
+import com.simplemobiletools.smsmessenger.extensions.getTextSize
+import com.simplemobiletools.smsmessenger.extensions.getThreadId
+import com.simplemobiletools.smsmessenger.extensions.getThreadParticipants
+import com.simplemobiletools.smsmessenger.extensions.getThreadTitle
+import com.simplemobiletools.smsmessenger.extensions.handleAppPasswordProtection
+import com.simplemobiletools.smsmessenger.extensions.hideKeyboard
+import com.simplemobiletools.smsmessenger.extensions.indexOfFirstOrNull
+import com.simplemobiletools.smsmessenger.extensions.isGifMimeType
+import com.simplemobiletools.smsmessenger.extensions.isImageMimeType
+import com.simplemobiletools.smsmessenger.extensions.isOrWasThankYouInstalled
+import com.simplemobiletools.smsmessenger.extensions.isVisible
+import com.simplemobiletools.smsmessenger.extensions.launchActivityIntent
+import com.simplemobiletools.smsmessenger.extensions.markMessageRead
+import com.simplemobiletools.smsmessenger.extensions.markThreadMessagesUnread
+import com.simplemobiletools.smsmessenger.extensions.messagesDB
+import com.simplemobiletools.smsmessenger.extensions.moveMessageToRecycleBin
+import com.simplemobiletools.smsmessenger.extensions.normalizeString
+import com.simplemobiletools.smsmessenger.extensions.notificationManager
+import com.simplemobiletools.smsmessenger.extensions.onTextChangeListener
+import com.simplemobiletools.smsmessenger.extensions.openRequestExactAlarmSettings
+import com.simplemobiletools.smsmessenger.extensions.realScreenSize
+import com.simplemobiletools.smsmessenger.extensions.removeDiacriticsIfNeeded
+import com.simplemobiletools.smsmessenger.extensions.renameConversation
+import com.simplemobiletools.smsmessenger.extensions.restoreAllMessagesFromRecycleBinForConversation
+import com.simplemobiletools.smsmessenger.extensions.restoreMessageFromRecycleBin
+import com.simplemobiletools.smsmessenger.extensions.saveSmsDraft
+import com.simplemobiletools.smsmessenger.extensions.showErrorToast
+import com.simplemobiletools.smsmessenger.extensions.showKeyboard
+import com.simplemobiletools.smsmessenger.extensions.showWithAnimation
+import com.simplemobiletools.smsmessenger.extensions.subscriptionManagerCompat
+import com.simplemobiletools.smsmessenger.extensions.toArrayList
+import com.simplemobiletools.smsmessenger.extensions.toInt
+import com.simplemobiletools.smsmessenger.extensions.toast
+import com.simplemobiletools.smsmessenger.extensions.updateConversationArchivedStatus
+import com.simplemobiletools.smsmessenger.extensions.updateLastConversationMessage
+import com.simplemobiletools.smsmessenger.extensions.updateScheduledMessagesThreadId
+import com.simplemobiletools.smsmessenger.extensions.updateTextColors
+import com.simplemobiletools.smsmessenger.extensions.value
+import com.simplemobiletools.smsmessenger.extensions.viewBinding
+import com.simplemobiletools.smsmessenger.helpers.CAPTURE_AUDIO_INTENT
+import com.simplemobiletools.smsmessenger.helpers.CAPTURE_PHOTO_INTENT
+import com.simplemobiletools.smsmessenger.helpers.CAPTURE_VIDEO_INTENT
+import com.simplemobiletools.smsmessenger.helpers.ContactsHelper
+import com.simplemobiletools.smsmessenger.helpers.FILE_SIZE_NONE
+import com.simplemobiletools.smsmessenger.helpers.IS_RECYCLE_BIN
+import com.simplemobiletools.smsmessenger.helpers.KEY_PHONE
+import com.simplemobiletools.smsmessenger.helpers.MESSAGES_LIMIT
+import com.simplemobiletools.smsmessenger.helpers.MyContactsContentProvider
+import com.simplemobiletools.smsmessenger.helpers.PERMISSION_READ_PHONE_STATE
+import com.simplemobiletools.smsmessenger.helpers.PICK_CONTACT_INTENT
+import com.simplemobiletools.smsmessenger.helpers.PICK_DOCUMENT_INTENT
+import com.simplemobiletools.smsmessenger.helpers.PICK_PHOTO_INTENT
+import com.simplemobiletools.smsmessenger.helpers.PICK_SAVE_FILE_INTENT
+import com.simplemobiletools.smsmessenger.helpers.PICK_VIDEO_INTENT
+import com.simplemobiletools.smsmessenger.helpers.SEARCHED_MESSAGE_ID
+import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
+import com.simplemobiletools.smsmessenger.helpers.THREAD_ATTACHMENT_URI
+import com.simplemobiletools.smsmessenger.helpers.THREAD_ATTACHMENT_URIS
+import com.simplemobiletools.smsmessenger.helpers.THREAD_ID
+import com.simplemobiletools.smsmessenger.helpers.THREAD_NUMBER
+import com.simplemobiletools.smsmessenger.helpers.THREAD_TEXT
+import com.simplemobiletools.smsmessenger.helpers.THREAD_TITLE
+import com.simplemobiletools.smsmessenger.helpers.VcfExporter
+import com.simplemobiletools.smsmessenger.helpers.WAS_PROTECTION_HANDLED
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
+import com.simplemobiletools.smsmessenger.helpers.generateRandomId
+import com.simplemobiletools.smsmessenger.helpers.isNougatPlus
+import com.simplemobiletools.smsmessenger.helpers.isOreoPlus
+import com.simplemobiletools.smsmessenger.helpers.isSPlus
+import com.simplemobiletools.smsmessenger.helpers.refreshMessages
+import com.simplemobiletools.smsmessenger.messaging.cancelScheduleSendPendingIntent
+import com.simplemobiletools.smsmessenger.messaging.isLongMmsMessage
+import com.simplemobiletools.smsmessenger.messaging.isShortCodeWithLetters
+import com.simplemobiletools.smsmessenger.messaging.scheduleMessage
+import com.simplemobiletools.smsmessenger.messaging.sendMessageCompat
+import com.simplemobiletools.smsmessenger.models.Attachment
+import com.simplemobiletools.smsmessenger.models.AttachmentSelection
+import com.simplemobiletools.smsmessenger.models.Conversation
+import com.simplemobiletools.smsmessenger.models.Events
+import com.simplemobiletools.smsmessenger.models.Message
+import com.simplemobiletools.smsmessenger.models.MessageAttachment
+import com.simplemobiletools.smsmessenger.models.SIMCard
+import com.simplemobiletools.smsmessenger.models.ThreadItem
+import com.simplemobiletools.smsmessenger.models.ThreadItem.ThreadDateTime
+import com.simplemobiletools.smsmessenger.models.ThreadItem.ThreadError
+import com.simplemobiletools.smsmessenger.models.ThreadItem.ThreadLoading
+import com.simplemobiletools.smsmessenger.models.ThreadItem.ThreadSending
+import com.simplemobiletools.smsmessenger.models.ThreadItem.ThreadSent
+import java.io.File
+import java.io.InputStream
+import java.io.OutputStream
+import kotlin.collections.set
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.joda.time.DateTime
-import java.io.File
-import java.io.InputStream
-import java.io.OutputStream
 
 class ThreadActivity : SimpleActivity() {
     private val MIN_DATE_TIME_DIFF_SECS = 300
@@ -126,7 +247,12 @@ class ThreadActivity : SimpleActivity() {
         setupOptionsMenu()
         refreshMenuItems()
 
-        updateMaterialActivityViews(binding.threadCoordinator, null, useTransparentNavigation = false, useTopSearchMenu = false)
+        updateMaterialActivityViews(
+            binding.threadCoordinator,
+            null,
+            useTransparentNavigation = false,
+            useTopSearchMenu = false
+        )
         setupMaterialScrollListener(null, binding.threadToolbar)
 
         val extras = intent.extras
@@ -171,7 +297,11 @@ class ThreadActivity : SimpleActivity() {
 
     override fun onResume() {
         super.onResume()
-        setupToolbar(binding.threadToolbar, NavigationIcon.Arrow, statusBarColor = getProperBackgroundColor())
+        setupToolbar(
+            binding.threadToolbar,
+            NavigationIcon.Arrow,
+            statusBarColor = getProperBackgroundColor()
+        )
 
         val smsDraft = getSmsDraft(threadId)
         if (smsDraft != null) {
@@ -253,20 +383,26 @@ class ThreadActivity : SimpleActivity() {
         binding.threadToolbar.menu.apply {
             findItem(R.id.delete).isVisible = threadItems.isNotEmpty()
             findItem(R.id.restore).isVisible = threadItems.isNotEmpty() && isRecycleBin
-            findItem(R.id.archive).isVisible = threadItems.isNotEmpty() && conversation?.isArchived == false && !isRecycleBin && archiveAvailable
-            findItem(R.id.unarchive).isVisible = threadItems.isNotEmpty() && conversation?.isArchived == true && !isRecycleBin && archiveAvailable
-            findItem(R.id.rename_conversation).isVisible = participants.size > 1 && conversation != null && !isRecycleBin
+            findItem(R.id.archive).isVisible =
+                threadItems.isNotEmpty() && conversation?.isArchived == false && !isRecycleBin && archiveAvailable
+            findItem(R.id.unarchive).isVisible =
+                threadItems.isNotEmpty() && conversation?.isArchived == true && !isRecycleBin && archiveAvailable
+            findItem(R.id.rename_conversation).isVisible =
+                participants.size > 1 && conversation != null && !isRecycleBin
             findItem(R.id.conversation_details).isVisible = conversation != null && !isRecycleBin
-            findItem(R.id.block_number).title = addLockedLabelIfNeeded(com.simplemobiletools.commons.R.string.block_number)
+            findItem(R.id.block_number).title =
+                addLockedLabelIfNeeded(com.simplemobiletools.commons.R.string.block_number)
             findItem(R.id.block_number).isVisible = isNougatPlus() && !isRecycleBin
-            findItem(R.id.dial_number).isVisible = participants.size == 1 && !isSpecialNumber() && !isRecycleBin
+            findItem(R.id.dial_number).isVisible =
+                participants.size == 1 && !isSpecialNumber() && !isRecycleBin
             findItem(R.id.manage_people).isVisible = !isSpecialNumber() && !isRecycleBin
             findItem(R.id.mark_as_unread).isVisible = threadItems.isNotEmpty() && !isRecycleBin
 
             // allow saving number in cases when we dont have it stored yet and it is a casual readable number
-            findItem(R.id.add_number_to_contact).isVisible = participants.size == 1 && participants.first().name == firstPhoneNumber && firstPhoneNumber.any {
-                it.isDigit()
-            } && !isRecycleBin
+            findItem(R.id.add_number_to_contact).isVisible =
+                participants.size == 1 && participants.first().name == firstPhoneNumber && firstPhoneNumber.any {
+                    it.isDigit()
+                } && !isRecycleBin
         }
     }
 
@@ -304,7 +440,10 @@ class ThreadActivity : SimpleActivity() {
             addAttachment(capturedImageUri!!)
         } else if (data != null) {
             when (requestCode) {
-                CAPTURE_VIDEO_INTENT, PICK_DOCUMENT_INTENT, CAPTURE_AUDIO_INTENT, PICK_PHOTO_INTENT, PICK_VIDEO_INTENT -> addAttachment(data)
+                CAPTURE_VIDEO_INTENT, PICK_DOCUMENT_INTENT, CAPTURE_AUDIO_INTENT, PICK_PHOTO_INTENT, PICK_VIDEO_INTENT -> addAttachment(
+                    data
+                )
+
                 PICK_CONTACT_INTENT -> addContactAttachment(data)
                 PICK_SAVE_FILE_INTENT -> saveAttachment(resultData)
             }
@@ -360,8 +499,10 @@ class ThreadActivity : SimpleActivity() {
             if (!isRecycleBin) {
                 messages = getMessages(threadId, true)
                 if (config.useRecycleBin) {
-                    val recycledMessages = messagesDB.getThreadMessagesFromRecycleBin(threadId).map { it.id }
-                    messages = messages.filter { !recycledMessages.contains(it.id) }.toMutableList() as ArrayList<Message>
+                    val recycledMessages =
+                        messagesDB.getThreadMessagesFromRecycleBin(threadId).map { it.id }
+                    messages = messages.filter { !recycledMessages.contains(it.id) }
+                        .toMutableList() as ArrayList<Message>
                 }
             }
 
@@ -383,11 +524,13 @@ class ThreadActivity : SimpleActivity() {
             if (privateContacts.isNotEmpty()) {
                 val senderNumbersToReplace = HashMap<String, String>()
                 participants.filter { it.doesHavePhoneNumber(it.name) }.forEach { participant ->
-                    privateContacts.firstOrNull { it.doesHavePhoneNumber(participant.phoneNumbers.first().normalizedNumber) }?.apply {
-                        senderNumbersToReplace[participant.phoneNumbers.first().normalizedNumber] = name
-                        participant.name = name
-                        participant.photoUri = photoUri
-                    }
+                    privateContacts.firstOrNull { it.doesHavePhoneNumber(participant.phoneNumbers.first().normalizedNumber) }
+                        ?.apply {
+                            senderNumbersToReplace[participant.phoneNumbers.first().normalizedNumber] =
+                                name
+                            participant.name = name
+                            participant.photoUri = photoUri
+                        }
                 }
 
                 messages.forEach { message ->
@@ -407,7 +550,15 @@ class ThreadActivity : SimpleActivity() {
                 }
 
                 val phoneNumber = PhoneNumber(number, 0, "", number)
-                val contact = SimpleContact(0, 0, name, "", arrayListOf(phoneNumber), ArrayList(), ArrayList())
+                val contact = SimpleContact(
+                    0,
+                    0,
+                    name,
+                    "",
+                    arrayListOf(phoneNumber),
+                    ArrayList(),
+                    ArrayList()
+                )
                 participants.add(contact)
             }
 
@@ -434,17 +585,24 @@ class ThreadActivity : SimpleActivity() {
                 recyclerView = binding.threadMessagesList,
                 itemClick = { handleItemClick(it) },
                 isRecycleBin = isRecycleBin,
-                deleteMessages = { messages, toRecycleBin, fromRecycleBin -> deleteMessages(messages, toRecycleBin, fromRecycleBin) }
+                deleteMessages = { messages, toRecycleBin, fromRecycleBin ->
+                    deleteMessages(
+                        messages,
+                        toRecycleBin,
+                        fromRecycleBin
+                    )
+                }
             )
 
             binding.threadMessagesList.adapter = currAdapter
-            binding.threadMessagesList.endlessScrollListener = object : MyRecyclerView.EndlessScrollListener {
-                override fun updateBottom() {}
+            binding.threadMessagesList.endlessScrollListener =
+                object : MyRecyclerView.EndlessScrollListener {
+                    override fun updateBottom() {}
 
-                override fun updateTop() {
-                    fetchNextMessages()
+                    override fun updateTop() {
+                        fetchNextMessages()
+                    }
                 }
-            }
         }
         return currAdapter as ThreadAdapter
     }
@@ -458,7 +616,8 @@ class ThreadActivity : SimpleActivity() {
                 val layoutManager = binding.threadMessagesList.layoutManager as LinearLayoutManager
                 val lastPosition = itemCount - 1
                 val lastVisiblePosition = layoutManager.findLastVisibleItemPosition()
-                val shouldScrollToBottom = currentList.lastOrNull() != threadItems.lastOrNull() && lastPosition - lastVisiblePosition == 1
+                val shouldScrollToBottom =
+                    currentList.lastOrNull() != threadItems.lastOrNull() && lastPosition - lastVisiblePosition == 1
                 updateMessages(threadItems, if (shouldScrollToBottom) lastPosition else -1)
             }
         }
@@ -470,7 +629,8 @@ class ThreadActivity : SimpleActivity() {
                 binding.addContactOrNumber.setAdapter(adapter)
                 binding.addContactOrNumber.imeOptions = EditorInfo.IME_ACTION_NEXT
                 binding.addContactOrNumber.setOnItemClickListener { _, _, position, _ ->
-                    val currContacts = (binding.addContactOrNumber.adapter as AutoCompleteTextViewAdapter).resultList
+                    val currContacts =
+                        (binding.addContactOrNumber.adapter as AutoCompleteTextViewAdapter).resultList
                     val selectedContact = currContacts[position]
                     addSelectedContact(selectedContact)
                 }
@@ -485,7 +645,15 @@ class ThreadActivity : SimpleActivity() {
             binding.confirmInsertedNumber.setOnClickListener {
                 val number = binding.addContactOrNumber.value
                 val phoneNumber = PhoneNumber(number, 0, "", number)
-                val contact = SimpleContact(number.hashCode(), number.hashCode(), number, "", arrayListOf(phoneNumber), ArrayList(), ArrayList())
+                val contact = SimpleContact(
+                    number.hashCode(),
+                    number.hashCode(),
+                    number,
+                    "",
+                    arrayListOf(phoneNumber),
+                    ArrayList(),
+                    ArrayList()
+                )
                 addSelectedContact(contact)
             }
         }
@@ -504,7 +672,8 @@ class ThreadActivity : SimpleActivity() {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager = binding.threadMessagesList.layoutManager as LinearLayoutManager
                 val lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition()
-                val isCloseToBottom = lastVisibleItemPosition >= getOrCreateThreadAdapter().itemCount - SCROLL_TO_BOTTOM_FAB_LIMIT
+                val isCloseToBottom =
+                    lastVisibleItemPosition >= getOrCreateThreadAdapter().itemCount - SCROLL_TO_BOTTOM_FAB_LIMIT
                 if (isCloseToBottom) {
                     binding.scrollToBottomFab.hide()
                 } else {
@@ -524,7 +693,11 @@ class ThreadActivity : SimpleActivity() {
         }
     }
 
-    private fun deleteMessages(messagesToRemove: List<Message>, toRecycleBin: Boolean, fromRecycleBin: Boolean) {
+    private fun deleteMessages(
+        messagesToRemove: List<Message>,
+        toRecycleBin: Boolean,
+        fromRecycleBin: Boolean
+    ) {
         val deletePosition = threadItems.indexOf(messagesToRemove.first())
         messages.removeAll(messagesToRemove.toSet())
         threadItems = getThreadItems()
@@ -574,7 +747,10 @@ class ThreadActivity : SimpleActivity() {
                     val newList = currentList.toMutableList().apply {
                         removeAll { it is ThreadLoading }
                     }
-                    updateMessages(newMessages = newList as ArrayList<ThreadItem>, scrollPosition = 0)
+                    updateMessages(
+                        newMessages = newList as ArrayList<ThreadItem>,
+                        scrollPosition = 0
+                    )
                 }
             }
             return
@@ -615,7 +791,8 @@ class ThreadActivity : SimpleActivity() {
                     val searchedMessageId = intent.getLongExtra(SEARCHED_MESSAGE_ID, -1L)
                     intent.removeExtra(SEARCHED_MESSAGE_ID)
                     if (searchedMessageId != -1L) {
-                        val index = threadItems.indexOfFirst { (it as? Message)?.id == searchedMessageId }
+                        val index =
+                            threadItems.indexOfFirst { (it as? Message)?.id == searchedMessageId }
                         if (index != -1) {
                             binding.threadMessagesList.smoothScrollToPosition(index)
                         }
@@ -726,11 +903,13 @@ class ThreadActivity : SimpleActivity() {
             threadAddAttachment.setOnClickListener {
                 if (attachmentPickerHolder.isVisible()) {
                     isAttachmentPickerVisible = false
-                    WindowCompat.getInsetsController(window, threadTypeMessage).show(WindowInsetsCompat.Type.ime())
+                    WindowCompat.getInsetsController(window, threadTypeMessage)
+                        .show(WindowInsetsCompat.Type.ime())
                 } else {
                     isAttachmentPickerVisible = true
                     showOrHideAttachmentPicker()
-                    WindowCompat.getInsetsController(window, threadTypeMessage).hide(WindowInsetsCompat.Type.ime())
+                    WindowCompat.getInsetsController(window, threadTypeMessage)
+                        .hide(WindowInsetsCompat.Type.ime())
                 }
                 window.decorView.requestApplyInsets()
             }
@@ -779,14 +958,22 @@ class ThreadActivity : SimpleActivity() {
                     if (it.mimetype.startsWith("image/")) {
                         val fileOptions = BitmapFactory.Options()
                         fileOptions.inJustDecodeBounds = true
-                        BitmapFactory.decodeStream(contentResolver.openInputStream(it.getUri()), null, fileOptions)
+                        BitmapFactory.decodeStream(
+                            contentResolver.openInputStream(it.getUri()),
+                            null,
+                            fileOptions
+                        )
                         it.width = fileOptions.outWidth
                         it.height = fileOptions.outHeight
                     } else if (it.mimetype.startsWith("video/")) {
                         val metaRetriever = MediaMetadataRetriever()
                         metaRetriever.setDataSource(this, it.getUri())
-                        it.width = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)!!.toInt()
-                        it.height = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)!!.toInt()
+                        it.width =
+                            metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)!!
+                                .toInt()
+                        it.height =
+                            metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)!!
+                                .toInt()
                     }
 
                     if (it.width < 0) {
@@ -896,7 +1083,8 @@ class ThreadActivity : SimpleActivity() {
 
             binding.messageHolder.threadSelectSimNumber.setTextColor(getProperTextColor().getContrastColor())
             try {
-                binding.messageHolder.threadSelectSimNumber.text = (availableSIMCards[currentSIMCardIndex].id).toString()
+                binding.messageHolder.threadSelectSimNumber.text =
+                    (availableSIMCards[currentSIMCardIndex].id).toString()
             } catch (e: Exception) {
                 showErrorToast(e)
             }
@@ -904,9 +1092,13 @@ class ThreadActivity : SimpleActivity() {
     }
 
     @SuppressLint("MissingPermission")
-    private fun getProperSimIndex(availableSIMs: MutableList<SubscriptionInfo>, numbers: List<String>): Int {
+    private fun getProperSimIndex(
+        availableSIMs: MutableList<SubscriptionInfo>,
+        numbers: List<String>
+    ): Int {
         val userPreferredSimId = config.getUseSIMIdAtNumber(numbers.first())
-        val userPreferredSimIdx = availableSIMs.indexOfFirstOrNull { it.subscriptionId == userPreferredSimId }
+        val userPreferredSimIdx =
+            availableSIMs.indexOfFirstOrNull { it.subscriptionId == userPreferredSimId }
 
         val lastMessage = messages.lastOrNull()
         val senderPreferredSimIdx = if (lastMessage?.isReceivedMessage() == true) {
@@ -936,7 +1128,10 @@ class ThreadActivity : SimpleActivity() {
     private fun blockNumber() {
         val numbers = participants.getAddresses()
         val numbersString = TextUtils.join(", ", numbers)
-        val question = String.format(resources.getString(com.simplemobiletools.commons.R.string.block_confirmation), numbersString)
+        val question = String.format(
+            resources.getString(com.simplemobiletools.commons.R.string.block_confirmation),
+            numbersString
+        )
 
         ConfirmationDialog(this, question) {
             ensureBackgroundThread {
@@ -1021,8 +1216,10 @@ class ThreadActivity : SimpleActivity() {
         val views = ArrayList<View>()
         participants.forEach { contact ->
             ItemSelectedContactBinding.inflate(layoutInflater).apply {
-                val selectedContactBg = resources.getDrawable(R.drawable.item_selected_contact_background)
-                (selectedContactBg as LayerDrawable).findDrawableByLayerId(R.id.selected_contact_bg).applyColorFilter(properPrimaryColor)
+                val selectedContactBg =
+                    resources.getDrawable(R.drawable.item_selected_contact_background)
+                (selectedContactBg as LayerDrawable).findDrawableByLayerId(R.id.selected_contact_bg)
+                    .applyColorFilter(properPrimaryColor)
                 selectedContactHolder.background = selectedContactBg
 
                 selectedContactName.text = contact.name
@@ -1063,7 +1260,8 @@ class ThreadActivity : SimpleActivity() {
     }
 
     private fun addNumberToContact() {
-        val phoneNumber = participants.firstOrNull()?.phoneNumbers?.firstOrNull()?.normalizedNumber ?: return
+        val phoneNumber =
+            participants.firstOrNull()?.phoneNumbers?.firstOrNull()?.normalizedNumber ?: return
         Intent().apply {
             action = Intent.ACTION_INSERT_OR_EDIT
             type = "vnd.android.cursor.item/contact"
@@ -1113,7 +1311,8 @@ class ThreadActivity : SimpleActivity() {
             val message = messages.getOrNull(i) ?: continue
             // do not show the date/time above every message, only if the difference between the 2 messages is at least MIN_DATE_TIME_DIFF_SECS,
             // or if the message is sent from a different SIM
-            val isSentFromDifferentKnownSIM = prevSIMId != -1 && message.subscriptionId != -1 && prevSIMId != message.subscriptionId
+            val isSentFromDifferentKnownSIM =
+                prevSIMId != -1 && message.subscriptionId != -1 && prevSIMId != message.subscriptionId
             if (message.date - prevDateTime > MIN_DATE_TIME_DIFF_SECS || isSentFromDifferentKnownSIM) {
                 val simCardID = subscriptionIdToSimId[message.subscriptionId] ?: "?"
                 items.add(ThreadDateTime(message.date, simCardID))
@@ -1136,7 +1335,12 @@ class ThreadActivity : SimpleActivity() {
             }
 
             if (i == cnt - 1 && (message.type == Telephony.Sms.MESSAGE_TYPE_SENT)) {
-                items.add(ThreadSent(message.id, delivered = message.status == Telephony.Sms.STATUS_COMPLETE))
+                items.add(
+                    ThreadSent(
+                        message.id,
+                        delivered = message.status == Telephony.Sms.STATUS_COMPLETE
+                    )
+                )
             }
             prevSIMId = message.subscriptionId
         }
@@ -1153,7 +1357,11 @@ class ThreadActivity : SimpleActivity() {
         return items
     }
 
-    private fun launchActivityForResult(intent: Intent, requestCode: Int, @StringRes error: Int = com.simplemobiletools.commons.R.string.no_app_found) {
+    private fun launchActivityForResult(
+        intent: Intent,
+        requestCode: Int,
+        @StringRes error: Int = com.simplemobiletools.commons.R.string.no_app_found
+    ) {
         hideKeyboard()
         try {
             startActivityForResult(intent, requestCode)
@@ -1293,13 +1501,18 @@ class ThreadActivity : SimpleActivity() {
     }
 
     private fun saveAttachment(resultData: Intent) {
-        val takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-        applicationContext.contentResolver.takePersistableUriPermission(resultData.data!!, takeFlags)
+        val takeFlags =
+            Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        applicationContext.contentResolver.takePersistableUriPermission(
+            resultData.data!!,
+            takeFlags
+        )
         var inputStream: InputStream? = null
         var outputStream: OutputStream? = null
         try {
             inputStream = contentResolver.openInputStream(Uri.parse(lastAttachmentUri))
-            outputStream = contentResolver.openOutputStream(Uri.parse(resultData.dataString!!), "rwt")
+            outputStream =
+                contentResolver.openOutputStream(Uri.parse(resultData.dataString!!), "rwt")
             inputStream!!.copyTo(outputStream!!)
             outputStream.flush()
             toast(com.simplemobiletools.commons.R.string.file_saved)
@@ -1338,7 +1551,8 @@ class ThreadActivity : SimpleActivity() {
 
         text = removeDiacriticsIfNeeded(text)
 
-        val subscriptionId = availableSIMCards.getOrNull(currentSIMCardIndex)?.subscriptionId ?: SmsManager.getDefaultSmsSubscriptionId()
+        val subscriptionId = availableSIMCards.getOrNull(currentSIMCardIndex)?.subscriptionId
+            ?: SmsManager.getDefaultSmsSubscriptionId()
 
         if (isScheduledMessage) {
             sendScheduledMessage(text, subscriptionId)
@@ -1367,7 +1581,12 @@ class ThreadActivity : SimpleActivity() {
                 val conversation = conversationsDB.getConversationWithThreadId(threadId)
                 if (conversation != null) {
                     val nowSeconds = (System.currentTimeMillis() / 1000).toInt()
-                    conversationsDB.insertOrUpdate(conversation.copy(date = nowSeconds, snippet = message.body))
+                    conversationsDB.insertOrUpdate(
+                        conversation.copy(
+                            date = nowSeconds,
+                            snippet = message.body
+                        )
+                    )
                 }
                 scheduleMessage(message)
                 insertOrUpdateMessage(message)
@@ -1379,7 +1598,10 @@ class ThreadActivity : SimpleActivity() {
                 }
             }
         } catch (e: Exception) {
-            showErrorToast(e.localizedMessage ?: getString(com.simplemobiletools.commons.R.string.unknown_error_occurred))
+            showErrorToast(
+                e.localizedMessage
+                    ?: getString(com.simplemobiletools.commons.R.string.unknown_error_occurred)
+            )
         }
     }
 
@@ -1392,7 +1614,11 @@ class ThreadActivity : SimpleActivity() {
             sendMessageCompat(text, addresses, subscriptionId, attachments, messageToResend)
             ensureBackgroundThread {
                 val messageIds = messages.map { it.id }
-                val messages = getMessages(threadId, getImageResolutions = true, limit = maxOf(1, attachments.size))
+                val messages = getMessages(
+                    threadId,
+                    getImageResolutions = true,
+                    limit = maxOf(1, attachments.size)
+                )
                     .filter { it.id !in messageIds }
                 for (message in messages) {
                     insertOrUpdateMessage(message)
@@ -1403,7 +1629,10 @@ class ThreadActivity : SimpleActivity() {
         } catch (e: Exception) {
             showErrorToast(e)
         } catch (e: Error) {
-            showErrorToast(e.localizedMessage ?: getString(com.simplemobiletools.commons.R.string.unknown_error_occurred))
+            showErrorToast(
+                e.localizedMessage
+                    ?: getString(com.simplemobiletools.commons.R.string.unknown_error_occurred)
+            )
         }
     }
 
@@ -1437,13 +1666,18 @@ class ThreadActivity : SimpleActivity() {
     private fun showSelectedContact(views: ArrayList<View>) {
         binding.selectedContacts.removeAllViews()
         var newLinearLayout = LinearLayout(this)
-        newLinearLayout.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        newLinearLayout.layoutParams =
+            LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         newLinearLayout.orientation = LinearLayout.HORIZONTAL
 
-        val sideMargin = (binding.selectedContacts.layoutParams as RelativeLayout.LayoutParams).leftMargin
-        val mediumMargin = resources.getDimension(com.simplemobiletools.commons.R.dimen.medium_margin).toInt()
+        val sideMargin =
+            (binding.selectedContacts.layoutParams as RelativeLayout.LayoutParams).leftMargin
+        val mediumMargin =
+            resources.getDimension(com.simplemobiletools.commons.R.dimen.medium_margin).toInt()
         val parentWidth = realScreenSize.x - sideMargin * 2
-        val firstRowWidth = parentWidth - resources.getDimension(com.simplemobiletools.commons.R.dimen.normal_icon_size).toInt() + sideMargin / 2
+        val firstRowWidth =
+            parentWidth - resources.getDimension(com.simplemobiletools.commons.R.dimen.normal_icon_size)
+                .toInt() + sideMargin / 2
         var widthSoFar = 0
         var isFirstRow = true
 
@@ -1465,7 +1699,8 @@ class ThreadActivity : SimpleActivity() {
                 isFirstRow = false
                 binding.selectedContacts.addView(newLinearLayout)
                 newLinearLayout = LinearLayout(this)
-                newLinearLayout.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+                newLinearLayout.layoutParams =
+                    LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
                 newLinearLayout.orientation = LinearLayout.HORIZONTAL
                 params = LayoutParams(layout.measuredWidth, layout.measuredHeight)
                 params.topMargin = mediumMargin
@@ -1482,7 +1717,8 @@ class ThreadActivity : SimpleActivity() {
     }
 
     private fun removeSelectedContact(id: Int) {
-        participants = participants.filter { it.rawId != id }.toMutableList() as ArrayList<SimpleContact>
+        participants =
+            participants.filter { it.rawId != id }.toMutableList() as ArrayList<SimpleContact>
         showSelectedContacts()
         updateMessageType()
     }
@@ -1502,7 +1738,10 @@ class ThreadActivity : SimpleActivity() {
         return numbers
     }
 
-    private fun fixParticipantNumbers(participants: ArrayList<SimpleContact>, properNumbers: ArrayList<String>): ArrayList<SimpleContact> {
+    private fun fixParticipantNumbers(
+        participants: ArrayList<SimpleContact>,
+        properNumbers: ArrayList<String>
+    ): ArrayList<SimpleContact> {
         for (number in properNumbers) {
             for (participant in participants) {
                 participant.phoneNumbers = participant.phoneNumbers.map {
@@ -1529,7 +1768,11 @@ class ThreadActivity : SimpleActivity() {
             type = mimeType
             addCategory(Intent.CATEGORY_OPENABLE)
             putExtra(Intent.EXTRA_TITLE, path.split("/").last())
-            launchActivityForResult(this, PICK_SAVE_FILE_INTENT, error = com.simplemobiletools.commons.R.string.system_service_disabled)
+            launchActivityForResult(
+                this,
+                PICK_SAVE_FILE_INTENT,
+                error = com.simplemobiletools.commons.R.string.system_service_disabled
+            )
         }
     }
 
@@ -1549,12 +1792,16 @@ class ThreadActivity : SimpleActivity() {
 
         val lastMaxId = messages.filterNot { it.isScheduled }.maxByOrNull { it.id }?.id ?: 0L
         val newThreadId = getThreadId(participants.getAddresses().toSet())
-        val newMessages = getMessages(newThreadId, getImageResolutions = true, includeScheduledMessages = false)
+        val newMessages =
+            getMessages(newThreadId, getImageResolutions = true, includeScheduledMessages = false)
 
         if (messages.isNotEmpty() && messages.all { it.isScheduled } && newMessages.isNotEmpty()) {
             // update scheduled messages with real thread id
             threadId = newThreadId
-            updateScheduledMessagesThreadId(messages = messages.filter { it.threadId != threadId }, threadId)
+            updateScheduledMessagesThreadId(
+                messages = messages.filter { it.threadId != threadId },
+                threadId
+            )
         }
 
         messages = newMessages.apply {
@@ -1567,9 +1814,10 @@ class ThreadActivity : SimpleActivity() {
             }
         }
 
-        messages.filter { !it.isScheduled && !it.isReceivedMessage() && it.id > lastMaxId }.forEach { latestMessage ->
-            messagesDB.insertOrIgnore(latestMessage)
-        }
+        messages.filter { !it.isScheduled && !it.isReceivedMessage() && it.id > lastMaxId }
+            .forEach { latestMessage ->
+                messagesDB.insertOrIgnore(latestMessage)
+            }
 
         setupAdapter()
         runOnUiThread {
@@ -1599,7 +1847,11 @@ class ThreadActivity : SimpleActivity() {
             RadioItem(TYPE_SEND, getString(R.string.send_now)),
             RadioItem(TYPE_DELETE, getString(com.simplemobiletools.commons.R.string.delete))
         )
-        RadioGroupDialog(activity = this, items = items, titleId = R.string.scheduled_message) { any ->
+        RadioGroupDialog(
+            activity = this,
+            items = items,
+            titleId = R.string.scheduled_message
+        ) { any ->
             when (any as Int) {
                 TYPE_DELETE -> cancelScheduledMessageAndRefresh(message.id)
                 TYPE_EDIT -> editScheduledMessage(message)
@@ -1680,12 +1932,13 @@ class ThreadActivity : SimpleActivity() {
 
         val dateTime = scheduledDateTime
         val millis = dateTime.millis
-        binding.messageHolder.scheduledMessageButton.text = if (dateTime.yearOfCentury().get() > DateTime.now().yearOfCentury().get()) {
-            millis.formatDate(this)
-        } else {
-            val flags = FORMAT_SHOW_TIME or FORMAT_SHOW_DATE or FORMAT_NO_YEAR
-            DateUtils.formatDateTime(this, millis, flags)
-        }
+        binding.messageHolder.scheduledMessageButton.text =
+            if (dateTime.yearOfCentury().get() > DateTime.now().yearOfCentury().get()) {
+                millis.formatDate(this)
+            } else {
+                val flags = FORMAT_SHOW_TIME or FORMAT_SHOW_DATE or FORMAT_NO_YEAR
+                DateUtils.formatDateTime(this, millis, flags)
+            }
     }
 
     private fun hideScheduleSendUi() {
@@ -1702,7 +1955,12 @@ class ThreadActivity : SimpleActivity() {
         }
         ResourcesCompat.getDrawable(resources, drawableResId, theme)?.apply {
             applyColorFilter(getProperTextColor())
-            binding.messageHolder.threadSendMessage.setCompoundDrawablesWithIntrinsicBounds(null, this, null, null)
+            binding.messageHolder.threadSendMessage.setCompoundDrawablesWithIntrinsicBounds(
+                null,
+                this,
+                null,
+                null
+            )
         }
     }
 
@@ -1836,14 +2094,18 @@ class ThreadActivity : SimpleActivity() {
             view.onApplyWindowInsets(insets)
         }
 
-        val callback = object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_CONTINUE_ON_SUBTREE) {
-            override fun onPrepare(animation: WindowInsetsAnimationCompat) {
-                super.onPrepare(animation)
-                showOrHideAttachmentPicker()
-            }
+        val callback =
+            object : WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_CONTINUE_ON_SUBTREE) {
+                override fun onPrepare(animation: WindowInsetsAnimationCompat) {
+                    super.onPrepare(animation)
+                    showOrHideAttachmentPicker()
+                }
 
-            override fun onProgress(insets: WindowInsetsCompat, runningAnimations: MutableList<WindowInsetsAnimationCompat>) = insets
-        }
+                override fun onProgress(
+                    insets: WindowInsetsCompat,
+                    runningAnimations: MutableList<WindowInsetsAnimationCompat>
+                ) = insets
+            }
         ViewCompat.setWindowInsetsAnimationCallback(window.decorView, callback)
     }
 

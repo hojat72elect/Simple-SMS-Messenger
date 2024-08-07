@@ -10,19 +10,33 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.adapters.MyRecyclerViewListAdapter
-import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.SimpleContactsHelper
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.activities.SimpleActivity
 import com.simplemobiletools.smsmessenger.databinding.ItemConversationBinding
-import com.simplemobiletools.smsmessenger.extensions.*
+import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
+import com.simplemobiletools.smsmessenger.extensions.beVisibleIf
+import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.formatDateOrTime
+import com.simplemobiletools.smsmessenger.extensions.getAllDrafts
+import com.simplemobiletools.smsmessenger.extensions.getTextSize
+import com.simplemobiletools.smsmessenger.extensions.setupViewBackground
 import com.simplemobiletools.smsmessenger.models.Conversation
 
 @Suppress("LeakingThis")
 abstract class BaseConversationsAdapter(
-    activity: SimpleActivity, recyclerView: MyRecyclerView, onRefresh: () -> Unit, itemClick: (Any) -> Unit
-) : MyRecyclerViewListAdapter<Conversation>(activity, recyclerView, ConversationDiffCallback(), itemClick, onRefresh),
+    activity: SimpleActivity,
+    recyclerView: MyRecyclerView,
+    onRefresh: () -> Unit,
+    itemClick: (Any) -> Unit
+) : MyRecyclerViewListAdapter<Conversation>(
+    activity,
+    recyclerView,
+    ConversationDiffCallback(),
+    itemClick,
+    onRefresh
+),
     RecyclerViewFastScroller.OnPopupTextUpdate {
     private var fontSize = activity.getTextSize()
     private var drafts = HashMap<Long, String?>()
@@ -38,8 +52,11 @@ abstract class BaseConversationsAdapter(
 
         registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onChanged() = restoreRecyclerViewState()
-            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) = restoreRecyclerViewState()
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) = restoreRecyclerViewState()
+            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) =
+                restoreRecyclerViewState()
+
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) =
+                restoreRecyclerViewState()
         })
     }
 
@@ -48,7 +65,10 @@ abstract class BaseConversationsAdapter(
         notifyDataSetChanged()
     }
 
-    fun updateConversations(newConversations: ArrayList<Conversation>, commitCallback: (() -> Unit)? = null) {
+    fun updateConversations(
+        newConversations: ArrayList<Conversation>,
+        commitCallback: (() -> Unit)? = null
+    ) {
         saveRecyclerViewState()
         submitList(newConversations.toList(), commitCallback)
     }
@@ -68,7 +88,8 @@ abstract class BaseConversationsAdapter(
 
     override fun getSelectableItemCount() = itemCount
 
-    protected fun getSelectedItems() = currentList.filter { selectedKeys.contains(it.hashCode()) } as ArrayList<Conversation>
+    protected fun getSelectedItems() =
+        currentList.filter { selectedKeys.contains(it.hashCode()) } as ArrayList<Conversation>
 
     override fun getIsItemSelectable(position: Int) = true
 
@@ -87,7 +108,11 @@ abstract class BaseConversationsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val conversation = getItem(position)
-        holder.bindView(conversation, allowSingleClick = true, allowLongClick = true) { itemView, _ ->
+        holder.bindView(
+            conversation,
+            allowSingleClick = true,
+            allowLongClick = true
+        ) { itemView, _ ->
             setupView(itemView, conversation)
         }
         bindViewHolder(holder)
@@ -159,7 +184,12 @@ abstract class BaseConversationsAdapter(
                 null
             }
 
-            SimpleContactsHelper(activity).loadContactImage(conversation.photoUri, conversationImage, conversation.title, placeholder)
+            SimpleContactsHelper(activity).loadContactImage(
+                conversation.photoUri,
+                conversationImage,
+                conversation.title,
+                placeholder
+            )
         }
     }
 

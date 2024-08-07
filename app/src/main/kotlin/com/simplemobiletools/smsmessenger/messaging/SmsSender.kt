@@ -5,7 +5,7 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.net.Uri
 import android.telephony.PhoneNumberUtils
-import com.simplemobiletools.commons.helpers.isSPlus
+import com.simplemobiletools.smsmessenger.helpers.isSPlus
 import com.simplemobiletools.smsmessenger.messaging.SmsException.Companion.EMPTY_DESTINATION_ADDRESS
 import com.simplemobiletools.smsmessenger.messaging.SmsException.Companion.ERROR_SENDING_MESSAGE
 import com.simplemobiletools.smsmessenger.receivers.SendStatusReceiver
@@ -110,13 +110,23 @@ class SmsSender(val app: Application) {
     }
 
     private fun getSendStatusIntent(requestUri: Uri, subId: Int): Intent {
-        val intent = Intent(SendStatusReceiver.SMS_SENT_ACTION, requestUri, app, SmsStatusSentReceiver::class.java)
+        val intent = Intent(
+            SendStatusReceiver.SMS_SENT_ACTION,
+            requestUri,
+            app,
+            SmsStatusSentReceiver::class.java
+        )
         intent.putExtra(SendStatusReceiver.EXTRA_SUB_ID, subId)
         return intent
     }
 
     private fun getDeliveredStatusIntent(requestUri: Uri, subId: Int): Intent {
-        val intent = Intent(SendStatusReceiver.SMS_DELIVERED_ACTION, requestUri, app, SmsStatusDeliveredReceiver::class.java)
+        val intent = Intent(
+            SendStatusReceiver.SMS_DELIVERED_ACTION,
+            requestUri,
+            app,
+            SmsStatusDeliveredReceiver::class.java
+        )
         intent.putExtra(SendStatusReceiver.EXTRA_SUB_ID, subId)
         return intent
     }

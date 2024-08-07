@@ -9,13 +9,19 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.ScheduleMessageDialogBinding
+import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
 import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
+import com.simplemobiletools.smsmessenger.extensions.getDatePickerDialogTheme
+import com.simplemobiletools.smsmessenger.extensions.getProperTextColor
+import com.simplemobiletools.smsmessenger.extensions.getTimeFormat
 import com.simplemobiletools.smsmessenger.extensions.roundToClosestMultipleOf
-import org.joda.time.DateTime
+import com.simplemobiletools.smsmessenger.extensions.setupDialogStuff
+import com.simplemobiletools.smsmessenger.extensions.toast
 import java.util.Calendar
+import org.joda.time.DateTime
 
 class ScheduleMessageDialog(
     private val activity: BaseSimpleActivity,
@@ -94,7 +100,12 @@ class ScheduleMessageDialog(
 
         val dateSetListener = OnDateSetListener { _, y, m, d -> dateSet(y, m, d) }
         DatePickerDialog(
-            activity, activity.getDatePickerDialogTheme(), dateSetListener, year, monthOfYear, dayOfMonth
+            activity,
+            activity.getDatePickerDialogTheme(),
+            dateSetListener,
+            year,
+            monthOfYear,
+            dayOfMonth
         ).apply {
             datePicker.minDate = System.currentTimeMillis()
             show()
@@ -132,7 +143,12 @@ class ScheduleMessageDialog(
         } else {
             val timeSetListener = OnTimeSetListener { _, hours, minutes -> timeSet(hours, minutes) }
             TimePickerDialog(
-                activity, activity.getDatePickerDialogTheme(), timeSetListener, hourOfDay, minute, DateFormat.is24HourFormat(activity)
+                activity,
+                activity.getDatePickerDialogTheme(),
+                timeSetListener,
+                hourOfDay,
+                minute,
+                DateFormat.is24HourFormat(activity)
             ).apply {
                 show()
                 getButton(AlertDialog.BUTTON_NEGATIVE).apply {
@@ -189,5 +205,6 @@ class ScheduleMessageDialog(
 
     private fun getNextHour() = (calendar.get(Calendar.HOUR_OF_DAY) + 1).coerceIn(0, 23)
 
-    private fun getNextMinute() = (calendar.get(Calendar.MINUTE) + 5).roundToClosestMultipleOf(5).coerceIn(0, 59)
+    private fun getNextMinute() =
+        (calendar.get(Calendar.MINUTE) + 5).roundToClosestMultipleOf(5).coerceIn(0, 59)
 }

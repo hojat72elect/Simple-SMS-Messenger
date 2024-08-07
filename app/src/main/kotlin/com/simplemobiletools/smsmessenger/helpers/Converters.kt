@@ -3,7 +3,7 @@ package com.simplemobiletools.smsmessenger.helpers
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.simplemobiletools.commons.models.SimpleContact
+import com.simplemobiletools.smsmessenger.models.SimpleContact
 import com.simplemobiletools.smsmessenger.models.Attachment
 import com.simplemobiletools.smsmessenger.models.MessageAttachment
 
@@ -14,20 +14,24 @@ class Converters {
     private val messageAttachmentType = object : TypeToken<MessageAttachment?>() {}.type
 
     @TypeConverter
-    fun jsonToAttachmentList(value: String) = gson.fromJson<ArrayList<Attachment>>(value, attachmentType)
+    fun jsonToAttachmentList(value: String) =
+        gson.fromJson<ArrayList<Attachment>>(value, attachmentType)
 
     @TypeConverter
     fun attachmentListToJson(list: ArrayList<Attachment>) = gson.toJson(list)
 
     @TypeConverter
-    fun jsonToSimpleContactList(value: String) = gson.fromJson<ArrayList<SimpleContact>>(value, simpleContactType)
+    fun jsonToSimpleContactList(value: String) =
+        gson.fromJson<ArrayList<SimpleContact>>(value, simpleContactType)
 
     @TypeConverter
     fun simpleContactListToJson(list: ArrayList<SimpleContact>) = gson.toJson(list)
 
     @TypeConverter
-    fun jsonToMessageAttachment(value: String) = gson.fromJson<MessageAttachment>(value, messageAttachmentType)
+    fun jsonToMessageAttachment(value: String) =
+        gson.fromJson<MessageAttachment>(value, messageAttachmentType)
 
     @TypeConverter
-    fun messageAttachmentToJson(messageAttachment: MessageAttachment?) = gson.toJson(messageAttachment)
+    fun messageAttachmentToJson(messageAttachment: MessageAttachment?) =
+        gson.toJson(messageAttachment)
 }

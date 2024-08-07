@@ -6,12 +6,12 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
-import com.simplemobiletools.commons.extensions.getCompressionFormat
-import com.simplemobiletools.commons.extensions.getMyFileUri
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.extensions.extension
+import com.simplemobiletools.smsmessenger.extensions.getCompressionFormat
 import com.simplemobiletools.smsmessenger.extensions.getExtensionFromMimeType
 import com.simplemobiletools.smsmessenger.extensions.getFileSizeFromUri
+import com.simplemobiletools.smsmessenger.extensions.getMyFileUri
 import com.simplemobiletools.smsmessenger.extensions.isImageMimeType
 import java.io.File
 import java.io.FileOutputStream
@@ -31,9 +31,15 @@ class ImageCompressor(private val context: Context) {
 
     private val minQuality = 30
     private val minResolution = 56
-    private val scaleStepFactor = 0.6f // increase for more accurate file size at the cost increased computation
+    private val scaleStepFactor =
+        0.6f // increase for more accurate file size at the cost increased computation
 
-    fun compressImage(uri: Uri, compressSize: Long, lossy: Boolean = compressSize < FILE_SIZE_1_MB, callback: (compressedFileUri: Uri?) -> Unit) {
+    fun compressImage(
+        uri: Uri,
+        compressSize: Long,
+        lossy: Boolean = compressSize < FILE_SIZE_1_MB,
+        callback: (compressedFileUri: Uri?) -> Unit
+    ) {
         ensureBackgroundThread {
             try {
                 val fileSize = context.getFileSizeFromUri(uri)
@@ -41,7 +47,11 @@ class ImageCompressor(private val context: Context) {
                     val mimeType = contentResolver.getType(uri)!!
                     if (mimeType.isImageMimeType()) {
                         val byteArray = contentResolver.openInputStream(uri)?.readBytes()!!
-                        var imageFile = File(outputDirectory, System.currentTimeMillis().toString().plus(mimeType.getExtensionFromMimeType()))
+                        var imageFile = File(
+                            outputDirectory,
+                            System.currentTimeMillis().toString()
+                                .plus(mimeType.getExtensionFromMimeType())
+                        )
                         imageFile.writeBytes(byteArray)
                         val bitmap = loadBitmap(imageFile)
                         val format = if (lossy) {
@@ -70,9 +80,18 @@ class ImageCompressor(private val context: Context) {
                                     break
                                 }
 
-                                imageFile = decodeSampledBitmapFromFile(imageFile, scaledWidth, scaledHeight).run {
+                                imageFile = decodeSampledBitmapFromFile(
+                                    imageFile,
+                                    scaledWidth,
+                                    scaledHeight
+                                ).run {
                                     determineImageRotation(imageFile, bitmap = this).run {
-                                        overWrite(imageFile, bitmap = this, format = format, quality = quality)
+                                        overWrite(
+                                            imageFile,
+                                            bitmap = this,
+                                            format = format,
+                                            quality = quality
+                                        )
                                     }
                                 }
                             }
@@ -92,7 +111,12 @@ class ImageCompressor(private val context: Context) {
         }
     }
 
-    private fun overWrite(imageFile: File, bitmap: Bitmap, format: Bitmap.CompressFormat = imageFile.path.getCompressionFormat(), quality: Int = 100): File {
+    private fun overWrite(
+        imageFile: File,
+        bitmap: Bitmap,
+        format: Bitmap.CompressFormat = imageFile.path.getCompressionFormat(),
+        quality: Int = 100
+    ): File {
         val result = if (format == imageFile.path.getCompressionFormat()) {
             imageFile
         } else {
@@ -103,7 +127,12 @@ class ImageCompressor(private val context: Context) {
         return result
     }
 
-    private fun saveBitmap(bitmap: Bitmap, destination: File, format: Bitmap.CompressFormat = destination.path.getCompressionFormat(), quality: Int = 100) {
+    private fun saveBitmap(
+        bitmap: Bitmap,
+        destination: File,
+        format: Bitmap.CompressFormat = destination.path.getCompressionFormat(),
+        quality: Int = 100
+    ) {
         destination.parentFile?.mkdirs()
         var fileOutputStream: FileOutputStream? = null
         try {
@@ -133,7 +162,11 @@ class ImageCompressor(private val context: Context) {
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
 
-    private fun decodeSampledBitmapFromFile(imageFile: File, reqWidth: Int, reqHeight: Int): Bitmap {
+    private fun decodeSampledBitmapFromFile(
+        imageFile: File,
+        reqWidth: Int,
+        reqHeight: Int
+    ): Bitmap {
         return BitmapFactory.Options().run {
             inJustDecodeBounds = true
             BitmapFactory.decodeFile(imageFile.absolutePath, this)
@@ -145,7 +178,11 @@ class ImageCompressor(private val context: Context) {
         }
     }
 
-    private fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+    private fun calculateInSampleSize(
+        options: BitmapFactory.Options,
+        reqWidth: Int,
+        reqHeight: Int
+    ): Int {
         // Raw height and width of image
         val height = options.outHeight
         val width = options.outWidth

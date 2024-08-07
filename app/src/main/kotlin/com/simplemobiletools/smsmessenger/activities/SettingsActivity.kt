@@ -1,29 +1,67 @@
 package com.simplemobiletools.smsmessenger.activities
 
-import android.annotation.TargetApi
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import com.simplemobiletools.commons.activities.ManageBlockedNumbersActivity
-import com.simplemobiletools.commons.dialogs.*
-import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.*
+import com.simplemobiletools.commons.dialogs.ChangeDateTimeFormatDialog
+import com.simplemobiletools.commons.dialogs.ConfirmationDialog
+import com.simplemobiletools.commons.dialogs.FeatureLockedDialog
+import com.simplemobiletools.commons.dialogs.RadioGroupDialog
+import com.simplemobiletools.commons.dialogs.SecurityDialog
+import com.simplemobiletools.commons.helpers.NavigationIcon
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.ActivitySettingsBinding
 import com.simplemobiletools.smsmessenger.dialogs.ExportMessagesDialog
+import com.simplemobiletools.smsmessenger.extensions.addLockedLabelIfNeeded
+import com.simplemobiletools.smsmessenger.extensions.beGoneIf
+import com.simplemobiletools.smsmessenger.extensions.beVisibleIf
 import com.simplemobiletools.smsmessenger.extensions.config
 import com.simplemobiletools.smsmessenger.extensions.emptyMessagesRecycleBin
+import com.simplemobiletools.smsmessenger.extensions.getBlockedNumbers
+import com.simplemobiletools.smsmessenger.extensions.getCustomizeColorsString
+import com.simplemobiletools.smsmessenger.extensions.getFontSizeText
+import com.simplemobiletools.smsmessenger.extensions.getProperPrimaryColor
+import com.simplemobiletools.smsmessenger.extensions.isOrWasThankYouInstalled
+import com.simplemobiletools.smsmessenger.extensions.launchPurchaseThankYouIntent
 import com.simplemobiletools.smsmessenger.extensions.messagesDB
-import com.simplemobiletools.smsmessenger.helpers.*
-import com.simplemobiletools.smsmessenger.models.*
+import com.simplemobiletools.smsmessenger.extensions.showErrorToast
+import com.simplemobiletools.smsmessenger.extensions.toast
+import com.simplemobiletools.smsmessenger.extensions.updateTextColors
+import com.simplemobiletools.smsmessenger.extensions.viewBinding
+import com.simplemobiletools.smsmessenger.helpers.FILE_SIZE_100_KB
+import com.simplemobiletools.smsmessenger.helpers.FILE_SIZE_1_MB
+import com.simplemobiletools.smsmessenger.helpers.FILE_SIZE_200_KB
+import com.simplemobiletools.smsmessenger.helpers.FILE_SIZE_2_MB
+import com.simplemobiletools.smsmessenger.helpers.FILE_SIZE_300_KB
+import com.simplemobiletools.smsmessenger.helpers.FILE_SIZE_600_KB
+import com.simplemobiletools.smsmessenger.helpers.FILE_SIZE_NONE
+import com.simplemobiletools.smsmessenger.helpers.FONT_SIZE_EXTRA_LARGE
+import com.simplemobiletools.smsmessenger.helpers.FONT_SIZE_LARGE
+import com.simplemobiletools.smsmessenger.helpers.FONT_SIZE_MEDIUM
+import com.simplemobiletools.smsmessenger.helpers.FONT_SIZE_SMALL
+import com.simplemobiletools.smsmessenger.helpers.LOCK_SCREEN_NOTHING
+import com.simplemobiletools.smsmessenger.helpers.LOCK_SCREEN_SENDER
+import com.simplemobiletools.smsmessenger.helpers.LOCK_SCREEN_SENDER_MESSAGE
+import com.simplemobiletools.smsmessenger.helpers.MessagesImporter
+import com.simplemobiletools.smsmessenger.helpers.MessagesReader
+import com.simplemobiletools.smsmessenger.helpers.PROTECTION_FINGERPRINT
+import com.simplemobiletools.smsmessenger.helpers.SHOW_ALL_TABS
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
+import com.simplemobiletools.smsmessenger.helpers.isNougatPlus
+import com.simplemobiletools.smsmessenger.helpers.isOreoPlus
+import com.simplemobiletools.smsmessenger.helpers.isTiramisuPlus
+import com.simplemobiletools.smsmessenger.helpers.refreshMessages
+import java.util.Locale
+import kotlin.system.exitProcess
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.util.*
-import kotlin.system.exitProcess
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class SettingsActivity : SimpleActivity() {
     private var blockedNumbersAtPause = -1
     private var recycleBinMessages = 0
@@ -43,7 +81,10 @@ class SettingsActivity : SimpleActivity() {
             useTransparentNavigation = true,
             useTopSearchMenu = false
         )
-        setupMaterialScrollListener(scrollingView = binding.settingsNestedScrollview, toolbar = binding.settingsToolbar)
+        setupMaterialScrollListener(
+            scrollingView = binding.settingsNestedScrollview,
+            toolbar = binding.settingsToolbar
+        )
     }
 
     override fun onResume() {
@@ -91,18 +132,20 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
-    private val getContent = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
-        if (uri != null) {
-            MessagesImporter(this).importMessages(uri)
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            if (uri != null) {
+                MessagesImporter(this).importMessages(uri)
+            }
         }
-    }
 
-    private val saveDocument = registerForActivityResult(ActivityResultContracts.CreateDocument(messagesFileType)) { uri ->
-        if (uri != null) {
-            toast(com.simplemobiletools.commons.R.string.exporting)
-            exportMessages(uri)
+    private val saveDocument =
+        registerForActivityResult(ActivityResultContracts.CreateDocument(messagesFileType)) { uri ->
+            if (uri != null) {
+                toast(com.simplemobiletools.commons.R.string.exporting)
+                exportMessages(uri)
+            }
         }
-    }
 
     private fun setupMessagesExport() {
         binding.settingsExportMessagesHolder.setOnClickListener {
@@ -121,7 +164,10 @@ class SettingsActivity : SimpleActivity() {
     private fun exportMessages(uri: Uri) {
         ensureBackgroundThread {
             try {
-                MessagesReader(this).getMessagesToExport(config.exportSms, config.exportMms) { messagesToExport ->
+                MessagesReader(this).getMessagesToExport(
+                    config.exportSms,
+                    config.exportMms
+                ) { messagesToExport ->
                     if (messagesToExport.isEmpty()) {
                         toast(com.simplemobiletools.commons.R.string.no_entries_for_exporting)
                         return@getMessagesToExport
@@ -185,10 +231,9 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
-    // support for device-wise blocking came on Android 7, rely only on that
-    @TargetApi(Build.VERSION_CODES.N)
     private fun setupManageBlockedNumbers() = binding.apply {
-        settingsManageBlockedNumbers.text = addLockedLabelIfNeeded(com.simplemobiletools.commons.R.string.manage_blocked_numbers)
+        settingsManageBlockedNumbers.text =
+            addLockedLabelIfNeeded(com.simplemobiletools.commons.R.string.manage_blocked_numbers)
         settingsManageBlockedNumbersHolder.beVisibleIf(isNougatPlus())
 
         settingsManageBlockedNumbersHolder.setOnClickListener {
@@ -203,7 +248,8 @@ class SettingsActivity : SimpleActivity() {
     }
 
     private fun setupManageBlockedKeywords() = binding.apply {
-        settingsManageBlockedKeywords.text = addLockedLabelIfNeeded(R.string.manage_blocked_keywords)
+        settingsManageBlockedKeywords.text =
+            addLockedLabelIfNeeded(R.string.manage_blocked_keywords)
 
         settingsManageBlockedKeywordsHolder.setOnClickListener {
             if (isOrWasThankYouInstalled()) {
@@ -229,9 +275,15 @@ class SettingsActivity : SimpleActivity() {
         settingsFontSizeHolder.setOnClickListener {
             val items = arrayListOf(
                 RadioItem(FONT_SIZE_SMALL, getString(com.simplemobiletools.commons.R.string.small)),
-                RadioItem(FONT_SIZE_MEDIUM, getString(com.simplemobiletools.commons.R.string.medium)),
+                RadioItem(
+                    FONT_SIZE_MEDIUM,
+                    getString(com.simplemobiletools.commons.R.string.medium)
+                ),
                 RadioItem(FONT_SIZE_LARGE, getString(com.simplemobiletools.commons.R.string.large)),
-                RadioItem(FONT_SIZE_EXTRA_LARGE, getString(com.simplemobiletools.commons.R.string.extra_large))
+                RadioItem(
+                    FONT_SIZE_EXTRA_LARGE,
+                    getString(com.simplemobiletools.commons.R.string.extra_large)
+                )
             )
 
             RadioGroupDialog(this@SettingsActivity, items, config.fontSize) {
@@ -295,7 +347,10 @@ class SettingsActivity : SimpleActivity() {
             val items = arrayListOf(
                 RadioItem(LOCK_SCREEN_SENDER_MESSAGE, getString(R.string.sender_and_message)),
                 RadioItem(LOCK_SCREEN_SENDER, getString(R.string.sender_only)),
-                RadioItem(LOCK_SCREEN_NOTHING, getString(com.simplemobiletools.commons.R.string.nothing)),
+                RadioItem(
+                    LOCK_SCREEN_NOTHING,
+                    getString(com.simplemobiletools.commons.R.string.nothing)
+                ),
             )
 
             RadioGroupDialog(this@SettingsActivity, items, config.lockScreenVisibilitySetting) {
@@ -353,7 +408,11 @@ class SettingsActivity : SimpleActivity() {
             recycleBinMessages = messagesDB.getArchivedCount()
             runOnUiThread {
                 settingsEmptyRecycleBinSize.text =
-                    resources.getQuantityString(R.plurals.delete_messages, recycleBinMessages, recycleBinMessages)
+                    resources.getQuantityString(
+                        R.plurals.delete_messages,
+                        recycleBinMessages,
+                        recycleBinMessages
+                    )
             }
         }
 
@@ -373,7 +432,11 @@ class SettingsActivity : SimpleActivity() {
                     }
                     recycleBinMessages = 0
                     settingsEmptyRecycleBinSize.text =
-                        resources.getQuantityString(R.plurals.delete_messages, recycleBinMessages, recycleBinMessages)
+                        resources.getQuantityString(
+                            R.plurals.delete_messages,
+                            recycleBinMessages,
+                            recycleBinMessages
+                        )
                 }
             }
         }
@@ -382,8 +445,13 @@ class SettingsActivity : SimpleActivity() {
     private fun setupAppPasswordProtection() = binding.apply {
         settingsAppPasswordProtection.isChecked = config.isAppPasswordProtectionOn
         settingsAppPasswordProtectionHolder.setOnClickListener {
-            val tabToShow = if (config.isAppPasswordProtectionOn) config.appProtectionType else SHOW_ALL_TABS
-            SecurityDialog(this@SettingsActivity, config.appPasswordHash, tabToShow) { hash, type, success ->
+            val tabToShow =
+                if (config.isAppPasswordProtectionOn) config.appProtectionType else SHOW_ALL_TABS
+            SecurityDialog(
+                this@SettingsActivity,
+                config.appPasswordHash,
+                tabToShow
+            ) { hash, type, success ->
                 if (success) {
                     val hasPasswordProtection = config.isAppPasswordProtectionOn
                     settingsAppPasswordProtection.isChecked = !hasPasswordProtection
@@ -392,13 +460,20 @@ class SettingsActivity : SimpleActivity() {
                     config.appProtectionType = type
 
                     if (config.isAppPasswordProtectionOn) {
-                        val confirmationTextId = if (config.appProtectionType == PROTECTION_FINGERPRINT) {
-                            com.simplemobiletools.commons.R.string.fingerprint_setup_successfully
-                        } else {
-                            com.simplemobiletools.commons.R.string.protection_setup_successfully
-                        }
+                        val confirmationTextId =
+                            if (config.appProtectionType == PROTECTION_FINGERPRINT) {
+                                com.simplemobiletools.commons.R.string.fingerprint_setup_successfully
+                            } else {
+                                com.simplemobiletools.commons.R.string.protection_setup_successfully
+                            }
 
-                        ConfirmationDialog(this@SettingsActivity, "", confirmationTextId, com.simplemobiletools.commons.R.string.ok, 0) { }
+                        ConfirmationDialog(
+                            this@SettingsActivity,
+                            "",
+                            confirmationTextId,
+                            com.simplemobiletools.commons.R.string.ok,
+                            0
+                        ) { }
                     }
                 }
             }

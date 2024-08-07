@@ -1,6 +1,10 @@
 package com.simplemobiletools.smsmessenger.extensions.gson
 
-import com.google.gson.*
+import com.google.gson.JsonArray
+import com.google.gson.JsonElement
+import com.google.gson.JsonNull
+import com.google.gson.JsonObject
+import com.google.gson.JsonPrimitive
 import java.math.BigDecimal
 import java.math.BigInteger
 

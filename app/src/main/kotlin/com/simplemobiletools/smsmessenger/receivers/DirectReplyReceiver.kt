@@ -7,13 +7,22 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import androidx.core.app.RemoteInput
-import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.helpers.SimpleContactsHelper
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.smsmessenger.extensions.*
+import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
+import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.conversationsDB
+import com.simplemobiletools.smsmessenger.extensions.getMessages
+import com.simplemobiletools.smsmessenger.extensions.getNotificationBitmap
+import com.simplemobiletools.smsmessenger.extensions.markThreadMessagesRead
+import com.simplemobiletools.smsmessenger.extensions.messagesDB
+import com.simplemobiletools.smsmessenger.extensions.notificationHelper
+import com.simplemobiletools.smsmessenger.extensions.removeDiacriticsIfNeeded
+import com.simplemobiletools.smsmessenger.extensions.showErrorToast
+import com.simplemobiletools.smsmessenger.extensions.subscriptionManagerCompat
+import com.simplemobiletools.smsmessenger.extensions.updateLastConversationMessage
 import com.simplemobiletools.smsmessenger.helpers.REPLY
 import com.simplemobiletools.smsmessenger.helpers.THREAD_ID
 import com.simplemobiletools.smsmessenger.helpers.THREAD_NUMBER
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.messaging.sendMessageCompat
 
 class DirectReplyReceiver : BroadcastReceiver() {
@@ -21,7 +30,8 @@ class DirectReplyReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val address = intent.getStringExtra(THREAD_NUMBER)
         val threadId = intent.getLongExtra(THREAD_ID, 0L)
-        var body = RemoteInput.getResultsFromIntent(intent)?.getCharSequence(REPLY)?.toString() ?: return
+        var body =
+            RemoteInput.getResultsFromIntent(intent)?.getCharSequence(REPLY)?.toString() ?: return
 
         body = context.removeDiacriticsIfNeeded(body)
 
@@ -40,7 +50,12 @@ class DirectReplyReceiver : BroadcastReceiver() {
                 var messageId = 0L
                 try {
                     context.sendMessageCompat(body, listOf(address), subscriptionId, emptyList())
-                    val message = context.getMessages(threadId, getImageResolutions = false, includeScheduledMessages = false, limit = 1).lastOrNull()
+                    val message = context.getMessages(
+                        threadId,
+                        getImageResolutions = false,
+                        includeScheduledMessages = false,
+                        limit = 1
+                    ).lastOrNull()
                     if (message != null) {
                         context.messagesDB.insertOrUpdate(message)
                         messageId = message.id
@@ -54,7 +69,15 @@ class DirectReplyReceiver : BroadcastReceiver() {
                 val photoUri = SimpleContactsHelper(context).getPhotoUriFromPhoneNumber(address)
                 val bitmap = context.getNotificationBitmap(photoUri)
                 Handler(Looper.getMainLooper()).post {
-                    context.notificationHelper.showMessageNotification(messageId, address, body, threadId, bitmap, sender = null, alertOnlyOnce = true)
+                    context.notificationHelper.showMessageNotification(
+                        messageId,
+                        address,
+                        body,
+                        threadId,
+                        bitmap,
+                        sender = null,
+                        alertOnlyOnce = true
+                    )
                 }
 
                 context.markThreadMessagesRead(threadId)

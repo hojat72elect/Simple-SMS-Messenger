@@ -6,16 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
-import com.simplemobiletools.commons.extensions.getTextSize
-import com.simplemobiletools.commons.extensions.highlightTextPart
-import com.simplemobiletools.commons.helpers.SimpleContactsHelper
+import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.activities.SimpleActivity
 import com.simplemobiletools.smsmessenger.databinding.ItemSearchResultBinding
+import com.simplemobiletools.smsmessenger.extensions.getTextSize
+import com.simplemobiletools.smsmessenger.extensions.highlightTextPart
 import com.simplemobiletools.smsmessenger.models.SearchResult
 
 class SearchResultsAdapter(
-    activity: SimpleActivity, var searchResults: ArrayList<SearchResult>, recyclerView: MyRecyclerView, highlightText: String, itemClick: (Any) -> Unit
+    activity: SimpleActivity,
+    var searchResults: ArrayList<SearchResult>,
+    recyclerView: MyRecyclerView,
+    highlightText: String,
+    itemClick: (Any) -> Unit
 ) : MyRecyclerViewAdapter(activity, recyclerView, itemClick) {
 
     private var fontSize = activity.getTextSize()
@@ -46,7 +50,11 @@ class SearchResultsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val searchResult = searchResults[position]
-        holder.bindView(searchResult, allowSingleClick = true, allowLongClick = false) { itemView, _ ->
+        holder.bindView(
+            searchResult,
+            allowSingleClick = true,
+            allowLongClick = false
+        ) { itemView, _ ->
             setupView(itemView, searchResult)
         }
         bindViewHolder(holder)
@@ -85,7 +93,11 @@ class SearchResultsAdapter(
                 setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize * 0.8f)
             }
 
-            SimpleContactsHelper(activity).loadContactImage(searchResult.photoUri, searchResultImage, searchResult.title)
+            SimpleContactsHelper(activity).loadContactImage(
+                searchResult.photoUri,
+                searchResultImage,
+                searchResult.title
+            )
         }
     }
 

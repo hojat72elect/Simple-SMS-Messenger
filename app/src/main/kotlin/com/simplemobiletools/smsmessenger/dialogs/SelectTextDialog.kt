@@ -1,8 +1,8 @@
 package com.simplemobiletools.smsmessenger.dialogs
 
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.extensions.getAlertDialogBuilder
-import com.simplemobiletools.commons.extensions.setupDialogStuff
+import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
+import com.simplemobiletools.smsmessenger.extensions.setupDialogStuff
 import com.simplemobiletools.smsmessenger.databinding.DialogSelectTextBinding
 
 // helper dialog for selecting just a part of a message, not copying the whole into clipboard

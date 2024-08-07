@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.Telephony.Sms
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.extensions.messagesDB
 import com.simplemobiletools.smsmessenger.extensions.messagingUtils
 import com.simplemobiletools.smsmessenger.helpers.refreshMessages
@@ -35,13 +35,16 @@ class SmsStatusDeliveredReceiver : SendStatusReceiver() {
                             Sms.STATUS_PENDING
                         }
                     }
+
                     2 -> {
                         // TODO: Need to check whether SC still trying to deliver the SMS to destination and will send the report again?
                         Sms.STATUS_PENDING
                     }
+
                     3 -> {
                         Sms.STATUS_FAILED
                     }
+
                     else -> {
                         Sms.STATUS_PENDING
                     }
@@ -56,7 +59,11 @@ class SmsStatusDeliveredReceiver : SendStatusReceiver() {
         updateSmsStatusAndDateSent(context, messageUri, System.currentTimeMillis())
     }
 
-    private fun updateSmsStatusAndDateSent(context: Context, messageUri: Uri?, timeSentInMillis: Long = -1L) {
+    private fun updateSmsStatusAndDateSent(
+        context: Context,
+        messageUri: Uri?,
+        timeSentInMillis: Long = -1L
+    ) {
         val resolver = context.contentResolver
         val values = ContentValues().apply {
             if (status != Sms.Sent.STATUS_NONE) {

@@ -48,7 +48,7 @@ data class MmsBackup(
     val parts: List<MmsPart>,
 
     override val backupType: BackupType = BackupType.MMS,
-): MessagesBackup() {
+) : MessagesBackup() {
 
     fun toContentValues(): ContentValues {
         return contentValuesOf(

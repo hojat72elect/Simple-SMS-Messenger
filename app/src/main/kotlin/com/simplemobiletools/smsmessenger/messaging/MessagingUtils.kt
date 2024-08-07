@@ -13,8 +13,8 @@ import android.widget.Toast
 import com.klinker.android.send_message.Message
 import com.klinker.android.send_message.Settings
 import com.klinker.android.send_message.Transaction
-import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.extensions.toast
+import com.simplemobiletools.smsmessenger.extensions.showErrorToast
+import com.simplemobiletools.smsmessenger.extensions.toast
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.extensions.getThreadId
 import com.simplemobiletools.smsmessenger.extensions.isPlainTextMimeType
@@ -61,7 +61,12 @@ class MessagingUtils(val context: Context) {
             if (messageId != null) {
                 val selection = "${Sms._ID} = ?"
                 val selectionArgs = arrayOf(messageId.toString())
-                val count = context.contentResolver.update(Sms.CONTENT_URI, values, selection, selectionArgs)
+                val count = context.contentResolver.update(
+                    Sms.CONTENT_URI,
+                    values,
+                    selection,
+                    selectionArgs
+                )
                 if (count > 0) {
                     response = Uri.parse("${Sms.CONTENT_URI}/${messageId}")
                 } else {
@@ -78,7 +83,11 @@ class MessagingUtils(val context: Context) {
 
     /** Send an SMS message given [text] and [addresses]. A [SmsException] is thrown in case any errors occur. */
     fun sendSmsMessage(
-        text: String, addresses: Set<String>, subId: Int, requireDeliveryReport: Boolean, messageId: Long? = null
+        text: String,
+        addresses: Set<String>,
+        subId: Int,
+        requireDeliveryReport: Boolean,
+        messageId: Long? = null
     ) {
         if (addresses.size > 1) {
             // insert a dummy message for this thread if it is a group message
@@ -146,7 +155,13 @@ class MessagingUtils(val context: Context) {
     }
 
     @Deprecated("TODO: Move/rewrite MMS code into the app.")
-    fun sendMmsMessage(text: String, addresses: List<String>, attachment: Attachment?, settings: Settings, messageId: Long? = null) {
+    fun sendMmsMessage(
+        text: String,
+        addresses: List<String>,
+        attachment: Attachment?,
+        settings: Settings,
+        messageId: Long? = null
+    ) {
         val transaction = Transaction(context, settings)
         val message = Message(text, addresses.toTypedArray())
 
@@ -166,7 +181,10 @@ class MessagingUtils(val context: Context) {
             } catch (e: Exception) {
                 context.showErrorToast(e)
             } catch (e: Error) {
-                context.showErrorToast(e.localizedMessage ?: context.getString(com.simplemobiletools.commons.R.string.unknown_error_occurred))
+                context.showErrorToast(
+                    e.localizedMessage
+                        ?: context.getString(com.simplemobiletools.commons.R.string.unknown_error_occurred)
+                )
             }
         }
 
@@ -190,7 +208,10 @@ class MessagingUtils(val context: Context) {
                     SmsManager.RESULT_ERROR_NO_SERVICE -> context.getString(R.string.error_service_is_unavailable)
                     SmsManager.RESULT_ERROR_RADIO_OFF -> context.getString(R.string.error_radio_turned_off)
                     SmsManager.RESULT_NO_DEFAULT_SMS_APP -> context.getString(R.string.sim_card_not_available)
-                    else -> context.getString(R.string.unknown_error_occurred_sending_message, resultCode)
+                    else -> context.getString(
+                        R.string.unknown_error_occurred_sending_message,
+                        resultCode
+                    )
                 }
             }
             context.toast(msg = msg, length = Toast.LENGTH_LONG)

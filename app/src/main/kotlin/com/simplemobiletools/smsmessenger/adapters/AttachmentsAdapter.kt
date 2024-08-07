@@ -19,14 +19,32 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.VCardViewerActivity
 import com.simplemobiletools.smsmessenger.databinding.ItemAttachmentDocumentPreviewBinding
 import com.simplemobiletools.smsmessenger.databinding.ItemAttachmentMediaPreviewBinding
 import com.simplemobiletools.smsmessenger.databinding.ItemAttachmentVcardPreviewBinding
-import com.simplemobiletools.smsmessenger.extensions.*
-import com.simplemobiletools.smsmessenger.helpers.*
+import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
+import com.simplemobiletools.smsmessenger.extensions.beGone
+import com.simplemobiletools.smsmessenger.extensions.beVisible
+import com.simplemobiletools.smsmessenger.extensions.beVisibleIf
+import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.darkenColor
+import com.simplemobiletools.smsmessenger.extensions.getProperPrimaryColor
+import com.simplemobiletools.smsmessenger.extensions.isGifMimeType
+import com.simplemobiletools.smsmessenger.extensions.isImageMimeType
+import com.simplemobiletools.smsmessenger.extensions.isVideoMimeType
+import com.simplemobiletools.smsmessenger.extensions.launchViewIntent
+import com.simplemobiletools.smsmessenger.extensions.onGlobalLayout
+import com.simplemobiletools.smsmessenger.extensions.toast
+import com.simplemobiletools.smsmessenger.helpers.ATTACHMENT_DOCUMENT
+import com.simplemobiletools.smsmessenger.helpers.ATTACHMENT_MEDIA
+import com.simplemobiletools.smsmessenger.helpers.ATTACHMENT_VCARD
+import com.simplemobiletools.smsmessenger.helpers.EXTRA_VCARD_URI
+import com.simplemobiletools.smsmessenger.helpers.FILE_SIZE_NONE
+import com.simplemobiletools.smsmessenger.helpers.ImageCompressor
+import com.simplemobiletools.smsmessenger.helpers.setupDocumentPreview
+import com.simplemobiletools.smsmessenger.helpers.setupVCardPreview
 import com.simplemobiletools.smsmessenger.models.AttachmentSelection
 
 class AttachmentsAdapter(
@@ -34,7 +52,9 @@ class AttachmentsAdapter(
     val recyclerView: RecyclerView,
     val onAttachmentsRemoved: () -> Unit,
     val onReady: (() -> Unit)
-) : ListAdapter<AttachmentSelection, AttachmentsAdapter.AttachmentsViewHolder>(AttachmentDiffCallback()) {
+) : ListAdapter<AttachmentSelection, AttachmentsAdapter.AttachmentsViewHolder>(
+    AttachmentDiffCallback()
+) {
 
     private val config = activity.config
     private val resources = activity.resources
@@ -50,7 +70,12 @@ class AttachmentsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AttachmentsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = when (viewType) {
-            ATTACHMENT_DOCUMENT -> ItemAttachmentDocumentPreviewBinding.inflate(inflater, parent, false)
+            ATTACHMENT_DOCUMENT -> ItemAttachmentDocumentPreviewBinding.inflate(
+                inflater,
+                parent,
+                false
+            )
+
             ATTACHMENT_VCARD -> ItemAttachmentVcardPreviewBinding.inflate(inflater, parent, false)
             ATTACHMENT_MEDIA -> ItemAttachmentMediaPreviewBinding.inflate(inflater, parent, false)
             else -> throw IllegalArgumentException("Unknown view type: $viewType")
@@ -68,10 +93,17 @@ class AttachmentsAdapter(
                         uri = attachment.uri,
                         title = attachment.filename,
                         mimeType = attachment.mimetype,
-                        onClick = { activity.launchViewIntent(attachment.uri, attachment.mimetype, attachment.filename) },
+                        onClick = {
+                            activity.launchViewIntent(
+                                attachment.uri,
+                                attachment.mimetype,
+                                attachment.filename
+                            )
+                        },
                         onRemoveButtonClicked = { removeAttachment(attachment) }
                     )
                 }
+
                 ATTACHMENT_VCARD -> {
                     (binding as ItemAttachmentVcardPreviewBinding).setupVCardPreview(
                         activity = activity,
@@ -85,6 +117,7 @@ class AttachmentsAdapter(
                         onRemoveButtonClicked = { removeAttachment(attachment) }
                     )
                 }
+
                 ATTACHMENT_MEDIA -> setupMediaPreview(
                     binding = binding as ItemAttachmentMediaPreviewBinding,
                     attachment = attachment
@@ -116,7 +149,10 @@ class AttachmentsAdapter(
         }
     }
 
-    private fun setupMediaPreview(binding: ItemAttachmentMediaPreviewBinding, attachment: AttachmentSelection) {
+    private fun setupMediaPreview(
+        binding: ItemAttachmentMediaPreviewBinding,
+        attachment: AttachmentSelection
+    ) {
         binding.apply {
             mediaAttachmentHolder.background.applyColorFilter(primaryColor.darkenColor())
             mediaAttachmentHolder.setOnClickListener {
@@ -131,12 +167,16 @@ class AttachmentsAdapter(
                 }
             }
 
-            val compressImage = attachment.mimetype.isImageMimeType() && !attachment.mimetype.isGifMimeType()
+            val compressImage =
+                attachment.mimetype.isImageMimeType() && !attachment.mimetype.isGifMimeType()
             if (compressImage && attachment.isPending && config.mmsFileSizeLimit != FILE_SIZE_NONE) {
                 thumbnail.beGone()
                 compressionProgress.beVisible()
 
-                imageCompressor.compressImage(attachment.uri, config.mmsFileSizeLimit) { compressedUri ->
+                imageCompressor.compressImage(
+                    attachment.uri,
+                    config.mmsFileSizeLimit
+                ) { compressedUri ->
                     activity.runOnUiThread {
                         when (compressedUri) {
                             attachment.uri -> {
@@ -151,7 +191,12 @@ class AttachmentsAdapter(
 
                             else -> {
                                 attachments.remove(attachment)
-                                addAttachment(attachment.copy(uri = compressedUri, isPending = false))
+                                addAttachment(
+                                    attachment.copy(
+                                        uri = compressedUri,
+                                        isPending = false
+                                    )
+                                )
                             }
                         }
                         onReady()
@@ -163,8 +208,12 @@ class AttachmentsAdapter(
         }
     }
 
-    private fun loadMediaPreview(binding: ItemAttachmentMediaPreviewBinding, attachment: AttachmentSelection) {
-        val roundedCornersRadius = resources.getDimension(com.simplemobiletools.commons.R.dimen.activity_margin).toInt()
+    private fun loadMediaPreview(
+        binding: ItemAttachmentMediaPreviewBinding,
+        attachment: AttachmentSelection
+    ) {
+        val roundedCornersRadius =
+            resources.getDimension(com.simplemobiletools.commons.R.dimen.activity_margin).toInt()
         val size = resources.getDimension(R.dimen.attachment_preview_size).toInt()
 
         val options = RequestOptions()
@@ -177,13 +226,24 @@ class AttachmentsAdapter(
             .override(size, size)
             .apply(options)
             .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>,
+                    isFirstResource: Boolean
+                ): Boolean {
                     removeAttachment(attachment)
                     activity.toast(com.simplemobiletools.commons.R.string.unknown_error_occurred)
                     return false
                 }
 
-                override fun onResourceReady(dr: Drawable, a: Any, t: Target<Drawable>, d: DataSource, i: Boolean): Boolean {
+                override fun onResourceReady(
+                    dr: Drawable,
+                    a: Any,
+                    t: Target<Drawable>,
+                    d: DataSource,
+                    i: Boolean
+                ): Boolean {
                     binding.thumbnail.beVisible()
                     binding.playIcon.beVisibleIf(attachment.mimetype.isVideoMimeType())
                     binding.compressionProgress.beGone()
@@ -193,7 +253,8 @@ class AttachmentsAdapter(
             .into(binding.thumbnail)
     }
 
-    inner class AttachmentsViewHolder(val binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class AttachmentsViewHolder(val binding: ViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bindView(callback: (binding: ViewBinding, adapterPosition: Int) -> Unit) {
             callback(binding, adapterPosition)
         }
@@ -201,11 +262,17 @@ class AttachmentsAdapter(
 }
 
 private class AttachmentDiffCallback : DiffUtil.ItemCallback<AttachmentSelection>() {
-    override fun areItemsTheSame(oldItem: AttachmentSelection, newItem: AttachmentSelection): Boolean {
+    override fun areItemsTheSame(
+        oldItem: AttachmentSelection,
+        newItem: AttachmentSelection
+    ): Boolean {
         return AttachmentSelection.areItemsTheSame(oldItem, newItem)
     }
 
-    override fun areContentsTheSame(oldItem: AttachmentSelection, newItem: AttachmentSelection): Boolean {
+    override fun areContentsTheSame(
+        oldItem: AttachmentSelection,
+        newItem: AttachmentSelection
+    ): Boolean {
         return AttachmentSelection.areContentsTheSame(oldItem, newItem)
     }
 }

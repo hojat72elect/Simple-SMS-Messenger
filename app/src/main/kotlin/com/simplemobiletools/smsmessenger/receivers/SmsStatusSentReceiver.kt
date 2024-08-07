@@ -9,9 +9,14 @@ import android.os.Looper
 import android.provider.Telephony.Sms
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ProcessLifecycleOwner
-import com.simplemobiletools.commons.extensions.getMyContactsCursor
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
-import com.simplemobiletools.smsmessenger.extensions.*
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
+import com.simplemobiletools.smsmessenger.extensions.getMessageRecipientAddress
+import com.simplemobiletools.smsmessenger.extensions.getMyContactsCursor
+import com.simplemobiletools.smsmessenger.extensions.getNameFromAddress
+import com.simplemobiletools.smsmessenger.extensions.getThreadId
+import com.simplemobiletools.smsmessenger.extensions.messagesDB
+import com.simplemobiletools.smsmessenger.extensions.messagingUtils
+import com.simplemobiletools.smsmessenger.extensions.notificationHelper
 import com.simplemobiletools.smsmessenger.helpers.refreshMessages
 
 /** Handles updating databases and states when a SMS message is sent. */
@@ -57,7 +62,8 @@ class SmsStatusSentReceiver : SendStatusReceiver() {
             if (ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
                 return@post
             }
-            val privateCursor = context.getMyContactsCursor(favoritesOnly = false, withPhoneNumbersOnly = true)
+            val privateCursor =
+                context.getMyContactsCursor(favoritesOnly = false, withPhoneNumbersOnly = true)
             ensureBackgroundThread {
                 val address = context.getMessageRecipientAddress(messageId)
                 val threadId = context.getThreadId(address)

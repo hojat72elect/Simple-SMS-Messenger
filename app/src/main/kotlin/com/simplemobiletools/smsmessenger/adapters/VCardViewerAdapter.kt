@@ -9,12 +9,16 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
-import com.simplemobiletools.commons.extensions.*
-import com.simplemobiletools.commons.helpers.SimpleContactsHelper
+import com.simplemobiletools.smsmessenger.extensions.getProperTextColor
+import com.simplemobiletools.smsmessenger.extensions.getTextSize
+import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.SimpleActivity
 import com.simplemobiletools.smsmessenger.databinding.ItemVcardContactBinding
 import com.simplemobiletools.smsmessenger.databinding.ItemVcardContactPropertyBinding
+import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
+import com.simplemobiletools.smsmessenger.extensions.beGone
+import com.simplemobiletools.smsmessenger.extensions.onGlobalLayout
 import com.simplemobiletools.smsmessenger.models.VCardPropertyWrapper
 import com.simplemobiletools.smsmessenger.models.VCardWrapper
 
@@ -22,7 +26,9 @@ private const val TYPE_VCARD_CONTACT = 1
 private const val TYPE_VCARD_CONTACT_PROPERTY = 2
 
 class VCardViewerAdapter(
-    activity: SimpleActivity, private var items: MutableList<Any>, private val itemClick: (Any) -> Unit
+    activity: SimpleActivity,
+    private var items: MutableList<Any>,
+    private val itemClick: (Any) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var fontSize = activity.getTextSize()
@@ -44,9 +50,11 @@ class VCardViewerAdapter(
             TYPE_VCARD_CONTACT -> VCardContactViewHolder(
                 binding = ItemVcardContactBinding.inflate(layoutInflater, parent, false)
             )
+
             TYPE_VCARD_CONTACT_PROPERTY -> VCardPropertyViewHolder(
                 binding = ItemVcardContactPropertyBinding.inflate(layoutInflater, parent, false)
             )
+
             else -> throw IllegalArgumentException("Unexpected type: $viewType")
         }
     }
@@ -59,7 +67,8 @@ class VCardViewerAdapter(
         }
     }
 
-    inner class VCardContactViewHolder(val binding: ItemVcardContactBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class VCardContactViewHolder(val binding: ItemVcardContactBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bindView(item: VCardWrapper) {
             val name = item.fullName
             binding.apply {
@@ -71,12 +80,14 @@ class VCardViewerAdapter(
                 itemContactImage.apply {
                     val photo = item.vCard.photos.firstOrNull()
                     val placeholder = if (name != null) {
-                        SimpleContactsHelper(context).getContactLetterIcon(name).toDrawable(resources)
+                        SimpleContactsHelper(context).getContactLetterIcon(name)
+                            .toDrawable(resources)
                     } else {
                         null
                     }
 
-                    val roundingRadius = resources.getDimensionPixelSize(com.simplemobiletools.commons.R.dimen.big_margin)
+                    val roundingRadius =
+                        resources.getDimensionPixelSize(com.simplemobiletools.commons.R.dimen.big_margin)
                     val transformation = RoundedCorners(roundingRadius)
                     val options = RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
@@ -129,7 +140,10 @@ class VCardViewerAdapter(
             binding.expandCollapseIcon.setImageResource(R.drawable.ic_collapse_up)
         }
 
-        private fun collapseRow(properties: List<VCardPropertyWrapper>, vCardWrapper: VCardWrapper) {
+        private fun collapseRow(
+            properties: List<VCardPropertyWrapper>,
+            vCardWrapper: VCardWrapper
+        ) {
             vCardWrapper.expanded = false
             val nextPosition = items.indexOf(vCardWrapper) + 1
             repeat(properties.size) {
@@ -140,7 +154,8 @@ class VCardViewerAdapter(
         }
     }
 
-    inner class VCardPropertyViewHolder(val binding: ItemVcardContactPropertyBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class VCardPropertyViewHolder(val binding: ItemVcardContactPropertyBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bindView(item: VCardPropertyWrapper) {
             binding.apply {
                 itemVcardPropertyTitle.apply {

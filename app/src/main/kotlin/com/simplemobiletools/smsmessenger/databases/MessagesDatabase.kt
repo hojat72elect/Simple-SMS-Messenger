@@ -12,9 +12,16 @@ import com.simplemobiletools.smsmessenger.interfaces.AttachmentsDao
 import com.simplemobiletools.smsmessenger.interfaces.ConversationsDao
 import com.simplemobiletools.smsmessenger.interfaces.MessageAttachmentsDao
 import com.simplemobiletools.smsmessenger.interfaces.MessagesDao
-import com.simplemobiletools.smsmessenger.models.*
+import com.simplemobiletools.smsmessenger.models.Attachment
+import com.simplemobiletools.smsmessenger.models.Conversation
+import com.simplemobiletools.smsmessenger.models.Message
+import com.simplemobiletools.smsmessenger.models.MessageAttachment
+import com.simplemobiletools.smsmessenger.models.RecycleBinMessage
 
-@Database(entities = [Conversation::class, Attachment::class, MessageAttachment::class, Message::class, RecycleBinMessage::class], version = 8)
+@Database(
+    entities = [Conversation::class, Attachment::class, MessageAttachment::class, Message::class, RecycleBinMessage::class],
+    version = 8
+)
 @TypeConverters(Converters::class)
 abstract class MessagesDatabase : RoomDatabase() {
 
@@ -33,7 +40,11 @@ abstract class MessagesDatabase : RoomDatabase() {
             if (db == null) {
                 synchronized(MessagesDatabase::class) {
                     if (db == null) {
-                        db = Room.databaseBuilder(context.applicationContext, MessagesDatabase::class.java, "conversations.db")
+                        db = Room.databaseBuilder(
+                            context.applicationContext,
+                            MessagesDatabase::class.java,
+                            "conversations.db"
+                        )
                             .fallbackToDestructiveMigration()
                             .addMigrations(MIGRATION_1_2)
                             .addMigrations(MIGRATION_2_3)
@@ -69,7 +80,7 @@ abstract class MessagesDatabase : RoomDatabase() {
 
                     execSQL(
                         "INSERT OR IGNORE INTO conversations_new (thread_id, snippet, date, read, title, photo_uri, is_group_conversation, phone_number) " +
-                            "SELECT thread_id, snippet, date, read, title, photo_uri, is_group_conversation, phone_number FROM conversations"
+                                "SELECT thread_id, snippet, date, read, title, photo_uri, is_group_conversation, phone_number FROM conversations"
                     )
 
                     execSQL("DROP TABLE conversations")

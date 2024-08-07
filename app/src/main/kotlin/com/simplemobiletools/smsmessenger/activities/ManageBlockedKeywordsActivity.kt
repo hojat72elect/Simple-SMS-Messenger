@@ -2,22 +2,22 @@ package com.simplemobiletools.smsmessenger.activities
 
 import android.os.Bundle
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.extensions.beVisibleIf
-import com.simplemobiletools.commons.extensions.getProperPrimaryColor
-import com.simplemobiletools.commons.extensions.underlineText
-import com.simplemobiletools.commons.extensions.updateTextColors
-import com.simplemobiletools.commons.extensions.viewBinding
-import com.simplemobiletools.commons.helpers.APP_ICON_IDS
-import com.simplemobiletools.commons.helpers.APP_LAUNCHER_NAME
 import com.simplemobiletools.commons.helpers.NavigationIcon
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.ActivityManageBlockedKeywordsBinding
 import com.simplemobiletools.smsmessenger.dialogs.AddBlockedKeywordDialog
 import com.simplemobiletools.smsmessenger.dialogs.ManageBlockedKeywordsAdapter
+import com.simplemobiletools.smsmessenger.extensions.beVisibleIf
 import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.getProperPrimaryColor
 import com.simplemobiletools.smsmessenger.extensions.toArrayList
+import com.simplemobiletools.smsmessenger.extensions.underlineText
+import com.simplemobiletools.smsmessenger.extensions.updateTextColors
+import com.simplemobiletools.smsmessenger.extensions.viewBinding
+import com.simplemobiletools.smsmessenger.helpers.APP_ICON_IDS
+import com.simplemobiletools.smsmessenger.helpers.APP_LAUNCHER_NAME
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 
 class ManageBlockedKeywordsActivity : BaseSimpleActivity(), RefreshRecyclerViewListener {
     override fun getAppIconIDs() = intent.getIntegerArrayListExtra(APP_ICON_IDS) ?: ArrayList()
@@ -39,7 +39,10 @@ class ManageBlockedKeywordsActivity : BaseSimpleActivity(), RefreshRecyclerViewL
             useTransparentNavigation = true,
             useTopSearchMenu = false
         )
-        setupMaterialScrollListener(scrollingView = binding.manageBlockedKeywordsList, toolbar = binding.blockKeywordsToolbar)
+        setupMaterialScrollListener(
+            scrollingView = binding.manageBlockedKeywordsList,
+            toolbar = binding.blockKeywordsToolbar
+        )
         updateTextColors(binding.manageBlockedKeywordsWrapper)
 
         binding.manageBlockedKeywordsPlaceholder2.apply {
@@ -77,7 +80,12 @@ class ManageBlockedKeywordsActivity : BaseSimpleActivity(), RefreshRecyclerViewL
         ensureBackgroundThread {
             val blockedKeywords = config.blockedKeywords
             runOnUiThread {
-                ManageBlockedKeywordsAdapter(this, blockedKeywords.toArrayList(), this, binding.manageBlockedKeywordsList) {
+                ManageBlockedKeywordsAdapter(
+                    this,
+                    blockedKeywords.toArrayList(),
+                    this,
+                    binding.manageBlockedKeywordsList
+                ) {
                     addOrEditBlockedKeyword(it as String)
                 }.apply {
                     binding.manageBlockedKeywordsList.adapter = this

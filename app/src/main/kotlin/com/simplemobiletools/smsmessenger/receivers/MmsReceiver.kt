@@ -6,10 +6,11 @@ import android.os.Handler
 import android.os.Looper
 import com.bumptech.glide.Glide
 import com.klinker.android.send_message.MmsReceivedReceiver
-import com.simplemobiletools.commons.extensions.isNumberBlocked
-import com.simplemobiletools.commons.extensions.normalizePhoneNumber
-import com.simplemobiletools.commons.extensions.showErrorToast
-import com.simplemobiletools.commons.helpers.ensureBackgroundThread
+import com.simplemobiletools.smsmessenger.extensions.showErrorToast
+import com.simplemobiletools.smsmessenger.extensions.isNumberBlocked
+import com.simplemobiletools.smsmessenger.extensions.normalizePhoneNumber
+import com.simplemobiletools.smsmessenger.extensions.showErrorToast
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.extensions.conversationsDB
 import com.simplemobiletools.smsmessenger.extensions.getConversations
@@ -45,8 +46,15 @@ class MmsReceiver : MmsReceivedReceiver() {
             }
 
             Handler(Looper.getMainLooper()).post {
-                context.showReceivedMessageNotification(mms.id, address, mms.body, mms.threadId, glideBitmap)
-                val conversation = context.getConversations(mms.threadId).firstOrNull() ?: return@post
+                context.showReceivedMessageNotification(
+                    mms.id,
+                    address,
+                    mms.body,
+                    mms.threadId,
+                    glideBitmap
+                )
+                val conversation =
+                    context.getConversations(mms.threadId).firstOrNull() ?: return@post
                 ensureBackgroundThread {
                     context.insertOrUpdateConversation(conversation)
                     context.updateUnreadCountBadge(context.conversationsDB.getUnreadConversations())
@@ -56,5 +64,6 @@ class MmsReceiver : MmsReceivedReceiver() {
         }
     }
 
-    override fun onError(context: Context, error: String) = context.showErrorToast(context.getString(R.string.couldnt_download_mms))
+    override fun onError(context: Context, error: String) =
+        context.showErrorToast(context.getString(R.string.couldnt_download_mms))
 }

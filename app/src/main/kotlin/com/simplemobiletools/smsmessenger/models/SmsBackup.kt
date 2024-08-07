@@ -33,7 +33,7 @@ data class SmsBackup(
     val serviceCenter: String?,
 
     override val backupType: BackupType = BackupType.SMS,
-    ): MessagesBackup() {
+) : MessagesBackup() {
 
     fun toContentValues(): ContentValues {
         return contentValuesOf(

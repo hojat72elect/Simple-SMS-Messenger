@@ -4,7 +4,7 @@ import android.provider.Telephony
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.simplemobiletools.commons.models.SimpleContact
+import com.simplemobiletools.smsmessenger.models.SimpleContact
 
 @Entity(tableName = "messages")
 data class Message(
@@ -56,14 +56,14 @@ data class Message(
 
         fun areContentsTheSame(old: Message, new: Message): Boolean {
             return old.body == new.body &&
-                old.threadId == new.threadId &&
-                old.date == new.date &&
-                old.isMMS == new.isMMS &&
-                old.attachment == new.attachment &&
-                old.senderPhoneNumber == new.senderPhoneNumber &&
-                old.senderName == new.senderName &&
-                old.senderPhotoUri == new.senderPhotoUri &&
-                old.isScheduled == new.isScheduled
+                    old.threadId == new.threadId &&
+                    old.date == new.date &&
+                    old.isMMS == new.isMMS &&
+                    old.attachment == new.attachment &&
+                    old.senderPhoneNumber == new.senderPhoneNumber &&
+                    old.senderName == new.senderName &&
+                    old.senderPhotoUri == new.senderPhotoUri &&
+                    old.isScheduled == new.isScheduled
         }
     }
 }

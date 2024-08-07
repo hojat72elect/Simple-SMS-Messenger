@@ -4,14 +4,17 @@ import android.annotation.SuppressLint
 import android.telephony.SubscriptionInfo
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
 import com.simplemobiletools.commons.dialogs.BasePropertiesDialog
-import com.simplemobiletools.commons.extensions.*
+import com.simplemobiletools.smsmessenger.extensions.getTimeFormat
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.extensions.config
+import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
+import com.simplemobiletools.smsmessenger.extensions.setupDialogStuff
 import com.simplemobiletools.smsmessenger.extensions.subscriptionManagerCompat
 import com.simplemobiletools.smsmessenger.models.Message
 import org.joda.time.DateTime
 
-class MessageDetailsDialog(val activity: BaseSimpleActivity, val message: Message) : BasePropertiesDialog(activity) {
+class MessageDetailsDialog(val activity: BaseSimpleActivity, val message: Message) :
+    BasePropertiesDialog(activity) {
     init {
         @SuppressLint("MissingPermission")
         val availableSIMs = activity.subscriptionManagerCompat().activeSubscriptionInfoList
