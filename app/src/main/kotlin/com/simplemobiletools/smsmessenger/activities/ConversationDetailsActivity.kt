@@ -1,8 +1,10 @@
 package com.simplemobiletools.smsmessenger.activities
 
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
-import com.simplemobiletools.commons.helpers.NavigationIcon
+import com.simplemobiletools.smsmessenger.helpers.NavigationIcon
 import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.models.SimpleContact
 import com.simplemobiletools.smsmessenger.adapters.ContactsAdapter
@@ -22,6 +24,7 @@ import com.simplemobiletools.smsmessenger.extensions.viewBinding
 import com.simplemobiletools.smsmessenger.helpers.THREAD_ID
 import com.simplemobiletools.smsmessenger.models.Conversation
 
+@RequiresApi(Build.VERSION_CODES.O)
 class ConversationDetailsActivity : SimpleActivity() {
 
     private var threadId: Long = 0L
@@ -61,6 +64,7 @@ class ConversationDetailsActivity : SimpleActivity() {
             }
         }
     }
+
 
     override fun onResume() {
         super.onResume()

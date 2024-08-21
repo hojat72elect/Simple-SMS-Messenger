@@ -8,7 +8,7 @@ import android.text.format.DateFormat
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.ScheduleMessageDialogBinding
 import com.simplemobiletools.smsmessenger.extensions.applyColorFilter

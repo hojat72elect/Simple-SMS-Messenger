@@ -7,6 +7,7 @@ import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.util.Size
 import android.util.TypedValue
 import android.view.Menu
@@ -14,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import androidx.annotation.RequiresApi
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.updateLayoutParams
@@ -28,10 +30,6 @@ import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
-import com.simplemobiletools.commons.adapters.MyRecyclerViewListAdapter
-import com.simplemobiletools.commons.dialogs.ConfirmationDialog
-import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
-import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.NewConversationActivity
@@ -47,6 +45,7 @@ import com.simplemobiletools.smsmessenger.databinding.ItemThreadErrorBinding
 import com.simplemobiletools.smsmessenger.databinding.ItemThreadLoadingBinding
 import com.simplemobiletools.smsmessenger.databinding.ItemThreadSendingBinding
 import com.simplemobiletools.smsmessenger.databinding.ItemThreadSuccessBinding
+import com.simplemobiletools.smsmessenger.dialogs.ConfirmationDialog
 import com.simplemobiletools.smsmessenger.dialogs.DeleteConfirmationDialog
 import com.simplemobiletools.smsmessenger.dialogs.MessageDetailsDialog
 import com.simplemobiletools.smsmessenger.dialogs.SelectTextDialog
@@ -71,6 +70,7 @@ import com.simplemobiletools.smsmessenger.extensions.startContactDetailsIntent
 import com.simplemobiletools.smsmessenger.extensions.subscriptionManagerCompat
 import com.simplemobiletools.smsmessenger.extensions.usableScreenSize
 import com.simplemobiletools.smsmessenger.helpers.EXTRA_VCARD_URI
+import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
 import com.simplemobiletools.smsmessenger.helpers.THREAD_DATE_TIME
 import com.simplemobiletools.smsmessenger.helpers.THREAD_LOADING
 import com.simplemobiletools.smsmessenger.helpers.THREAD_RECEIVED_MESSAGE
@@ -78,6 +78,7 @@ import com.simplemobiletools.smsmessenger.helpers.THREAD_SENT_MESSAGE
 import com.simplemobiletools.smsmessenger.helpers.THREAD_SENT_MESSAGE_ERROR
 import com.simplemobiletools.smsmessenger.helpers.THREAD_SENT_MESSAGE_SENDING
 import com.simplemobiletools.smsmessenger.helpers.THREAD_SENT_MESSAGE_SENT
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.helpers.setupDocumentPreview
 import com.simplemobiletools.smsmessenger.helpers.setupVCardPreview
 import com.simplemobiletools.smsmessenger.models.Attachment
@@ -89,6 +90,7 @@ import com.simplemobiletools.smsmessenger.models.ThreadItem.ThreadLoading
 import com.simplemobiletools.smsmessenger.models.ThreadItem.ThreadSending
 import com.simplemobiletools.smsmessenger.models.ThreadItem.ThreadSent
 
+@RequiresApi(Build.VERSION_CODES.O)
 class ThreadAdapter(
     activity: SimpleActivity,
     recyclerView: MyRecyclerView,

@@ -24,10 +24,6 @@ import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.SparseArray
 import com.simplemobiletools.commons.R
-import com.simplemobiletools.smsmessenger.extensions.getVisibleContactSources
-import com.simplemobiletools.smsmessenger.extensions.groupsDB
-import com.simplemobiletools.smsmessenger.extensions.hasContactPermissions
-import com.simplemobiletools.smsmessenger.helpers.LocalContactsHelper
 import com.simplemobiletools.commons.models.PhoneNumber
 import com.simplemobiletools.commons.models.contacts.Address
 import com.simplemobiletools.commons.models.contacts.Contact
@@ -47,6 +43,9 @@ import com.simplemobiletools.smsmessenger.extensions.getPhotoThumbnailSize
 import com.simplemobiletools.smsmessenger.extensions.getPrivateContactSource
 import com.simplemobiletools.smsmessenger.extensions.getStringValue
 import com.simplemobiletools.smsmessenger.extensions.getStringValueOrNull
+import com.simplemobiletools.smsmessenger.extensions.getVisibleContactSources
+import com.simplemobiletools.smsmessenger.extensions.groupsDB
+import com.simplemobiletools.smsmessenger.extensions.hasContactPermissions
 import com.simplemobiletools.smsmessenger.extensions.hasPermission
 import com.simplemobiletools.smsmessenger.extensions.normalizePhoneNumber
 import com.simplemobiletools.smsmessenger.extensions.queryCursor

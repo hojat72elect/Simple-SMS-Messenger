@@ -1,7 +1,7 @@
 package com.simplemobiletools.smsmessenger.dialogs
 
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.extensions.value
 import com.simplemobiletools.smsmessenger.databinding.DialogAddBlockedKeywordBinding
 import com.simplemobiletools.smsmessenger.extensions.config

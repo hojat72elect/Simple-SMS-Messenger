@@ -7,9 +7,9 @@ import android.view.WindowManager
 import android.widget.Toast
 import com.google.gson.Gson
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
-import com.simplemobiletools.commons.dialogs.RadioGroupDialog
+import com.simplemobiletools.smsmessenger.dialogs.RadioGroupDialog
 import com.simplemobiletools.smsmessenger.helpers.MyContactsContentProvider
-import com.simplemobiletools.commons.helpers.NavigationIcon
+import com.simplemobiletools.smsmessenger.helpers.NavigationIcon
 import com.simplemobiletools.smsmessenger.helpers.PERMISSION_READ_CONTACTS
 import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
 import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread

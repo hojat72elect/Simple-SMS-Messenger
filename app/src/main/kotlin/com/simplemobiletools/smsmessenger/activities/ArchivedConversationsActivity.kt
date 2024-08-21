@@ -3,8 +3,8 @@ package com.simplemobiletools.smsmessenger.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import com.simplemobiletools.commons.dialogs.ConfirmationDialog
-import com.simplemobiletools.commons.helpers.NavigationIcon
+import com.simplemobiletools.smsmessenger.dialogs.ConfirmationDialog
+import com.simplemobiletools.smsmessenger.helpers.NavigationIcon
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.adapters.ArchivedConversationsAdapter
 import com.simplemobiletools.smsmessenger.databinding.ActivityArchivedConversationsBinding

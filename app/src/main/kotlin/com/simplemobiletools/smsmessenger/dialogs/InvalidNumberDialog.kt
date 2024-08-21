@@ -1,6 +1,6 @@
 package com.simplemobiletools.smsmessenger.dialogs
 
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
 import com.simplemobiletools.smsmessenger.extensions.setupDialogStuff
 import com.simplemobiletools.smsmessenger.databinding.DialogInvalidNumberBinding

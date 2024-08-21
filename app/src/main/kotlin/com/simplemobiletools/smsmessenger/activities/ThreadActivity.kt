@@ -47,15 +47,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.simplemobiletools.commons.dialogs.ConfirmationDialog
-import com.simplemobiletools.commons.dialogs.FeatureLockedDialog
-import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
-import com.simplemobiletools.commons.dialogs.RadioGroupDialog
-import com.simplemobiletools.smsmessenger.helpers.ExportResult
-import com.simplemobiletools.commons.helpers.NavigationIcon
+import com.simplemobiletools.smsmessenger.dialogs.FeatureLockedDialog
+import com.simplemobiletools.smsmessenger.helpers.NavigationIcon
 import com.simplemobiletools.commons.models.PhoneNumber
 import com.simplemobiletools.commons.models.RadioItem
-import com.simplemobiletools.smsmessenger.models.SimpleContact
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.BuildConfig
 import com.simplemobiletools.smsmessenger.R
@@ -64,7 +59,10 @@ import com.simplemobiletools.smsmessenger.adapters.AutoCompleteTextViewAdapter
 import com.simplemobiletools.smsmessenger.adapters.ThreadAdapter
 import com.simplemobiletools.smsmessenger.databinding.ActivityThreadBinding
 import com.simplemobiletools.smsmessenger.databinding.ItemSelectedContactBinding
+import com.simplemobiletools.smsmessenger.dialogs.ConfirmationDialog
 import com.simplemobiletools.smsmessenger.dialogs.InvalidNumberDialog
+import com.simplemobiletools.smsmessenger.dialogs.PermissionRequiredDialog
+import com.simplemobiletools.smsmessenger.dialogs.RadioGroupDialog
 import com.simplemobiletools.smsmessenger.dialogs.RenameConversationDialog
 import com.simplemobiletools.smsmessenger.dialogs.ScheduleMessageDialog
 import com.simplemobiletools.smsmessenger.extensions.addBlockedNumber
@@ -143,6 +141,7 @@ import com.simplemobiletools.smsmessenger.helpers.CAPTURE_AUDIO_INTENT
 import com.simplemobiletools.smsmessenger.helpers.CAPTURE_PHOTO_INTENT
 import com.simplemobiletools.smsmessenger.helpers.CAPTURE_VIDEO_INTENT
 import com.simplemobiletools.smsmessenger.helpers.ContactsHelper
+import com.simplemobiletools.smsmessenger.helpers.ExportResult
 import com.simplemobiletools.smsmessenger.helpers.FILE_SIZE_NONE
 import com.simplemobiletools.smsmessenger.helpers.IS_RECYCLE_BIN
 import com.simplemobiletools.smsmessenger.helpers.KEY_PHONE
@@ -182,6 +181,7 @@ import com.simplemobiletools.smsmessenger.models.Events
 import com.simplemobiletools.smsmessenger.models.Message
 import com.simplemobiletools.smsmessenger.models.MessageAttachment
 import com.simplemobiletools.smsmessenger.models.SIMCard
+import com.simplemobiletools.smsmessenger.models.SimpleContact
 import com.simplemobiletools.smsmessenger.models.ThreadItem
 import com.simplemobiletools.smsmessenger.models.ThreadItem.ThreadDateTime
 import com.simplemobiletools.smsmessenger.models.ThreadItem.ThreadError

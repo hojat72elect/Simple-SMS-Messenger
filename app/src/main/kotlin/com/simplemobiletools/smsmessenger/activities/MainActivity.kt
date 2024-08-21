@@ -12,7 +12,7 @@ import android.os.Bundle
 import android.provider.Telephony
 import android.text.TextUtils
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
+import com.simplemobiletools.smsmessenger.dialogs.PermissionRequiredDialog
 import com.simplemobiletools.smsmessenger.helpers.LICENSE_EVENT_BUS
 import com.simplemobiletools.smsmessenger.helpers.LICENSE_INDICATOR_FAST_SCROLL
 import com.simplemobiletools.smsmessenger.helpers.LICENSE_SMS_MMS

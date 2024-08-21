@@ -1,13 +1,18 @@
 package com.simplemobiletools.smsmessenger.helpers
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Looper
 import android.provider.ContactsContract
 import android.util.Log
 import androidx.annotation.ChecksSdkIntAtLeast
+import androidx.annotation.StringRes
 import com.simplemobiletools.smsmessenger.extensions.normalizeString
 import com.simplemobiletools.commons.models.contacts.LocalContact
 import com.simplemobiletools.commons.overloads.times
+import com.simplemobiletools.smsmessenger.R
+import com.simplemobiletools.commons.R as commonsR
 import com.simplemobiletools.smsmessenger.models.Events
 import kotlin.math.abs
 import kotlin.random.Random
@@ -52,6 +57,13 @@ const val USE_RECYCLE_BIN = "use_recycle_bin"
 const val LAST_RECYCLE_BIN_CHECK = "last_recycle_bin_check"
 const val IS_RECYCLE_BIN = "is_recycle_bin"
 const val IS_ARCHIVE_AVAILABLE = "is_archive_available"
+
+// possible icons at the top left corner
+enum class NavigationIcon(@StringRes val accessibilityResId: Int) {
+    Cross(R.string.close),
+    Arrow(R.string.back),
+    None(0)
+}
 
 private const val PATH = "com.simplemobiletools.smsmessenger.action."
 const val MARK_AS_READ = PATH + "mark_as_read"
@@ -707,3 +719,55 @@ fun getEmptyLocalContact() = LocalContact(
 )
 
 fun getProperText(text: String, shouldNormalize: Boolean) = if (shouldNormalize) text.normalizeString() else text
+
+fun getFilePlaceholderDrawables(context: Context): HashMap<String, Drawable> {
+    val fileDrawables = HashMap<String, Drawable>()
+    hashMapOf<String, Int>().apply {
+        put("aep", commonsR.drawable.ic_file_aep)
+        put("ai",  commonsR.drawable.ic_file_ai)
+        put("avi", commonsR.drawable.ic_file_avi)
+        put("css", commonsR.drawable.ic_file_css)
+        put("csv", commonsR.drawable.ic_file_csv)
+        put("dbf", commonsR.drawable.ic_file_dbf)
+        put("doc", commonsR.drawable.ic_file_doc)
+        put("docx",commonsR.drawable.ic_file_doc)
+        put("dwg", commonsR.drawable.ic_file_dwg)
+        put("exe", commonsR.drawable.ic_file_exe)
+        put("fla", commonsR.drawable.ic_file_fla)
+        put("flv", commonsR.drawable.ic_file_flv)
+        put("htm", commonsR.drawable.ic_file_html)
+        put("html",commonsR.drawable.ic_file_html)
+        put("ics", commonsR.drawable.ic_file_ics)
+        put("indd",commonsR.drawable.ic_file_indd)
+        put("iso", commonsR.drawable.ic_file_iso)
+        put("jpg", commonsR.drawable.ic_file_jpg)
+        put("jpeg",commonsR.drawable.ic_file_jpg)
+        put("js",  commonsR.drawable.ic_file_js)
+        put("json",commonsR.drawable.ic_file_json)
+        put("m4a", commonsR.drawable.ic_file_m4a)
+        put("mp3", commonsR.drawable.ic_file_mp3)
+        put("mp4", commonsR.drawable.ic_file_mp4)
+        put("ogg", commonsR.drawable.ic_file_ogg)
+        put("pdf", commonsR.drawable.ic_file_pdf)
+        put("plproj", commonsR.drawable.ic_file_plproj)
+        put("ppt",    commonsR.drawable.ic_file_ppt)
+        put("pptx",   commonsR.drawable.ic_file_ppt)
+        put("prproj", commonsR.drawable.ic_file_prproj)
+        put("psd",    commonsR.drawable.ic_file_psd)
+        put("rtf",    commonsR.drawable.ic_file_rtf)
+        put("sesx",   commonsR.drawable.ic_file_sesx)
+        put("sql", commonsR.drawable.ic_file_sql)
+        put("svg", commonsR.drawable.ic_file_svg)
+        put("txt", commonsR.drawable.ic_file_txt)
+        put("vcf", commonsR.drawable.ic_file_vcf)
+        put("wav", commonsR.drawable.ic_file_wav)
+        put("wmv", commonsR.drawable.ic_file_wmv)
+        put("xls", commonsR.drawable.ic_file_xls)
+        put("xlsx", commonsR.drawable.ic_file_xls)
+        put("xml",  commonsR.drawable.ic_file_xml)
+        put("zip",  commonsR.drawable.ic_file_zip)
+    }.forEach { (key, value) ->
+        fileDrawables[key] = context.resources.getDrawable(value)
+    }
+    return fileDrawables
+}

@@ -3,8 +3,8 @@ package com.simplemobiletools.smsmessenger.adapters
 import android.content.Intent
 import android.text.TextUtils
 import android.view.Menu
-import com.simplemobiletools.commons.dialogs.ConfirmationDialog
-import com.simplemobiletools.commons.dialogs.FeatureLockedDialog
+import com.simplemobiletools.smsmessenger.dialogs.ConfirmationDialog
+import com.simplemobiletools.smsmessenger.dialogs.FeatureLockedDialog
 import com.simplemobiletools.smsmessenger.helpers.KEY_PHONE
 import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.helpers.isNougatPlus

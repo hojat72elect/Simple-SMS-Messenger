@@ -1,11 +1,11 @@
 package com.simplemobiletools.smsmessenger.models
 
 import android.telephony.PhoneNumberUtils
-import com.simplemobiletools.commons.extensions.normalizePhoneNumber
-import com.simplemobiletools.commons.extensions.normalizeString
-import com.simplemobiletools.commons.helpers.SORT_BY_FULL_NAME
-import com.simplemobiletools.commons.helpers.SORT_DESCENDING
 import com.simplemobiletools.commons.models.PhoneNumber
+import com.simplemobiletools.smsmessenger.extensions.normalizePhoneNumber
+import com.simplemobiletools.smsmessenger.extensions.normalizeString
+import com.simplemobiletools.smsmessenger.helpers.SORT_BY_FULL_NAME
+import com.simplemobiletools.smsmessenger.helpers.SORT_DESCENDING
 
 data class SimpleContact(
     val rawId: Int,

@@ -1,17 +1,16 @@
 package com.simplemobiletools.smsmessenger.adapters
 
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Parcelable
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
-import com.simplemobiletools.commons.adapters.MyRecyclerViewListAdapter
-import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
-import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.activities.SimpleActivity
 import com.simplemobiletools.smsmessenger.databinding.ItemConversationBinding
@@ -22,8 +21,11 @@ import com.simplemobiletools.smsmessenger.extensions.formatDateOrTime
 import com.simplemobiletools.smsmessenger.extensions.getAllDrafts
 import com.simplemobiletools.smsmessenger.extensions.getTextSize
 import com.simplemobiletools.smsmessenger.extensions.setupViewBackground
+import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.models.Conversation
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Suppress("LeakingThis")
 abstract class BaseConversationsAdapter(
     activity: SimpleActivity,

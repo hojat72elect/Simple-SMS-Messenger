@@ -1,8 +1,8 @@
 package com.simplemobiletools.smsmessenger.activities
 
 import android.os.Bundle
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.helpers.NavigationIcon
+import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
+import com.simplemobiletools.smsmessenger.helpers.NavigationIcon
 import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.ActivityManageBlockedKeywordsBinding

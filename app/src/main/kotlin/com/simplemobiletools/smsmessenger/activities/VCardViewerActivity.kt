@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.simplemobiletools.smsmessenger.extensions.normalizePhoneNumber
 import com.simplemobiletools.smsmessenger.extensions.sendEmailIntent
 import com.simplemobiletools.smsmessenger.extensions.viewBinding
-import com.simplemobiletools.commons.helpers.NavigationIcon
+import com.simplemobiletools.smsmessenger.helpers.NavigationIcon
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.adapters.VCardViewerAdapter
 import com.simplemobiletools.smsmessenger.databinding.ActivityVcardViewerBinding

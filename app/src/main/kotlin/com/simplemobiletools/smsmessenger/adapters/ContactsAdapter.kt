@@ -1,19 +1,21 @@
 package com.simplemobiletools.smsmessenger.adapters
 
+import android.os.Build
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
-import com.simplemobiletools.commons.adapters.MyRecyclerViewAdapter
 import com.simplemobiletools.commons.databinding.ItemContactWithNumberBinding
+import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.smsmessenger.activities.SimpleActivity
 import com.simplemobiletools.smsmessenger.extensions.getTextSize
 import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
 import com.simplemobiletools.smsmessenger.models.SimpleContact
-import com.simplemobiletools.commons.views.MyRecyclerView
-import com.simplemobiletools.smsmessenger.activities.SimpleActivity
 
+@RequiresApi(Build.VERSION_CODES.O)
 class ContactsAdapter(
     activity: SimpleActivity,
     var contacts: ArrayList<SimpleContact>,

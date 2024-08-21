@@ -1,6 +1,6 @@
 package com.simplemobiletools.smsmessenger.activities
 
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.R
 
 open class SimpleActivity : BaseSimpleActivity() {

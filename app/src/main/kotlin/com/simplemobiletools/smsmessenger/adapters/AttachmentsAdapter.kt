@@ -18,7 +18,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.VCardViewerActivity
 import com.simplemobiletools.smsmessenger.databinding.ItemAttachmentDocumentPreviewBinding

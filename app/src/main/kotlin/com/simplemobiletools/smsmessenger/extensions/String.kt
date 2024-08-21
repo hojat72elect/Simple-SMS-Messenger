@@ -4,11 +4,14 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Point
+import android.os.Build
 import android.os.StatFs
 import android.provider.MediaStore
 import android.telephony.PhoneNumberUtils
+import android.text.Html
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.Spanned
 import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.widget.TextView
@@ -1038,3 +1041,9 @@ fun String.getMimeType(): String {
 fun String.isBlockedNumberPattern() = contains("*")
 
 
+fun String?.fromHtml(): Spanned =
+    when {
+        this == null -> SpannableString("")
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
+        else -> Html.fromHtml(this)
+    }

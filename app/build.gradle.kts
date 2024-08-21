@@ -48,6 +48,11 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 
     buildTypes {
@@ -87,6 +92,10 @@ android {
         kotlinOptions.jvmTarget = project.libs.versions.app.build.kotlinJVMTarget.get()
         kotlinOptions.freeCompilerArgs = listOf(
             "-opt-in=kotlin.RequiresOptIn",
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+            "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
+            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+            "-opt-in=com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi",
             "-Xcontext-receivers"
         )
     }
@@ -100,6 +109,10 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.glide.compose)
+    api(libs.glide)
+    ksp(libs.glide.compiler)
     implementation(libs.simple.mobile.tools.commons)
     implementation(libs.eventbus)
     implementation(libs.indicator.fast.scroll)
@@ -111,5 +124,12 @@ dependencies {
     implementation(libs.ez.vcard)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.bundles.room)
+    implementation(libs.bundles.lifecycle)
     ksp(libs.androidx.room.compiler)
+
+    implementation(libs.androidx.biometric.ktx)
+
+    implementation(libs.bundles.compose)
+    implementation(libs.compose.view.binding)
+    debugImplementation(libs.bundles.compose.preview)
 }
