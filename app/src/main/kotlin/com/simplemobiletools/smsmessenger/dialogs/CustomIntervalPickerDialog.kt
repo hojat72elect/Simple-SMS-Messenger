@@ -36,13 +36,13 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.simplemobiletools.commons.R
-import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
-import com.simplemobiletools.commons.databinding.DialogCustomIntervalPickerBinding
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.smsmessenger.compose.components.RadioGroupDialogComponent
 import com.simplemobiletools.smsmessenger.compose.extensions.MyDevices
+import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
 import com.simplemobiletools.smsmessenger.compose.theme.SimpleTheme
+import com.simplemobiletools.smsmessenger.databinding.DialogCustomIntervalPickerBinding
 import com.simplemobiletools.smsmessenger.extensions.beVisibleIf
 import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
 import com.simplemobiletools.smsmessenger.extensions.hideKeyboard

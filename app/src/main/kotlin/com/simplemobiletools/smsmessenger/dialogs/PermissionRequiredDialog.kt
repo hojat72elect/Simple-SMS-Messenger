@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
-import com.simplemobiletools.commons.databinding.DialogMessageBinding
+import com.simplemobiletools.smsmessenger.databinding.DialogMessageBinding
 import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
 import com.simplemobiletools.smsmessenger.extensions.setupDialogStuff
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.AlertDialogState

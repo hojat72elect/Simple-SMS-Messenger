@@ -27,7 +27,7 @@ import com.simplemobiletools.smsmessenger.compose.alert_dialog.rememberAlertDial
 import com.simplemobiletools.commons.compose.extensions.getActivity
 import com.simplemobiletools.commons.compose.extensions.rememberMutableInteractionSource
 import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
-import com.simplemobiletools.commons.databinding.DialogDonateBinding
+import com.simplemobiletools.smsmessenger.databinding.DialogDonateBinding
 import com.simplemobiletools.smsmessenger.compose.components.LinkifyTextComponent
 import com.simplemobiletools.smsmessenger.compose.extensions.MyDevices
 import com.simplemobiletools.smsmessenger.compose.theme.SimpleTheme

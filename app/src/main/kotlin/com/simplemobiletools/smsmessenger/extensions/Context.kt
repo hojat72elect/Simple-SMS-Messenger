@@ -87,16 +87,7 @@ import com.simplemobiletools.commons.models.PhoneNumber
 import com.simplemobiletools.commons.models.contacts.Contact
 import com.simplemobiletools.commons.models.contacts.ContactSource
 import com.simplemobiletools.commons.models.contacts.Organization
-import com.simplemobiletools.commons.views.MyAppCompatCheckbox
-import com.simplemobiletools.commons.views.MyAppCompatSpinner
-import com.simplemobiletools.commons.views.MyAutoCompleteTextView
-import com.simplemobiletools.commons.views.MyButton
 import com.simplemobiletools.commons.views.MyCompatRadioButton
-import com.simplemobiletools.commons.views.MyEditText
-import com.simplemobiletools.commons.views.MyFloatingActionButton
-import com.simplemobiletools.commons.views.MySeekBar
-import com.simplemobiletools.commons.views.MyTextInputLayout
-import com.simplemobiletools.commons.views.MyTextView
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databases.MessagesDatabase
 import com.simplemobiletools.smsmessenger.helpers.AttachmentUtils.parseAttachmentNames
@@ -105,6 +96,7 @@ import com.simplemobiletools.smsmessenger.helpers.Config
 import com.simplemobiletools.smsmessenger.helpers.ContactsHelper
 import com.simplemobiletools.smsmessenger.helpers.DARK_GREY
 import com.simplemobiletools.smsmessenger.helpers.DAY_SECONDS
+import com.simplemobiletools.smsmessenger.helpers.DEFAULT_FILE_NAME
 import com.simplemobiletools.smsmessenger.helpers.DEFAULT_MIMETYPE
 import com.simplemobiletools.smsmessenger.helpers.EXTERNAL_STORAGE_PROVIDER_AUTHORITY
 import com.simplemobiletools.smsmessenger.helpers.ExternalStorageProviderHack
@@ -179,6 +171,15 @@ import com.simplemobiletools.smsmessenger.models.NamePhoto
 import com.simplemobiletools.smsmessenger.models.RecycleBinMessage
 import com.simplemobiletools.smsmessenger.models.SharedTheme
 import com.simplemobiletools.smsmessenger.models.SimpleContact
+import com.simplemobiletools.smsmessenger.views.MyAppCompatCheckbox
+import com.simplemobiletools.smsmessenger.views.MyAppCompatSpinner
+import com.simplemobiletools.smsmessenger.views.MyAutoCompleteTextView
+import com.simplemobiletools.smsmessenger.views.MyButton
+import com.simplemobiletools.smsmessenger.views.MyEditText
+import com.simplemobiletools.smsmessenger.views.MyFloatingActionButton
+import com.simplemobiletools.smsmessenger.views.MySeekBar
+import com.simplemobiletools.smsmessenger.views.MyTextInputLayout
+import com.simplemobiletools.smsmessenger.views.MyTextView
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
@@ -4131,4 +4132,28 @@ fun Context.isAStorageRootFolder(path: String): Boolean {
         sdCardPath,
         true
     ) || trimmed.equals(otgPath, true)
+}
+
+fun Context.getTempFile(folderName: String, filename: String): File? {
+    val folder = File(cacheDir, folderName)
+    if (!folder.exists()) {
+        if (!folder.mkdir()) {
+            toast(commonsR.string.unknown_error_occurred)
+            return null
+        }
+    }
+
+    return File(folder, filename)
+}
+
+fun Context.getTempFile(filename: String = DEFAULT_FILE_NAME): File? {
+    val folder = File(cacheDir, "contacts")
+    if (!folder.exists()) {
+        if (!folder.mkdir()) {
+            toast(commonsR.string.unknown_error_occurred)
+            return null
+        }
+    }
+
+    return File(folder, filename)
 }

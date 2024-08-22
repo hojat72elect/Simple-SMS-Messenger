@@ -43,8 +43,8 @@ import com.simplemobiletools.commons.compose.alert_dialog.rememberAlertDialogSta
 import com.simplemobiletools.commons.compose.extensions.MyDevices
 import com.simplemobiletools.commons.compose.extensions.andThen
 import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
-import com.simplemobiletools.commons.databinding.DialogWritePermissionBinding
-import com.simplemobiletools.commons.databinding.DialogWritePermissionOtgBinding
+import com.simplemobiletools.smsmessenger.databinding.DialogWritePermissionBinding
+import com.simplemobiletools.smsmessenger.databinding.DialogWritePermissionOtgBinding
 import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
 import com.simplemobiletools.smsmessenger.extensions.setupDialogStuff
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity

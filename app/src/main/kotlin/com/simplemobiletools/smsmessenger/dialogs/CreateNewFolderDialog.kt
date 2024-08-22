@@ -1,5 +1,6 @@
 package com.simplemobiletools.smsmessenger.dialogs
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.view.View
 import androidx.annotation.RequiresApi
@@ -30,10 +31,10 @@ import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.commons.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.commons.compose.extensions.MyDevices
-import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
-import com.simplemobiletools.commons.databinding.DialogCreateNewFolderBinding
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
+import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
 import com.simplemobiletools.smsmessenger.compose.theme.SimpleTheme
+import com.simplemobiletools.smsmessenger.databinding.DialogCreateNewFolderBinding
 import com.simplemobiletools.smsmessenger.extensions.createAndroidSAFDirectory
 import com.simplemobiletools.smsmessenger.extensions.createSAFDirectorySdk30
 import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
@@ -54,6 +55,7 @@ import com.simplemobiletools.smsmessenger.extensions.value
 import com.simplemobiletools.smsmessenger.helpers.isRPlus
 import java.io.File
 
+@SuppressLint("SetTextI18n")
 @RequiresApi(Build.VERSION_CODES.O)
 class CreateNewFolderDialog(
     val activity: BaseSimpleActivity,

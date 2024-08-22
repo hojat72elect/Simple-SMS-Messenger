@@ -45,7 +45,7 @@
                     app:showDelay="250"
                     tools:visibility="visible" />
 
-                <com.simplemobiletools.commons.views.MyTextView
+                <com.simplemobiletools.smsmessenger.views.MyTextView
                     android:id="@+id/no_conversations_placeholder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
                         android:layoutAnimation="@anim/layout_animation"
                         android:overScrollMode="ifContentScrolls"
                         android:scrollbars="none"
-                        app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+                        app:layoutManager="com.simplemobiletools.smsmessenger.views.MyLinearLayoutManager" />
 
                 </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
             </RelativeLayout>

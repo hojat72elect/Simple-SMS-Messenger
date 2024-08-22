@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import com.simplemobiletools.commons.activities.ManageBlockedNumbersActivity
 import com.simplemobiletools.smsmessenger.helpers.NavigationIcon
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.smsmessenger.R

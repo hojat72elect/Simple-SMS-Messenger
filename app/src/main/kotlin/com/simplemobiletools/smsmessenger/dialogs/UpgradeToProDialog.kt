@@ -22,7 +22,7 @@ import com.simplemobiletools.smsmessenger.compose.alert_dialog.rememberAlertDial
 import com.simplemobiletools.smsmessenger.compose.extensions.MyDevices
 import com.simplemobiletools.smsmessenger.compose.extensions.andThen
 import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
-import com.simplemobiletools.commons.databinding.DialogUpgradeToProBinding
+import com.simplemobiletools.smsmessenger.databinding.DialogUpgradeToProBinding
 import com.simplemobiletools.smsmessenger.compose.theme.SimpleTheme
 import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
 import com.simplemobiletools.smsmessenger.extensions.launchUpgradeToProIntent

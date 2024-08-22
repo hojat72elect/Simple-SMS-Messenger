@@ -40,14 +40,14 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.activities.AboutActivity
-import com.simplemobiletools.commons.activities.CustomizationActivity
+import com.simplemobiletools.smsmessenger.activities.AboutActivity
+import com.simplemobiletools.smsmessenger.activities.CustomizationActivity
 import com.simplemobiletools.commons.compose.extensions.DEVELOPER_PLAY_STORE_URL
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.FeatureLockedDialog
 import com.simplemobiletools.commons.dialogs.FileConflictDialog
 import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
-import com.simplemobiletools.commons.interfaces.CopyMoveListener
+import com.simplemobiletools.smsmessenger.interfaces.CopyMoveListener
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.smsmessenger.asynctasks.CopyMoveTask

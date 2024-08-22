@@ -11,10 +11,10 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.documentfile.provider.DocumentFile
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.databinding.DialogFilepickerBinding
+import com.simplemobiletools.smsmessenger.databinding.DialogFilepickerBinding
 import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.models.FileDirItem
-import com.simplemobiletools.commons.views.Breadcrumbs
+import com.simplemobiletools.smsmessenger.views.Breadcrumbs
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.adapters.FilepickerFavoritesAdapter
 import com.simplemobiletools.smsmessenger.adapters.FilepickerItemsAdapter

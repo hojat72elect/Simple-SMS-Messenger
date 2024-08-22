@@ -1,12 +1,13 @@
 package com.simplemobiletools.smsmessenger.dialogs
 
+import android.os.Build
 import android.view.ContextThemeWrapper
 import android.view.Gravity
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
+import androidx.annotation.RequiresApi
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
@@ -17,7 +18,9 @@ import com.simplemobiletools.smsmessenger.extensions.copyToClipboard
 import com.simplemobiletools.smsmessenger.extensions.getPopupMenuTheme
 import com.simplemobiletools.smsmessenger.extensions.getProperTextColor
 import com.simplemobiletools.smsmessenger.extensions.setupViewBackground
+import com.simplemobiletools.smsmessenger.interfaces.RefreshRecyclerViewListener
 
+@RequiresApi(Build.VERSION_CODES.O)
 class ManageBlockedKeywordsAdapter(
     activity: BaseSimpleActivity,
     var blockedKeywords: ArrayList<String>,

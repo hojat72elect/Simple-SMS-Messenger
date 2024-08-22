@@ -1,9 +1,10 @@
 package com.simplemobiletools.smsmessenger.activities
 
+import android.os.Build
 import android.os.Bundle
-import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
+import androidx.annotation.RequiresApi
 import com.simplemobiletools.smsmessenger.helpers.NavigationIcon
-import com.simplemobiletools.commons.interfaces.RefreshRecyclerViewListener
+import com.simplemobiletools.smsmessenger.interfaces.RefreshRecyclerViewListener
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.ActivityManageBlockedKeywordsBinding
 import com.simplemobiletools.smsmessenger.dialogs.AddBlockedKeywordDialog
@@ -19,6 +20,7 @@ import com.simplemobiletools.smsmessenger.helpers.APP_ICON_IDS
 import com.simplemobiletools.smsmessenger.helpers.APP_LAUNCHER_NAME
 import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 
+@RequiresApi(Build.VERSION_CODES.O)
 class ManageBlockedKeywordsActivity : BaseSimpleActivity(), RefreshRecyclerViewListener {
     override fun getAppIconIDs() = intent.getIntegerArrayListExtra(APP_ICON_IDS) ?: ArrayList()
 

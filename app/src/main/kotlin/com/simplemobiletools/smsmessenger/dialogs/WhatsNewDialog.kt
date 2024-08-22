@@ -21,7 +21,7 @@ import com.simplemobiletools.smsmessenger.compose.alert_dialog.rememberAlertDial
 import com.simplemobiletools.smsmessenger.compose.extensions.MyDevices
 import com.simplemobiletools.commons.compose.settings.SettingsHorizontalDivider
 import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
-import com.simplemobiletools.commons.databinding.DialogWhatsNewBinding
+import com.simplemobiletools.smsmessenger.databinding.DialogWhatsNewBinding
 import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
 import com.simplemobiletools.smsmessenger.extensions.setupDialogStuff

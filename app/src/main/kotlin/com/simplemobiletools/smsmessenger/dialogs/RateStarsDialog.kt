@@ -39,7 +39,7 @@ import com.simplemobiletools.smsmessenger.compose.alert_dialog.rememberAlertDial
 import com.simplemobiletools.smsmessenger.compose.extensions.MyDevices
 import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
 import com.simplemobiletools.smsmessenger.compose.theme.Shapes
-import com.simplemobiletools.commons.databinding.DialogRateStarsBinding
+import com.simplemobiletools.smsmessenger.databinding.DialogRateStarsBinding
 import com.simplemobiletools.smsmessenger.compose.theme.SimpleTheme
 import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
 import com.simplemobiletools.smsmessenger.extensions.baseConfig

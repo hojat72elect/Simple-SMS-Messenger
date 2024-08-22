@@ -6,10 +6,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.biometric.auth.AuthPromptHost
 import androidx.fragment.app.FragmentActivity
 import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.adapters.PasswordTypesAdapter
-import com.simplemobiletools.commons.databinding.DialogSecurityBinding
-import com.simplemobiletools.commons.interfaces.HashListener
-import com.simplemobiletools.commons.views.MyDialogViewPager
+import com.simplemobiletools.smsmessenger.adapters.PasswordTypesAdapter
+import com.simplemobiletools.smsmessenger.interfaces.HashListener
+import com.simplemobiletools.smsmessenger.databinding.DialogSecurityBinding
 import com.simplemobiletools.smsmessenger.extensions.baseConfig
 import com.simplemobiletools.smsmessenger.extensions.beGone
 import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
@@ -27,6 +26,7 @@ import com.simplemobiletools.smsmessenger.helpers.PROTECTION_PATTERN
 import com.simplemobiletools.smsmessenger.helpers.PROTECTION_PIN
 import com.simplemobiletools.smsmessenger.helpers.SHOW_ALL_TABS
 import com.simplemobiletools.smsmessenger.helpers.isRPlus
+import com.simplemobiletools.smsmessenger.views.MyDialogViewPager
 
 class SecurityDialog(
     private val activity: Activity,
