@@ -6,9 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.compose.extensions.enableEdgeToEdgeSimple
 import com.simplemobiletools.commons.compose.theme.AppThemeSurface
+import com.simplemobiletools.commons.models.License
+import com.simplemobiletools.smsmessenger.R
+import com.simplemobiletools.smsmessenger.compose.screens.LicenseScreen
+import com.simplemobiletools.smsmessenger.extensions.launchViewIntent
 import com.simplemobiletools.smsmessenger.helpers.APP_LICENSES
 import com.simplemobiletools.smsmessenger.helpers.LICENSE_ANDROID_LAME
 import com.simplemobiletools.smsmessenger.helpers.LICENSE_APNG
@@ -25,6 +28,7 @@ import com.simplemobiletools.smsmessenger.helpers.LICENSE_GLIDE
 import com.simplemobiletools.smsmessenger.helpers.LICENSE_GSON
 import com.simplemobiletools.smsmessenger.helpers.LICENSE_INDICATOR_FAST_SCROLL
 import com.simplemobiletools.smsmessenger.helpers.LICENSE_JODA
+import com.simplemobiletools.smsmessenger.helpers.LICENSE_KOTLIN
 import com.simplemobiletools.smsmessenger.helpers.LICENSE_LEAK_CANARY
 import com.simplemobiletools.smsmessenger.helpers.LICENSE_M3U_PARSER
 import com.simplemobiletools.smsmessenger.helpers.LICENSE_NUMBER_PICKER
@@ -43,10 +47,6 @@ import com.simplemobiletools.smsmessenger.helpers.LICENSE_SMS_MMS
 import com.simplemobiletools.smsmessenger.helpers.LICENSE_STETHO
 import com.simplemobiletools.smsmessenger.helpers.LICENSE_SUBSAMPLING
 import com.simplemobiletools.smsmessenger.helpers.LICENSE_ZIP4J
-import com.simplemobiletools.commons.models.License
-import com.simplemobiletools.smsmessenger.compose.screens.LicenseScreen
-import com.simplemobiletools.smsmessenger.extensions.launchViewIntent
-import com.simplemobiletools.smsmessenger.helpers.LICENSE_KOTLIN
 import kotlinx.collections.immutable.toImmutableList
 
 class LicenseActivity : ComponentActivity() {

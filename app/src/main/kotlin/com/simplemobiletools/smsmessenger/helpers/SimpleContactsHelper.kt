@@ -24,9 +24,8 @@ import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
-import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.models.PhoneNumber
-import com.simplemobiletools.smsmessenger.models.SimpleContact
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
 import com.simplemobiletools.smsmessenger.extensions.baseConfig
 import com.simplemobiletools.smsmessenger.extensions.getContrastColor
@@ -36,6 +35,7 @@ import com.simplemobiletools.smsmessenger.extensions.getStringValue
 import com.simplemobiletools.smsmessenger.extensions.hasPermission
 import com.simplemobiletools.smsmessenger.extensions.normalizePhoneNumber
 import com.simplemobiletools.smsmessenger.extensions.queryCursor
+import com.simplemobiletools.smsmessenger.models.SimpleContact
 
 class SimpleContactsHelper(val context: Context) {
     fun getAvailableContacts(favoritesOnly: Boolean, callback: (ArrayList<SimpleContact>) -> Unit) {

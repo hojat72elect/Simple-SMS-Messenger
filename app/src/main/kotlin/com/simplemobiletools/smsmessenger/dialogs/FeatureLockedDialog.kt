@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.commons.compose.extensions.rememberMutableInteractionSource
 import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
 import com.simplemobiletools.commons.compose.theme.SimpleTheme

@@ -4,7 +4,7 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
 import android.graphics.BitmapFactory
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.compose.extensions.getActivity
 import com.simplemobiletools.smsmessenger.helpers.APP_ICON_IDS
 import com.simplemobiletools.smsmessenger.helpers.APP_LAUNCHER_NAME

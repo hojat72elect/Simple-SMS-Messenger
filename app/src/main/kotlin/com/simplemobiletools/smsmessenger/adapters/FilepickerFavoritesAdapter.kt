@@ -5,7 +5,7 @@ import android.util.TypedValue
 import android.view.Menu
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.FilepickerFavoriteBinding
 import com.simplemobiletools.smsmessenger.extensions.getTextSize
 import com.simplemobiletools.commons.views.MyRecyclerView

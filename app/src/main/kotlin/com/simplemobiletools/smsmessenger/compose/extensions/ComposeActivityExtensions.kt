@@ -3,7 +3,7 @@ package com.simplemobiletools.smsmessenger.compose.extensions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.commons.compose.extensions.getActivity
 import com.simplemobiletools.commons.compose.extensions.getComponentActivity
 import com.simplemobiletools.smsmessenger.extensions.launchViewIntent

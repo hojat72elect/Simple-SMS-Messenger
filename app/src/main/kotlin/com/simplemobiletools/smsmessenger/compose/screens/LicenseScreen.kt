@@ -10,12 +10,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.compose.extensions.MyDevices
 import com.simplemobiletools.commons.compose.settings.SettingsHorizontalDivider
-import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
 import com.simplemobiletools.commons.models.License
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.compose.lists.SimpleLazyListScaffold
+import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
 import com.simplemobiletools.smsmessenger.compose.theme.SimpleTheme
 import com.simplemobiletools.smsmessenger.helpers.LICENSE_ANDROID_LAME
 import com.simplemobiletools.smsmessenger.helpers.LICENSE_APNG

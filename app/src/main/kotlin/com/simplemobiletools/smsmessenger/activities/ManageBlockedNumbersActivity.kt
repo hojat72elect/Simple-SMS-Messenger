@@ -20,7 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.extensions.getTempFile
 import com.simplemobiletools.smsmessenger.helpers.BlockedNumbersImporter
 import com.simplemobiletools.commons.models.BlockedNumber

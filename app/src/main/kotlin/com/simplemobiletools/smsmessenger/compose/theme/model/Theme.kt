@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.compose.extensions.config
 import com.simplemobiletools.smsmessenger.compose.theme.isInDarkThemeAndSurfaceIsNotLitWell
 import com.simplemobiletools.smsmessenger.helpers.isSPlus

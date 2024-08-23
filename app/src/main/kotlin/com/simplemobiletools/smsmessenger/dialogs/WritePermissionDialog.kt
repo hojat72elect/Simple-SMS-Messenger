@@ -37,7 +37,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.commons.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.commons.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.commons.compose.extensions.MyDevices

@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.compose.theme.SimpleTheme
 import com.simplemobiletools.smsmessenger.compose.theme.model.Theme
 import com.simplemobiletools.smsmessenger.compose.theme.LocalTheme

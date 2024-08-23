@@ -35,7 +35,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.smsmessenger.compose.components.RadioGroupDialogComponent

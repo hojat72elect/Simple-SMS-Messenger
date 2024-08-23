@@ -1,5 +1,6 @@
 package com.simplemobiletools.smsmessenger.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.LayerDrawable
@@ -7,7 +8,7 @@ import android.graphics.drawable.RippleDrawable
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.ActivityCustomizationBinding
 import com.simplemobiletools.commons.dialogs.ColorPickerDialog
 import com.simplemobiletools.commons.dialogs.PurchaseThankYouDialog
@@ -592,6 +593,7 @@ class CustomizationActivity : BaseSimpleActivity() {
         updateApplyToAllColors(color)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun updateApplyToAllColors(newColor: Int) {
         if (newColor == baseConfig.primaryColor && !baseConfig.isUsingSystemTheme) {
             binding.applyToAll.setBackgroundResource(R.drawable.button_background_rounded)

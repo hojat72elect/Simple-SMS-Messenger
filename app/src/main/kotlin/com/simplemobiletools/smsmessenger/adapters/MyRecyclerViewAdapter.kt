@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.interfaces.MyActionModeCallback
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity

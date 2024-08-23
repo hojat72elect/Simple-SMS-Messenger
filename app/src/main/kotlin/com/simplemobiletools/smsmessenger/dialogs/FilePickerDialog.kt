@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.documentfile.provider.DocumentFile
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.DialogFilepickerBinding
 import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.commons.models.FileDirItem

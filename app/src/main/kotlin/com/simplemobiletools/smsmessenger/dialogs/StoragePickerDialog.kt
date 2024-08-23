@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.RadioGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.DialogRadioGroupBinding
 import com.simplemobiletools.smsmessenger.databinding.RadioButtonBinding
 import com.simplemobiletools.smsmessenger.extensions.hasExternalSDCard

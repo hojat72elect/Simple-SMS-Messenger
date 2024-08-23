@@ -34,15 +34,15 @@ import androidx.compose.ui.window.DialogWindowProvider
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import com.google.android.material.appbar.MaterialToolbar
-import com.simplemobiletools.commons.R
-import com.simplemobiletools.smsmessenger.databinding.DialogLineColorPickerBinding
 import com.simplemobiletools.commons.interfaces.LineColorPickerListener
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.smsmessenger.compose.extensions.MyDevices
 import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
 import com.simplemobiletools.smsmessenger.compose.theme.SimpleTheme
+import com.simplemobiletools.smsmessenger.databinding.DialogLineColorPickerBinding
 import com.simplemobiletools.smsmessenger.extensions.beGoneIf
 import com.simplemobiletools.smsmessenger.extensions.beVisibleIf
 import com.simplemobiletools.smsmessenger.extensions.copyToClipboard

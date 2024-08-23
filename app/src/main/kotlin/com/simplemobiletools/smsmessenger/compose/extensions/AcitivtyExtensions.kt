@@ -9,7 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.smsmessenger.extensions.baseConfig
 import com.simplemobiletools.smsmessenger.extensions.checkAppIconColor

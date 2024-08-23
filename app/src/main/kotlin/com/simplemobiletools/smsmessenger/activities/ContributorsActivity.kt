@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.remember
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.commons.compose.extensions.enableEdgeToEdgeSimple
 import com.simplemobiletools.smsmessenger.compose.screens.ContributorsScreen
 import com.simplemobiletools.commons.compose.theme.AppThemeSurface

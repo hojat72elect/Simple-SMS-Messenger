@@ -33,7 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.smsmessenger.compose.extensions.MyDevices

@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.interfaces.MyActionModeCallback
 import com.simplemobiletools.commons.models.RecyclerSelectionPayload
 import com.simplemobiletools.commons.views.MyRecyclerView

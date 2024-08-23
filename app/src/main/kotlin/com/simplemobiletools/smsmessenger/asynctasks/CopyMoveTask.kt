@@ -11,7 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.util.Pair
 import androidx.documentfile.provider.DocumentFile
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.interfaces.CopyMoveListener
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity

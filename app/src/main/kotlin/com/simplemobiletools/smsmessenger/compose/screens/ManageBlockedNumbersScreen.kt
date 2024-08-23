@@ -68,7 +68,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.compose.menus.ActionItem
 import com.simplemobiletools.commons.compose.menus.ActionMenu
 import com.simplemobiletools.commons.compose.menus.OverflowMode
@@ -76,6 +75,7 @@ import com.simplemobiletools.commons.compose.settings.SettingsCheckBoxComponent
 import com.simplemobiletools.commons.compose.settings.SettingsHorizontalDivider
 import com.simplemobiletools.commons.compose.system_ui_controller.rememberSystemUiController
 import com.simplemobiletools.commons.models.BlockedNumber
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.compose.components.SimpleDropDownMenuItem
 import com.simplemobiletools.smsmessenger.compose.extensions.BooleanPreviewParameterProvider
 import com.simplemobiletools.smsmessenger.compose.extensions.MyDevices

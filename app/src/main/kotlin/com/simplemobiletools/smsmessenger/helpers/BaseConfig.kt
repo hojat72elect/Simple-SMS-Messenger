@@ -5,7 +5,7 @@ import android.content.res.Configuration
 import android.os.Environment
 import android.text.format.DateFormat
 import androidx.core.content.ContextCompat
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.extensions.getInternalStoragePath
 import com.simplemobiletools.smsmessenger.extensions.getSDCardPath
 import com.simplemobiletools.smsmessenger.extensions.getSharedPrefs

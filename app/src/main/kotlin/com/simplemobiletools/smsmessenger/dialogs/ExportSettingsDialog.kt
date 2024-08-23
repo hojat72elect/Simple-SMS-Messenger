@@ -3,7 +3,7 @@ package com.simplemobiletools.smsmessenger.dialogs
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.DialogExportSettingsBinding
 import com.simplemobiletools.smsmessenger.extensions.baseConfig
 import com.simplemobiletools.smsmessenger.extensions.beGone

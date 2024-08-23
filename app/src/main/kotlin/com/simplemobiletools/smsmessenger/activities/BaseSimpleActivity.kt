@@ -39,17 +39,14 @@ import androidx.core.view.ScrollingView
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
-import com.simplemobiletools.commons.R
-import com.simplemobiletools.smsmessenger.activities.AboutActivity
-import com.simplemobiletools.smsmessenger.activities.CustomizationActivity
 import com.simplemobiletools.commons.compose.extensions.DEVELOPER_PLAY_STORE_URL
 import com.simplemobiletools.commons.dialogs.ConfirmationDialog
 import com.simplemobiletools.commons.dialogs.FeatureLockedDialog
 import com.simplemobiletools.commons.dialogs.FileConflictDialog
 import com.simplemobiletools.commons.dialogs.PermissionRequiredDialog
-import com.simplemobiletools.smsmessenger.interfaces.CopyMoveListener
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.FileDirItem
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.asynctasks.CopyMoveTask
 import com.simplemobiletools.smsmessenger.dialogs.ExportSettingsDialog
 import com.simplemobiletools.smsmessenger.dialogs.WritePermissionDialog
@@ -146,6 +143,7 @@ import com.simplemobiletools.smsmessenger.helpers.isRPlus
 import com.simplemobiletools.smsmessenger.helpers.isTiramisuPlus
 import com.simplemobiletools.smsmessenger.helpers.isUpsideDownCakePlus
 import com.simplemobiletools.smsmessenger.helpers.sumByLong
+import com.simplemobiletools.smsmessenger.interfaces.CopyMoveListener
 import java.io.File
 import java.io.OutputStream
 import java.util.regex.Pattern
