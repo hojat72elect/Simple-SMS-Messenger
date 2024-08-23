@@ -32,7 +32,7 @@ import com.simplemobiletools.commons.models.contacts.Event
 import com.simplemobiletools.commons.models.contacts.Group
 import com.simplemobiletools.commons.models.contacts.IM
 import com.simplemobiletools.commons.models.contacts.Organization
-import com.simplemobiletools.commons.overloads.times
+import com.simplemobiletools.smsmessenger.overloads.times
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.extensions.baseConfig
 import com.simplemobiletools.smsmessenger.extensions.getAllContactSources

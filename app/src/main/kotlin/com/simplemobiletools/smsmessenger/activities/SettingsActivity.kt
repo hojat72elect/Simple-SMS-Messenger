@@ -7,7 +7,7 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import com.simplemobiletools.smsmessenger.helpers.NavigationIcon
-import com.simplemobiletools.commons.models.RadioItem
+import com.simplemobiletools.smsmessenger.models.RadioItem
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.ActivitySettingsBinding
 import com.simplemobiletools.smsmessenger.dialogs.ChangeDateTimeFormatDialog

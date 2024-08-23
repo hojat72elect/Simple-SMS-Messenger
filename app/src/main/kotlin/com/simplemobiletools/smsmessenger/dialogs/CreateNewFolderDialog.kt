@@ -28,9 +28,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.simplemobiletools.smsmessenger.R
-import com.simplemobiletools.commons.compose.alert_dialog.AlertDialogState
-import com.simplemobiletools.commons.compose.alert_dialog.rememberAlertDialogState
-import com.simplemobiletools.commons.compose.extensions.MyDevices
+import com.simplemobiletools.smsmessenger.compose.alert_dialog.AlertDialogState
+import com.simplemobiletools.smsmessenger.compose.alert_dialog.rememberAlertDialogState
+import com.simplemobiletools.smsmessenger.compose.extensions.MyDevices
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
 import com.simplemobiletools.smsmessenger.compose.theme.SimpleTheme

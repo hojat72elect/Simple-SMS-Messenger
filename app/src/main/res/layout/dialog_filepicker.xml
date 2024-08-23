@@ -46,14 +46,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/filepicker_breadcrumbs">
 
-                <com.simplemobiletools.commons.views.MyRecyclerView
+                <com.simplemobiletools.smsmessenger.views.MyRecyclerView
                     android:id="@+id/filepicker_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/medium_margin"
                     android:layoutAnimation="@anim/layout_animation"
                     android:scrollbars="none"
-                    app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+                    app:layoutManager="com.simplemobiletools.smsmessenger.views.MyLinearLayoutManager" />
 
             </com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller>
         </RelativeLayout>
@@ -73,14 +73,14 @@
                 android:text="@string/favorites"
                 android:textSize="@dimen/bigger_text_size" />
 
-            <com.simplemobiletools.commons.views.MyRecyclerView
+            <com.simplemobiletools.smsmessenger.views.MyRecyclerView
                 android:id="@+id/filepicker_favorites_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/filepicker_favorites_label"
                 android:layout_marginStart="@dimen/activity_margin"
                 android:scrollbars="none"
-                app:layoutManager="com.simplemobiletools.commons.views.MyLinearLayoutManager" />
+                app:layoutManager="com.simplemobiletools.smsmessenger.views.MyLinearLayoutManager" />
 
         </RelativeLayout>
     </RelativeLayout>

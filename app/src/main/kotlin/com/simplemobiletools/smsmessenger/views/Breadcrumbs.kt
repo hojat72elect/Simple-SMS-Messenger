@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.ItemBreadcrumbFirstBinding
-import com.simplemobiletools.commons.models.FileDirItem
+import com.simplemobiletools.smsmessenger.models.FileDirItem
 import com.simplemobiletools.smsmessenger.databinding.ItemBreadcrumbBinding
 import com.simplemobiletools.smsmessenger.extensions.adjustAlpha
 import com.simplemobiletools.smsmessenger.extensions.applyColorFilter

@@ -1,12 +1,13 @@
 package com.simplemobiletools.smsmessenger.views
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import com.google.android.material.appbar.AppBarLayout
-import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.activities.BaseSimpleActivity
+import com.simplemobiletools.smsmessenger.R
+import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.databinding.MenuSearchBinding
 import com.simplemobiletools.smsmessenger.extensions.adjustAlpha
 import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
@@ -109,6 +110,7 @@ class MySearchMenu(context: Context, attrs: AttributeSet) : AppBarLayout(context
         binding.topToolbarSearchIcon.contentDescription = resources.getString(accessibilityString)
     }
 
+    @SuppressLint("NewApi")
     fun updateColors() {
         val backgroundColor = context.getProperBackgroundColor()
         val contrastColor = backgroundColor.getContrastColor()

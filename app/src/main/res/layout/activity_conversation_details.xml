@@ -62,7 +62,7 @@
             android:layout_marginEnd="@dimen/activity_margin"
             android:text="@string/members" />
 
-        <com.simplemobiletools.commons.views.MyRecyclerView
+        <com.simplemobiletools.smsmessenger.views.MyRecyclerView
             android:id="@+id/participants_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

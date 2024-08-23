@@ -15,10 +15,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.simplemobiletools.commons.compose.settings.SettingsGroupTitle
-import com.simplemobiletools.commons.compose.settings.SettingsHorizontalDivider
-import com.simplemobiletools.commons.compose.settings.SettingsListItem
-import com.simplemobiletools.commons.compose.settings.SettingsTitleTextComponent
+import com.simplemobiletools.smsmessenger.compose.settings.SettingsGroupTitle
+import com.simplemobiletools.smsmessenger.compose.settings.SettingsHorizontalDivider
+import com.simplemobiletools.smsmessenger.compose.settings.SettingsListItem
+import com.simplemobiletools.smsmessenger.compose.settings.SettingsTitleTextComponent
 import com.simplemobiletools.commons.models.LanguageContributor
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.compose.components.LinkifyTextComponent

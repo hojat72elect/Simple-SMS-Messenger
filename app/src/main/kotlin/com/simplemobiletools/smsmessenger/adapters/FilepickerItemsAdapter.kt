@@ -15,8 +15,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.bumptech.glide.request.RequestOptions
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.smsmessenger.R
-import com.simplemobiletools.commons.models.FileDirItem
-import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.smsmessenger.models.FileDirItem
+import com.simplemobiletools.smsmessenger.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.databinding.ItemFilepickerListBinding
 import com.simplemobiletools.smsmessenger.extensions.baseConfig

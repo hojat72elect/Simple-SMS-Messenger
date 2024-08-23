@@ -35,12 +35,18 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.biometric.BiometricPrompt
+import androidx.biometric.auth.AuthPromptCallback
+import androidx.biometric.auth.AuthPromptHost
+import androidx.biometric.auth.Class2BiometricAuthPrompt
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.simplemobiletools.commons.models.FileDirItem
-import com.simplemobiletools.commons.models.RadioItem
-import com.simplemobiletools.commons.models.Release
+import com.simplemobiletools.smsmessenger.extensions.toast
+import com.simplemobiletools.smsmessenger.helpers.PROTECTION_FINGERPRINT
+import com.simplemobiletools.smsmessenger.models.RadioItem
+import com.simplemobiletools.smsmessenger.models.Release
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.compose.extensions.DEVELOPER_PLAY_STORE_URL
@@ -79,6 +85,7 @@ import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.helpers.isOnMainThread
 import com.simplemobiletools.smsmessenger.helpers.isRPlus
 import com.simplemobiletools.smsmessenger.models.AlarmSound
+import com.simplemobiletools.smsmessenger.models.FileDirItem
 import com.simplemobiletools.smsmessenger.models.SharedTheme
 import com.simplemobiletools.smsmessenger.models.SimpleContact
 import com.simplemobiletools.smsmessenger.views.MyTextView
@@ -2087,3 +2094,32 @@ fun Activity.getThemeId(color: Int = baseConfig.primaryColor, showTransparentTop
             }
         }
     }
+
+fun Activity.showBiometricPrompt(
+    successCallback: ((String, Int) -> Unit)? = null,
+    failureCallback: (() -> Unit)? = null
+) {
+    Class2BiometricAuthPrompt.Builder(getText(R.string.authenticate), getText(R.string.cancel))
+        .build()
+        .startAuthentication(
+            AuthPromptHost(this as FragmentActivity),
+            object : AuthPromptCallback() {
+                override fun onAuthenticationSucceeded(activity: FragmentActivity?, result: BiometricPrompt.AuthenticationResult) {
+                    successCallback?.invoke("", PROTECTION_FINGERPRINT)
+                }
+
+                override fun onAuthenticationError(activity: FragmentActivity?, errorCode: Int, errString: CharSequence) {
+                    val isCanceledByUser = errorCode == BiometricPrompt.ERROR_NEGATIVE_BUTTON || errorCode == BiometricPrompt.ERROR_USER_CANCELED
+                    if (!isCanceledByUser) {
+                        toast(errString.toString())
+                    }
+                    failureCallback?.invoke()
+                }
+
+                override fun onAuthenticationFailed(activity: FragmentActivity?) {
+                    toast(R.string.authentication_failed)
+                    failureCallback?.invoke()
+                }
+            }
+        )
+}

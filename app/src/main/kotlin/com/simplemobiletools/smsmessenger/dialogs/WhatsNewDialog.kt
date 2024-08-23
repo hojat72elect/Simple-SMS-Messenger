@@ -15,8 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
-import com.simplemobiletools.commons.compose.settings.SettingsHorizontalDivider
-import com.simplemobiletools.commons.models.Release
+import com.simplemobiletools.smsmessenger.compose.settings.SettingsHorizontalDivider
+import com.simplemobiletools.smsmessenger.models.Release
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.rememberAlertDialogState

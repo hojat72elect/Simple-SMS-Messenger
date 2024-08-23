@@ -8,7 +8,7 @@ import androidx.annotation.RequiresApi
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.FilepickerFavoriteBinding
 import com.simplemobiletools.smsmessenger.extensions.getTextSize
-import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.smsmessenger.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 
 @RequiresApi(Build.VERSION_CODES.O)

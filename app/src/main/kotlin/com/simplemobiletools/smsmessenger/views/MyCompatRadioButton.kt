@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatRadioButton
-import com.simplemobiletools.commons.extensions.adjustAlpha
+import com.simplemobiletools.smsmessenger.extensions.adjustAlpha
 
 @SuppressLint("RestrictedApi")
 class MyCompatRadioButton : AppCompatRadioButton {

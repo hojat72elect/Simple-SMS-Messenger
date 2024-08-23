@@ -24,8 +24,8 @@ import androidx.compose.ui.window.DialogProperties
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.rememberAlertDialogState
-import com.simplemobiletools.commons.compose.extensions.getActivity
-import com.simplemobiletools.commons.compose.extensions.rememberMutableInteractionSource
+import com.simplemobiletools.smsmessenger.compose.extensions.getActivity
+import com.simplemobiletools.smsmessenger.compose.extensions.rememberMutableInteractionSource
 import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
 import com.simplemobiletools.smsmessenger.databinding.DialogDonateBinding
 import com.simplemobiletools.smsmessenger.compose.components.LinkifyTextComponent

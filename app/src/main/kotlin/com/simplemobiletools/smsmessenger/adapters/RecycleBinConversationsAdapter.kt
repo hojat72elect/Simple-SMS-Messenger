@@ -3,7 +3,7 @@ package com.simplemobiletools.smsmessenger.adapters
 import android.view.Menu
 import com.simplemobiletools.smsmessenger.dialogs.ConfirmationDialog
 import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.smsmessenger.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.SimpleActivity
 import com.simplemobiletools.smsmessenger.extensions.deleteConversation

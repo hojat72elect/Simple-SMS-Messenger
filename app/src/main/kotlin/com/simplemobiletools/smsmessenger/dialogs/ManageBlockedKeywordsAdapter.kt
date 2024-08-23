@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.annotation.RequiresApi
-import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.smsmessenger.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.adapters.MyRecyclerViewAdapter

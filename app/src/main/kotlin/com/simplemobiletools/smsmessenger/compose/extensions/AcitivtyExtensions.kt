@@ -10,7 +10,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.simplemobiletools.smsmessenger.R
-import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.smsmessenger.extensions.baseConfig
 import com.simplemobiletools.smsmessenger.extensions.checkAppIconColor
 import com.simplemobiletools.smsmessenger.extensions.getAppIconColors
@@ -24,6 +23,7 @@ import com.simplemobiletools.smsmessenger.extensions.random
 import com.simplemobiletools.smsmessenger.extensions.toggleAppIconColor
 import com.simplemobiletools.smsmessenger.extensions.updateSDCardPath
 import com.simplemobiletools.smsmessenger.helpers.isOreoMr1Plus
+import com.simplemobiletools.smsmessenger.models.Release
 
 fun ComponentActivity.appLaunchedCompose(
     appId: String,

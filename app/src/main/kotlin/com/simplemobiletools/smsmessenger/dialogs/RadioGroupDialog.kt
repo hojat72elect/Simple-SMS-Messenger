@@ -31,7 +31,7 @@ import com.simplemobiletools.smsmessenger.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
 import com.simplemobiletools.smsmessenger.databinding.DialogRadioGroupBinding
-import com.simplemobiletools.commons.models.RadioItem
+import com.simplemobiletools.smsmessenger.models.RadioItem
 import com.simplemobiletools.smsmessenger.compose.components.RadioGroupDialogComponent
 import com.simplemobiletools.smsmessenger.compose.extensions.BooleanPreviewParameterProvider
 import com.simplemobiletools.smsmessenger.compose.extensions.MyDevices

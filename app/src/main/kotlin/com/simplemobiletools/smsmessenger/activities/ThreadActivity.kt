@@ -50,8 +50,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.models.PhoneNumber
-import com.simplemobiletools.commons.models.RadioItem
-import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.smsmessenger.models.RadioItem
+import com.simplemobiletools.smsmessenger.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.BuildConfig
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.adapters.AttachmentsAdapter

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
-import com.simplemobiletools.commons.compose.theme.SimpleTheme
+import com.simplemobiletools.smsmessenger.compose.theme.SimpleTheme
 
 @get:ReadOnlyComposable
 val disabledTextColor @Composable get() = if (isInDarkThemeOrSurfaceIsNotLitWell()) Color.DarkGray else Color.LightGray

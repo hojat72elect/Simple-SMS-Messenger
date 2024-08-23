@@ -22,9 +22,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import com.simplemobiletools.smsmessenger.R
-import com.simplemobiletools.commons.compose.extensions.rememberMutableInteractionSource
+import com.simplemobiletools.smsmessenger.compose.extensions.rememberMutableInteractionSource
 import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
-import com.simplemobiletools.commons.compose.theme.SimpleTheme
+import com.simplemobiletools.smsmessenger.compose.theme.SimpleTheme
 import com.simplemobiletools.smsmessenger.databinding.DialogFeatureLockedBinding
 import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
 import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder

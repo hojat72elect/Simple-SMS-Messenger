@@ -8,7 +8,7 @@ import com.simplemobiletools.smsmessenger.dialogs.FeatureLockedDialog
 import com.simplemobiletools.smsmessenger.helpers.KEY_PHONE
 import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.helpers.isNougatPlus
-import com.simplemobiletools.commons.views.MyRecyclerView
+import com.simplemobiletools.smsmessenger.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.SimpleActivity
 import com.simplemobiletools.smsmessenger.dialogs.RenameConversationDialog

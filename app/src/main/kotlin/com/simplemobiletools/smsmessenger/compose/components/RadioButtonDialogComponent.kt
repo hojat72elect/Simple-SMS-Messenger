@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.simplemobiletools.smsmessenger.compose.extensions.MyDevices
-import com.simplemobiletools.commons.compose.extensions.rememberMutableInteractionSource
+import com.simplemobiletools.smsmessenger.compose.extensions.rememberMutableInteractionSource
 import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
 import com.simplemobiletools.smsmessenger.compose.theme.SimpleTheme
 import com.simplemobiletools.smsmessenger.dialogs.dialogTextColor

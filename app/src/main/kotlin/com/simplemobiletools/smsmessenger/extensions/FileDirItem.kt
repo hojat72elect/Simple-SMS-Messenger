@@ -1,7 +1,7 @@
 package com.simplemobiletools.smsmessenger.extensions
 
 import android.content.Context
-import com.simplemobiletools.commons.models.FileDirItem
+import com.simplemobiletools.smsmessenger.models.FileDirItem
 
 
 fun FileDirItem.isRecycleBinPath(context: Context): Boolean {

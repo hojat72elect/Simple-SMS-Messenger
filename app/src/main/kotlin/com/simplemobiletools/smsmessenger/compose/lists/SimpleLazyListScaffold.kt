@@ -28,10 +28,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.simplemobiletools.commons.compose.extensions.AdjustNavigationBarColors
-import com.simplemobiletools.commons.compose.extensions.MyDevices
-import com.simplemobiletools.commons.compose.extensions.plus
-import com.simplemobiletools.commons.compose.extensions.rememberMutableInteractionSource
+import com.simplemobiletools.smsmessenger.compose.extensions.AdjustNavigationBarColors
+import com.simplemobiletools.smsmessenger.compose.extensions.MyDevices
+import com.simplemobiletools.smsmessenger.compose.extensions.plus
+import com.simplemobiletools.smsmessenger.compose.extensions.rememberMutableInteractionSource
 import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
 
 @Composable

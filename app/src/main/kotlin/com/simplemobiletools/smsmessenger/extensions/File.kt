@@ -1,7 +1,7 @@
 package com.simplemobiletools.smsmessenger.extensions
 
 import android.content.Context
-import com.simplemobiletools.commons.models.FileDirItem
+import com.simplemobiletools.smsmessenger.models.FileDirItem
 import com.simplemobiletools.smsmessenger.helpers.MD5
 import com.simplemobiletools.smsmessenger.helpers.NOMEDIA
 import com.simplemobiletools.smsmessenger.helpers.audioExtensions

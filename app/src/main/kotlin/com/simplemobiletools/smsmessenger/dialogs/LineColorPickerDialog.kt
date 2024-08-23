@@ -34,7 +34,6 @@ import androidx.compose.ui.window.DialogWindowProvider
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import com.google.android.material.appbar.MaterialToolbar
-import com.simplemobiletools.commons.interfaces.LineColorPickerListener
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.AlertDialogState
@@ -50,6 +49,7 @@ import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
 import com.simplemobiletools.smsmessenger.extensions.setupDialogStuff
 import com.simplemobiletools.smsmessenger.extensions.toHex
 import com.simplemobiletools.smsmessenger.extensions.value
+import com.simplemobiletools.smsmessenger.interfaces.LineColorPickerListener
 
 @RequiresApi(Build.VERSION_CODES.O)
 class LineColorPickerDialog(

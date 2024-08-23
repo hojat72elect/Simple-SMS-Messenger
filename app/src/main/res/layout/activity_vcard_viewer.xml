@@ -14,7 +14,7 @@
         app:title="@string/contact_details"
         app:titleTextAppearance="@style/AppTheme.ActionBar.TitleTextStyle" />
 
-    <com.simplemobiletools.commons.views.MyRecyclerView
+    <com.simplemobiletools.smsmessenger.views.MyRecyclerView
         android:id="@+id/contacts_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

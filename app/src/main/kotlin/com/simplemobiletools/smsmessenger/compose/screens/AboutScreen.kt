@@ -8,13 +8,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.simplemobiletools.smsmessenger.R
-import com.simplemobiletools.commons.compose.extensions.MyDevices
-import com.simplemobiletools.commons.compose.settings.SettingsGroup
-import com.simplemobiletools.commons.compose.settings.SettingsHorizontalDivider
-import com.simplemobiletools.commons.compose.settings.SettingsListItem
-import com.simplemobiletools.commons.compose.settings.SettingsTitleTextComponent
+import com.simplemobiletools.smsmessenger.compose.extensions.MyDevices
+import com.simplemobiletools.smsmessenger.compose.settings.SettingsGroup
+import com.simplemobiletools.smsmessenger.compose.settings.SettingsHorizontalDivider
+import com.simplemobiletools.smsmessenger.compose.settings.SettingsListItem
+import com.simplemobiletools.smsmessenger.compose.settings.SettingsTitleTextComponent
 import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
-import com.simplemobiletools.commons.compose.theme.SimpleTheme
+import com.simplemobiletools.smsmessenger.compose.theme.SimpleTheme
 import com.simplemobiletools.smsmessenger.compose.lists.SimpleColumnScaffold
 
 private val startingTitlePadding = Modifier.padding(start = 60.dp)

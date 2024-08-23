@@ -38,22 +38,22 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.simplemobiletools.smsmessenger.R
-import com.simplemobiletools.commons.compose.alert_dialog.AlertDialogState
-import com.simplemobiletools.commons.compose.alert_dialog.rememberAlertDialogState
-import com.simplemobiletools.commons.compose.extensions.MyDevices
-import com.simplemobiletools.commons.compose.extensions.andThen
-import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
-import com.simplemobiletools.smsmessenger.databinding.DialogWritePermissionBinding
-import com.simplemobiletools.smsmessenger.databinding.DialogWritePermissionOtgBinding
-import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
-import com.simplemobiletools.smsmessenger.extensions.setupDialogStuff
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
+import com.simplemobiletools.smsmessenger.compose.alert_dialog.AlertDialogState
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.DialogSurface
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.dialogTextColor
+import com.simplemobiletools.smsmessenger.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.smsmessenger.compose.components.LinkifyTextComponent
+import com.simplemobiletools.smsmessenger.compose.extensions.MyDevices
+import com.simplemobiletools.smsmessenger.compose.extensions.andThen
+import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
 import com.simplemobiletools.smsmessenger.compose.theme.SimpleTheme
+import com.simplemobiletools.smsmessenger.databinding.DialogWritePermissionBinding
+import com.simplemobiletools.smsmessenger.databinding.DialogWritePermissionOtgBinding
 import com.simplemobiletools.smsmessenger.extensions.fromHtml
+import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
 import com.simplemobiletools.smsmessenger.extensions.humanizePath
+import com.simplemobiletools.smsmessenger.extensions.setupDialogStuff
 
 @RequiresApi(Build.VERSION_CODES.O)
 class WritePermissionDialog(

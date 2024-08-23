@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.DialogFilepickerBinding
 import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.models.FileDirItem
+import com.simplemobiletools.smsmessenger.models.FileDirItem
 import com.simplemobiletools.smsmessenger.views.Breadcrumbs
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.adapters.FilepickerFavoritesAdapter

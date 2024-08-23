@@ -4,11 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import com.simplemobiletools.smsmessenger.R
-import com.simplemobiletools.commons.compose.extensions.getActivity
-import com.simplemobiletools.commons.compose.extensions.getComponentActivity
-import com.simplemobiletools.smsmessenger.extensions.launchViewIntent
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.smsmessenger.dialogs.ConfirmationAlertDialog
+import com.simplemobiletools.smsmessenger.extensions.launchViewIntent
 
 @Composable
 fun FakeVersionCheck() {

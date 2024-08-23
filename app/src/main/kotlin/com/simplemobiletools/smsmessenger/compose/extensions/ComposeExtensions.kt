@@ -30,10 +30,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.LifecycleStartEffect
+import com.simplemobiletools.smsmessenger.compose.system_ui_controller.rememberSystemUiController
 import com.simplemobiletools.smsmessenger.R
-import com.simplemobiletools.commons.compose.extensions.getActivity
-import com.simplemobiletools.commons.compose.system_ui_controller.rememberSystemUiController
-import com.simplemobiletools.commons.compose.theme.SimpleTheme
+import com.simplemobiletools.smsmessenger.compose.theme.SimpleTheme
 import com.simplemobiletools.smsmessenger.compose.theme.isLitWell
 import com.simplemobiletools.smsmessenger.extensions.darkenColor
 import com.simplemobiletools.smsmessenger.extensions.launchViewIntent

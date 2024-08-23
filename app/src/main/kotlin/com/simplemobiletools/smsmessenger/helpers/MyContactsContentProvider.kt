@@ -17,7 +17,7 @@ import com.simplemobiletools.commons.models.contacts.Contact
  */
 class MyContactsContentProvider {
     companion object {
-        private const val AUTHORITY = "com.simplemobiletools.commons.contactsprovider"
+        private const val AUTHORITY = "com.simplemobiletools.smsmessenger.contactsprovider"
         val CONTACTS_CONTENT_URI = Uri.parse("content://$AUTHORITY/contacts")
 
         const val FAVORITES_ONLY = "favorites_only"

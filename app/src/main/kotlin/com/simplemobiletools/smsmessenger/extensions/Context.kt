@@ -81,7 +81,6 @@ import com.simplemobiletools.commons.databases.ContactsDatabase
 import com.simplemobiletools.commons.interfaces.ContactsDao
 import com.simplemobiletools.commons.interfaces.GroupsDao
 import com.simplemobiletools.commons.models.BlockedNumber
-import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.models.PhoneNumber
 import com.simplemobiletools.commons.models.contacts.Contact
 import com.simplemobiletools.commons.models.contacts.ContactSource
@@ -163,6 +162,7 @@ import com.simplemobiletools.smsmessenger.messaging.MessagingUtils.Companion.ADD
 import com.simplemobiletools.smsmessenger.messaging.SmsSender
 import com.simplemobiletools.smsmessenger.models.Attachment
 import com.simplemobiletools.smsmessenger.models.Conversation
+import com.simplemobiletools.smsmessenger.models.FileDirItem
 import com.simplemobiletools.smsmessenger.models.Message
 import com.simplemobiletools.smsmessenger.models.MessageAttachment
 import com.simplemobiletools.smsmessenger.models.NamePhoto
@@ -2776,6 +2776,41 @@ val Context.telecomManager: TelecomManager get() = getSystemService(Context.TELE
 val Context.windowManager: WindowManager get() = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 val Context.notificationManager: NotificationManager get() = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+fun Context.getAndroidSAFFileCount(path: String, countHidden: Boolean): Int {
+    val treeUri = getAndroidTreeUri(path).toUri()
+    if (treeUri == Uri.EMPTY) {
+        return 0
+    }
+
+    val documentId = createAndroidSAFDocumentId(path)
+    val rootDocId = getStorageRootIdForAndroidDir(path)
+    return getProperChildrenCount(rootDocId, treeUri, documentId, countHidden)
+}
+
+fun Context.getAndroidSAFFileSize(path: String): Long {
+    val treeUri = getAndroidTreeUri(path).toUri()
+    val documentId = createAndroidSAFDocumentId(path)
+    return getFileSize(treeUri, documentId)
+}
+
+fun Context.getAndroidSAFLastModified(path: String): Long {
+    val treeUri = getAndroidTreeUri(path).toUri()
+    if (treeUri == Uri.EMPTY) {
+        return 0L
+    }
+
+    val documentId = createAndroidSAFDocumentId(path)
+    val projection = arrayOf(Document.COLUMN_LAST_MODIFIED)
+    val documentUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId)
+    return contentResolver.query(documentUri, projection, null, null, null)?.use { cursor ->
+        if (cursor.moveToFirst()) {
+            cursor.getLongValue(Document.COLUMN_LAST_MODIFIED)
+        } else {
+            0L
+        }
+    } ?: 0L
+}
+
 
 fun Context.getFileInputStreamSync(path: String): InputStream? {
     return when {
@@ -4155,4 +4190,39 @@ fun Context.getTempFile(filename: String = DEFAULT_FILE_NAME): File? {
     }
 
     return File(folder, filename)
+}
+
+fun Context.getProperChildrenCount(
+    rootDocId: String,
+    treeUri: Uri,
+    documentId: String,
+    shouldShowHidden: Boolean
+): Int {
+    val projection = arrayOf(Document.COLUMN_DOCUMENT_ID, Document.COLUMN_MIME_TYPE)
+    val childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, documentId)
+    val rawCursor = contentResolver.query(childrenUri, projection, null, null, null)!!
+    val cursor =
+        ExternalStorageProviderHack.transformQueryResult(
+            rootDocId,
+            childrenUri,
+            rawCursor
+        )
+    return if (cursor.count > 0) {
+        var count = 0
+        cursor.use {
+            while (cursor.moveToNext()) {
+                val docId = cursor.getStringValue(Document.COLUMN_DOCUMENT_ID)
+                val mimeType = cursor.getStringValue(Document.COLUMN_MIME_TYPE)
+                if (mimeType == Document.MIME_TYPE_DIR) {
+                    count++
+                    count += getProperChildrenCount(rootDocId, treeUri, docId, shouldShowHidden)
+                } else if (!docId.getFilenameFromPath().startsWith('.') || shouldShowHidden) {
+                    count++
+                }
+            }
+        }
+        count
+    } else {
+        1
+    }
 }

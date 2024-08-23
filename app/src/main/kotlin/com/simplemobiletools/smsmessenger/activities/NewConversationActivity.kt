@@ -1,5 +1,6 @@
 package com.simplemobiletools.smsmessenger.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -13,7 +14,7 @@ import com.simplemobiletools.smsmessenger.helpers.NavigationIcon
 import com.simplemobiletools.smsmessenger.helpers.PERMISSION_READ_CONTACTS
 import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
 import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.models.RadioItem
+import com.simplemobiletools.smsmessenger.models.RadioItem
 import com.simplemobiletools.smsmessenger.models.SimpleContact
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.adapters.ContactsAdapter
@@ -57,6 +58,7 @@ class NewConversationActivity : SimpleActivity() {
 
     private val binding by viewBinding(ActivityNewConversationBinding::inflate)
 
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         isMaterialActivity = true
         super.onCreate(savedInstanceState)
@@ -84,6 +86,7 @@ class NewConversationActivity : SimpleActivity() {
         }
     }
 
+    @SuppressLint("NewApi")
     override fun onResume() {
         super.onResume()
         setupToolbar(binding.newConversationToolbar, NavigationIcon.Arrow)
@@ -92,6 +95,7 @@ class NewConversationActivity : SimpleActivity() {
         binding.suggestionsLabel.setTextColor(getProperPrimaryColor())
     }
 
+    @SuppressLint("NewApi")
     private fun initContacts() {
         if (isThirdPartyIntent()) {
             return
@@ -171,6 +175,7 @@ class NewConversationActivity : SimpleActivity() {
         }
     }
 
+    @SuppressLint("NewApi")
     private fun setupAdapter(contacts: ArrayList<SimpleContact>) {
         val hasContacts = contacts.isNotEmpty()
         binding.contactsList.beVisibleIf(hasContacts)

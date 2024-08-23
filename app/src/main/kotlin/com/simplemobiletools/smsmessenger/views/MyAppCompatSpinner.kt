@@ -6,9 +6,9 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatSpinner
-import com.simplemobiletools.commons.adapters.MyArrayAdapter
-import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
 import com.simplemobiletools.smsmessenger.R
+import com.simplemobiletools.smsmessenger.adapters.MyArrayAdapter
+import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
 
 
 class MyAppCompatSpinner : AppCompatSpinner {

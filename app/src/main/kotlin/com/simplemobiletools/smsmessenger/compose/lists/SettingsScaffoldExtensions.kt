@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.platform.LocalLayoutDirection
-import com.simplemobiletools.commons.compose.system_ui_controller.rememberSystemUiController
+import com.simplemobiletools.smsmessenger.compose.system_ui_controller.rememberSystemUiController
 import com.simplemobiletools.smsmessenger.compose.extensions.onEventValue
 import com.simplemobiletools.smsmessenger.compose.theme.LocalTheme
 import com.simplemobiletools.smsmessenger.compose.theme.SimpleTheme

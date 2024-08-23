@@ -14,8 +14,8 @@ import android.provider.Telephony
 import android.text.TextUtils
 import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.simplemobiletools.commons.models.FAQItem
-import com.simplemobiletools.commons.models.Release
+import com.simplemobiletools.smsmessenger.models.FAQItem
+import com.simplemobiletools.smsmessenger.models.Release
 import com.simplemobiletools.smsmessenger.BuildConfig
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.adapters.ConversationsAdapter

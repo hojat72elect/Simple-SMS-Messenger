@@ -74,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.simplemobiletools.commons.views.MyRecyclerView
+                    <com.simplemobiletools.smsmessenger.views.MyRecyclerView
                         android:id="@+id/conversations_list"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -125,7 +125,7 @@
                 android:textSize="@dimen/bigger_text_size"
                 android:textStyle="italic" />
 
-            <com.simplemobiletools.commons.views.MyRecyclerView
+            <com.simplemobiletools.smsmessenger.views.MyRecyclerView
                 android:id="@+id/search_results_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

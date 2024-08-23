@@ -10,10 +10,10 @@ import android.os.Bundle
 import androidx.annotation.RequiresApi
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.ActivityCustomizationBinding
-import com.simplemobiletools.commons.dialogs.ColorPickerDialog
-import com.simplemobiletools.commons.dialogs.PurchaseThankYouDialog
+import com.simplemobiletools.smsmessenger.dialogs.ColorPickerDialog
+import com.simplemobiletools.smsmessenger.dialogs.PurchaseThankYouDialog
 import com.simplemobiletools.commons.models.MyTheme
-import com.simplemobiletools.commons.models.RadioItem
+import com.simplemobiletools.smsmessenger.models.RadioItem
 import com.simplemobiletools.smsmessenger.dialogs.ConfirmationAdvancedDialog
 import com.simplemobiletools.smsmessenger.dialogs.ConfirmationDialog
 import com.simplemobiletools.smsmessenger.dialogs.LineColorPickerDialog
