@@ -112,8 +112,8 @@ class ArchivedConversationsActivity : SimpleActivity() {
             activity = this,
             message = "",
             messageId = R.string.empty_archive_confirmation,
-            positive = com.simplemobiletools.commons.R.string.yes,
-            negative = com.simplemobiletools.commons.R.string.no
+            positive = R.string.yes,
+            negative = R.string.no
         ) {
             removeAllArchivedConversations {
                 loadArchivedConversations()

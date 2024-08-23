@@ -183,9 +183,9 @@ class NewConversationActivity : SimpleActivity() {
 
         if (!hasContacts) {
             val placeholderText = if (hasPermission(PERMISSION_READ_CONTACTS)) {
-                com.simplemobiletools.commons.R.string.no_contacts_found
+                R.string.no_contacts_found
             } else {
-                com.simplemobiletools.commons.R.string.no_access_to_contacts
+                R.string.no_access_to_contacts
             }
 
             binding.noContactsPlaceholder.text = getString(placeholderText)

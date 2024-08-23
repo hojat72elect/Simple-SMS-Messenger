@@ -26,7 +26,7 @@
                 android:paddingEnd="@dimen/small_margin"
                 android:paddingBottom="@dimen/small_margin" />
 
-            <com.simplemobiletools.commons.views.MyTextView
+            <com.simplemobiletools.smsmessenger.views.MyTextView
                 android:id="@+id/filepicker_placeholder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone">
 
-            <com.simplemobiletools.commons.views.MyTextView
+            <com.simplemobiletools.smsmessenger.views.MyTextView
                 android:id="@+id/filepicker_favorites_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
         android:layout_gravity="bottom|end"
         android:orientation="vertical">
 
-        <com.simplemobiletools.commons.views.MyFloatingActionButton
+        <com.simplemobiletools.smsmessenger.views.MyFloatingActionButton
             android:id="@+id/filepicker_fab_show_favorites"
             android:layout_width="@dimen/fab_size"
             android:layout_height="@dimen/fab_size"
@@ -100,7 +100,7 @@
             android:layout_marginBottom="@dimen/activity_margin"
             android:src="@drawable/ic_star_vector" />
 
-        <com.simplemobiletools.commons.views.MyFloatingActionButton
+        <com.simplemobiletools.smsmessenger.views.MyFloatingActionButton
             android:id="@+id/filepicker_fab_show_hidden"
             android:layout_width="@dimen/fab_size"
             android:layout_height="@dimen/fab_size"
@@ -110,7 +110,7 @@
 
     </LinearLayout>
 
-    <com.simplemobiletools.commons.views.MyFloatingActionButton
+    <com.simplemobiletools.smsmessenger.views.MyFloatingActionButton
         android:id="@+id/filepicker_fab"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"

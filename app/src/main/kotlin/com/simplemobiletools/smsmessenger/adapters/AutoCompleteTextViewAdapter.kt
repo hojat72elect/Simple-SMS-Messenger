@@ -5,14 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Filter
-import com.simplemobiletools.commons.databinding.ItemContactWithNumberBinding
-import com.simplemobiletools.smsmessenger.extensions.getProperBackgroundColor
-import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
-import com.simplemobiletools.smsmessenger.models.SimpleContact
+import com.simplemobiletools.smsmessenger.databinding.ItemContactWithNumberBinding
 import com.simplemobiletools.smsmessenger.activities.SimpleActivity
 import com.simplemobiletools.smsmessenger.extensions.darkenColor
 import com.simplemobiletools.smsmessenger.extensions.getContrastColor
+import com.simplemobiletools.smsmessenger.extensions.getProperBackgroundColor
 import com.simplemobiletools.smsmessenger.extensions.normalizeString
+import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
+import com.simplemobiletools.smsmessenger.models.SimpleContact
 
 class AutoCompleteTextViewAdapter(
     val activity: SimpleActivity,

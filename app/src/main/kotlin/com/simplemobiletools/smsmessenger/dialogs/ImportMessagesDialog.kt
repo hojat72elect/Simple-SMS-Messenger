@@ -28,8 +28,8 @@ class ImportMessagesDialog(
         }
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
-            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
+            .setPositiveButton(R.string.ok, null)
+            .setNegativeButton(R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(
                     binding.root,
@@ -47,7 +47,7 @@ class ImportMessagesDialog(
                         }
 
                         ignoreClicks = true
-                        activity.toast(com.simplemobiletools.commons.R.string.importing)
+                        activity.toast(R.string.importing)
                         config.importSms = binding.importSmsCheckbox.isChecked
                         config.importMms = binding.importMmsCheckbox.isChecked
                         ensureBackgroundThread {
@@ -64,10 +64,10 @@ class ImportMessagesDialog(
     private fun handleParseResult(result: ImportResult) {
         activity.toast(
             when (result) {
-                ImportResult.IMPORT_OK -> com.simplemobiletools.commons.R.string.importing_successful
-                ImportResult.IMPORT_PARTIAL -> com.simplemobiletools.commons.R.string.importing_some_entries_failed
-                ImportResult.IMPORT_FAIL -> com.simplemobiletools.commons.R.string.importing_failed
-                else -> com.simplemobiletools.commons.R.string.no_items_found
+                ImportResult.IMPORT_OK -> R.string.importing_successful
+                ImportResult.IMPORT_PARTIAL -> R.string.importing_some_entries_failed
+                ImportResult.IMPORT_FAIL -> R.string.importing_failed
+                else -> R.string.no_items_found
             }
         )
     }

@@ -15,11 +15,10 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.bumptech.glide.request.RequestOptions
 import com.qtalk.recyclerviewfastscroller.RecyclerViewFastScroller
 import com.simplemobiletools.commons.R
-import com.simplemobiletools.commons.databinding.ItemFilepickerListBinding
-import com.simplemobiletools.smsmessenger.helpers.getFilePlaceholderDrawables
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
+import com.simplemobiletools.smsmessenger.databinding.ItemFilepickerListBinding
 import com.simplemobiletools.smsmessenger.extensions.baseConfig
 import com.simplemobiletools.smsmessenger.extensions.formatSize
 import com.simplemobiletools.smsmessenger.extensions.getAndroidSAFUri
@@ -31,6 +30,7 @@ import com.simplemobiletools.smsmessenger.extensions.hasOTGConnected
 import com.simplemobiletools.smsmessenger.extensions.isGif
 import com.simplemobiletools.smsmessenger.extensions.isPathOnOTG
 import com.simplemobiletools.smsmessenger.extensions.isRestrictedSAFOnlyRoot
+import com.simplemobiletools.smsmessenger.helpers.getFilePlaceholderDrawables
 import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)

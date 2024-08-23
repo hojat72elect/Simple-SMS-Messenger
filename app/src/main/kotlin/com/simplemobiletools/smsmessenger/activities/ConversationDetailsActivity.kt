@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.helpers.NavigationIcon
 import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.models.SimpleContact
@@ -80,7 +81,7 @@ class ConversationDetailsActivity : SimpleActivity() {
         binding.conversationName.apply {
             ResourcesCompat.getDrawable(
                 resources,
-                com.simplemobiletools.commons.R.drawable.ic_edit_vector,
+                R.drawable.ic_edit_vector,
                 theme
             )?.apply {
                 applyColorFilter(getProperTextColor())

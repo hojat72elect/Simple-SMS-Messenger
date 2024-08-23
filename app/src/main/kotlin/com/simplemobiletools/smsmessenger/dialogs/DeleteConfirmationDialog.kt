@@ -2,6 +2,7 @@ package com.simplemobiletools.smsmessenger.dialogs
 
 import android.app.Activity
 import androidx.appcompat.app.AlertDialog
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.extensions.beGoneIf
 import com.simplemobiletools.smsmessenger.databinding.DialogDeleteConfirmationBinding
 import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
@@ -21,8 +22,8 @@ class DeleteConfirmationDialog(
         binding.deleteRememberTitle.text = message
         binding.skipTheRecycleBinCheckbox.beGoneIf(!showSkipRecycleBinOption)
         activity.getAlertDialogBuilder()
-            .setPositiveButton(com.simplemobiletools.commons.R.string.yes) { _, _ -> dialogConfirmed() }
-            .setNegativeButton(com.simplemobiletools.commons.R.string.no, null)
+            .setPositiveButton(R.string.yes) { _, _ -> dialogConfirmed() }
+            .setNegativeButton(R.string.no, null)
             .apply {
                 activity.setupDialogStuff(binding.root, this) { alertDialog ->
                     dialog = alertDialog

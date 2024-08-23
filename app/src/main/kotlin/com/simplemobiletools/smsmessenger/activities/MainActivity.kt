@@ -8,24 +8,12 @@ import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import android.graphics.drawable.LayerDrawable
+import android.os.Build
 import android.os.Bundle
 import android.provider.Telephony
 import android.text.TextUtils
+import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.simplemobiletools.smsmessenger.dialogs.PermissionRequiredDialog
-import com.simplemobiletools.smsmessenger.helpers.LICENSE_EVENT_BUS
-import com.simplemobiletools.smsmessenger.helpers.LICENSE_INDICATOR_FAST_SCROLL
-import com.simplemobiletools.smsmessenger.helpers.LICENSE_SMS_MMS
-import com.simplemobiletools.smsmessenger.helpers.LOWER_ALPHA
-import com.simplemobiletools.smsmessenger.helpers.MyContactsContentProvider
-import com.simplemobiletools.smsmessenger.helpers.PERMISSION_READ_CONTACTS
-import com.simplemobiletools.smsmessenger.helpers.PERMISSION_READ_SMS
-import com.simplemobiletools.smsmessenger.helpers.PERMISSION_SEND_SMS
-import com.simplemobiletools.smsmessenger.helpers.SHORT_ANIMATION_DURATION
-import com.simplemobiletools.smsmessenger.helpers.WAS_PROTECTION_HANDLED
-import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
-import com.simplemobiletools.smsmessenger.helpers.isNougatMR1Plus
-import com.simplemobiletools.smsmessenger.helpers.isQPlus
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.Release
 import com.simplemobiletools.smsmessenger.BuildConfig
@@ -33,6 +21,7 @@ import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.adapters.ConversationsAdapter
 import com.simplemobiletools.smsmessenger.adapters.SearchResultsAdapter
 import com.simplemobiletools.smsmessenger.databinding.ActivityMainBinding
+import com.simplemobiletools.smsmessenger.dialogs.PermissionRequiredDialog
 import com.simplemobiletools.smsmessenger.extensions.adjustAlpha
 import com.simplemobiletools.smsmessenger.extensions.appLaunched
 import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
@@ -69,9 +58,22 @@ import com.simplemobiletools.smsmessenger.extensions.underlineText
 import com.simplemobiletools.smsmessenger.extensions.updateTextColors
 import com.simplemobiletools.smsmessenger.extensions.updateUnreadCountBadge
 import com.simplemobiletools.smsmessenger.extensions.viewBinding
+import com.simplemobiletools.smsmessenger.helpers.LICENSE_EVENT_BUS
+import com.simplemobiletools.smsmessenger.helpers.LICENSE_INDICATOR_FAST_SCROLL
+import com.simplemobiletools.smsmessenger.helpers.LICENSE_SMS_MMS
+import com.simplemobiletools.smsmessenger.helpers.LOWER_ALPHA
+import com.simplemobiletools.smsmessenger.helpers.MyContactsContentProvider
+import com.simplemobiletools.smsmessenger.helpers.PERMISSION_READ_CONTACTS
+import com.simplemobiletools.smsmessenger.helpers.PERMISSION_READ_SMS
+import com.simplemobiletools.smsmessenger.helpers.PERMISSION_SEND_SMS
 import com.simplemobiletools.smsmessenger.helpers.SEARCHED_MESSAGE_ID
+import com.simplemobiletools.smsmessenger.helpers.SHORT_ANIMATION_DURATION
 import com.simplemobiletools.smsmessenger.helpers.THREAD_ID
 import com.simplemobiletools.smsmessenger.helpers.THREAD_TITLE
+import com.simplemobiletools.smsmessenger.helpers.WAS_PROTECTION_HANDLED
+import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
+import com.simplemobiletools.smsmessenger.helpers.isNougatMR1Plus
+import com.simplemobiletools.smsmessenger.helpers.isQPlus
 import com.simplemobiletools.smsmessenger.models.Conversation
 import com.simplemobiletools.smsmessenger.models.Events
 import com.simplemobiletools.smsmessenger.models.Message
@@ -80,6 +82,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
+@RequiresApi(Build.VERSION_CODES.O)
 class MainActivity : SimpleActivity() {
     private val MAKE_DEFAULT_APP_REQUEST = 1
 
@@ -126,6 +129,7 @@ class MainActivity : SimpleActivity() {
         }
     }
 
+
     override fun onResume() {
         super.onResume()
         updateMenuColors()
@@ -154,7 +158,7 @@ class MainActivity : SimpleActivity() {
         binding.conversationsProgressBar.trackColor = properPrimaryColor.adjustAlpha(LOWER_ALPHA)
         checkShortcut()
         (binding.conversationsFab.layoutParams as? CoordinatorLayout.LayoutParams)?.bottomMargin =
-            navigationBarHeight + resources.getDimension(com.simplemobiletools.commons.R.dimen.activity_margin)
+            navigationBarHeight + resources.getDimension(R.dimen.activity_margin)
                 .toInt()
     }
 
@@ -235,7 +239,7 @@ class MainActivity : SimpleActivity() {
     private fun refreshMenuItems() {
         binding.mainMenu.getToolbar().menu.apply {
             findItem(R.id.more_apps_from_us).isVisible =
-                !resources.getBoolean(com.simplemobiletools.commons.R.bool.hide_google_relations)
+                !resources.getBoolean(R.bool.hide_google_relations)
             findItem(R.id.show_recycle_bin).isVisible = config.useRecycleBin
             findItem(R.id.show_archived).isVisible = config.isArchiveAvailable
         }
@@ -273,7 +277,7 @@ class MainActivity : SimpleActivity() {
                     startActivityForResult(intent, MAKE_DEFAULT_APP_REQUEST)
                 }
             } else {
-                toast(com.simplemobiletools.commons.R.string.unknown_error_occurred)
+                toast(R.string.unknown_error_occurred)
                 finish()
             }
         } else {
@@ -298,7 +302,7 @@ class MainActivity : SimpleActivity() {
                                 if (!granted) {
                                     PermissionRequiredDialog(
                                         activity = this,
-                                        textId = com.simplemobiletools.commons.R.string.allow_notifications_incoming_messages,
+                                        textId = R.string.allow_notifications_incoming_messages,
                                         positiveActionCallback = { openNotificationSettings() })
                                 }
                             }
@@ -543,8 +547,8 @@ class MainActivity : SimpleActivity() {
     @SuppressLint("NewApi")
     private fun getCreateNewContactShortcut(appIconColor: Int): ShortcutInfo {
         val newEvent = getString(R.string.new_conversation)
-        val drawable = resources.getDrawable(com.simplemobiletools.commons.R.drawable.shortcut_plus)
-        (drawable as LayerDrawable).findDrawableByLayerId(com.simplemobiletools.commons.R.id.shortcut_plus_background)
+        val drawable = resources.getDrawable(R.drawable.shortcut_plus)
+        (drawable as LayerDrawable).findDrawableByLayerId(R.id.shortcut_plus_background)
             .applyColorFilter(appIconColor)
         val bmp = drawable.convertToBitmap()
 
@@ -663,22 +667,22 @@ class MainActivity : SimpleActivity() {
             FAQItem(R.string.faq_2_title, R.string.faq_2_text),
             FAQItem(R.string.faq_3_title, R.string.faq_3_text),
             FAQItem(
-                com.simplemobiletools.commons.R.string.faq_9_title_commons,
-                com.simplemobiletools.commons.R.string.faq_9_text_commons
+                R.string.faq_9_title_commons,
+                R.string.faq_9_text_commons
             )
         )
 
-        if (!resources.getBoolean(com.simplemobiletools.commons.R.bool.hide_google_relations)) {
+        if (!resources.getBoolean(R.bool.hide_google_relations)) {
             faqItems.add(
                 FAQItem(
-                    com.simplemobiletools.commons.R.string.faq_2_title_commons,
-                    com.simplemobiletools.commons.R.string.faq_2_text_commons
+                    R.string.faq_2_title_commons,
+                    R.string.faq_2_text_commons
                 )
             )
             faqItems.add(
                 FAQItem(
-                    com.simplemobiletools.commons.R.string.faq_6_title_commons,
-                    com.simplemobiletools.commons.R.string.faq_6_text_commons
+                    R.string.faq_6_title_commons,
+                    R.string.faq_6_text_commons
                 )
             )
         }

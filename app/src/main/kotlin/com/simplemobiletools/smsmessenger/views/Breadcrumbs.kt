@@ -11,8 +11,10 @@ import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import com.simplemobiletools.commons.databinding.ItemBreadcrumbBinding
-import com.simplemobiletools.commons.databinding.ItemBreadcrumbFirstBinding
+import com.simplemobiletools.commons.R
+import com.simplemobiletools.smsmessenger.databinding.ItemBreadcrumbFirstBinding
+import com.simplemobiletools.commons.models.FileDirItem
+import com.simplemobiletools.smsmessenger.databinding.ItemBreadcrumbBinding
 import com.simplemobiletools.smsmessenger.extensions.adjustAlpha
 import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
 import com.simplemobiletools.smsmessenger.extensions.baseConfig
@@ -21,12 +23,11 @@ import com.simplemobiletools.smsmessenger.extensions.getProperBackgroundColor
 import com.simplemobiletools.smsmessenger.extensions.getProperTextColor
 import com.simplemobiletools.smsmessenger.extensions.humanizePath
 import com.simplemobiletools.smsmessenger.extensions.onGlobalLayout
-import com.simplemobiletools.commons.models.FileDirItem
-import com.simplemobiletools.commons.R
 
 
 class Breadcrumbs(context: Context, attrs: AttributeSet) : HorizontalScrollView(context, attrs) {
-    private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    private val inflater =
+        context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private val itemsLayout: LinearLayout
     private var textColor = context.getProperTextColor()
     private var fontSize = resources.getDimension(R.dimen.bigger_text_size)
@@ -183,7 +184,8 @@ class Breadcrumbs(context: Context, attrs: AttributeSet) : HorizontalScrollView(
 
             ItemBreadcrumbFirstBinding.inflate(inflater, itemsLayout, false).apply {
                 resources.apply {
-                    breadcrumbText.background = ContextCompat.getDrawable(context, R.drawable.button_background)
+                    breadcrumbText.background =
+                        ContextCompat.getDrawable(context, R.drawable.button_background)
                     breadcrumbText.background.applyColorFilter(textColor)
                     elevation = 1f
                     background = ColorDrawable(firstItemBgColor)

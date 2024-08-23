@@ -148,15 +148,15 @@ class NotificationHelper(private val context: Context) {
         }
 
         builder.addAction(
-            com.simplemobiletools.commons.R.drawable.ic_check_vector,
+            R.drawable.ic_check_vector,
             context.getString(R.string.mark_as_read),
             markAsReadPendingIntent
         )
             .setChannelId(NOTIFICATION_CHANNEL)
         if (isNoReplySms) {
             builder.addAction(
-                com.simplemobiletools.commons.R.drawable.ic_delete_vector,
-                context.getString(com.simplemobiletools.commons.R.string.delete),
+                R.drawable.ic_delete_vector,
+                context.getString(R.string.delete),
                 deleteSmsPendingIntent
             ).setChannelId(NOTIFICATION_CHANNEL)
         }

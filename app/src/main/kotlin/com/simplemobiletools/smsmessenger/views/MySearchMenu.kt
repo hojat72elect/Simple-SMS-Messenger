@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import com.google.android.material.appbar.AppBarLayout
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.activities.BaseSimpleActivity
-import com.simplemobiletools.commons.databinding.MenuSearchBinding
+import com.simplemobiletools.smsmessenger.databinding.MenuSearchBinding
 import com.simplemobiletools.smsmessenger.extensions.adjustAlpha
 import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
 import com.simplemobiletools.smsmessenger.extensions.getContrastColor

@@ -1,6 +1,7 @@
 package com.simplemobiletools.smsmessenger.dialogs
 
 import androidx.appcompat.app.AlertDialog
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.extensions.value
 import com.simplemobiletools.smsmessenger.databinding.DialogAddBlockedKeywordBinding
@@ -22,8 +23,8 @@ class AddBlockedKeywordDialog(
         }
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(com.simplemobiletools.commons.R.string.ok, null)
-            .setNegativeButton(com.simplemobiletools.commons.R.string.cancel, null)
+            .setPositiveButton(R.string.ok, null)
+            .setNegativeButton(R.string.cancel, null)
             .apply {
                 activity.setupDialogStuff(binding.root, this) { alertDialog ->
                     alertDialog.showKeyboard(binding.addBlockedKeywordEdittext)

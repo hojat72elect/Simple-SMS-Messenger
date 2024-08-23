@@ -23,7 +23,6 @@ import android.provider.ContactsContract.Settings
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.SparseArray
-import com.simplemobiletools.commons.R
 import com.simplemobiletools.commons.models.PhoneNumber
 import com.simplemobiletools.commons.models.contacts.Address
 import com.simplemobiletools.commons.models.contacts.Contact
@@ -34,6 +33,7 @@ import com.simplemobiletools.commons.models.contacts.Group
 import com.simplemobiletools.commons.models.contacts.IM
 import com.simplemobiletools.commons.models.contacts.Organization
 import com.simplemobiletools.commons.overloads.times
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.extensions.baseConfig
 import com.simplemobiletools.smsmessenger.extensions.getAllContactSources
 import com.simplemobiletools.smsmessenger.extensions.getByteArray

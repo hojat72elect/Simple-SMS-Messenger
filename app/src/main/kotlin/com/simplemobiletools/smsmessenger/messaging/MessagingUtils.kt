@@ -183,7 +183,7 @@ class MessagingUtils(val context: Context) {
             } catch (e: Error) {
                 context.showErrorToast(
                     e.localizedMessage
-                        ?: context.getString(com.simplemobiletools.commons.R.string.unknown_error_occurred)
+                        ?: context.getString(R.string.unknown_error_occurred)
                 )
             }
         }

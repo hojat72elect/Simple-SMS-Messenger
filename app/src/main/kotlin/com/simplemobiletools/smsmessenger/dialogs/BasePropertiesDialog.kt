@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.simplemobiletools.commons.R
 import com.simplemobiletools.smsmessenger.databinding.DialogPropertiesBinding
-import com.simplemobiletools.commons.databinding.ItemPropertyBinding
+import com.simplemobiletools.smsmessenger.databinding.ItemPropertyBinding
 import com.simplemobiletools.smsmessenger.extensions.copyToClipboard
 import com.simplemobiletools.smsmessenger.extensions.getProperTextColor
 import com.simplemobiletools.smsmessenger.extensions.showLocationOnMap

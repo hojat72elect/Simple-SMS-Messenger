@@ -140,7 +140,7 @@ fun ItemAttachmentVcardBinding.setupVCardPreview(
             if (vCards.isEmpty()) {
                 vcardTitle.beVisible()
                 vcardTitle.text =
-                    context.getString(com.simplemobiletools.commons.R.string.unknown_error_occurred)
+                    context.getString(R.string.unknown_error_occurred)
                 return@runOnUiThread
             }
 

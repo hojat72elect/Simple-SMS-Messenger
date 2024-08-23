@@ -1,6 +1,5 @@
 package com.simplemobiletools.smsmessenger.extensions
 
-import com.simplemobiletools.commons.R as commonsR
 import android.Manifest
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
@@ -87,7 +86,6 @@ import com.simplemobiletools.commons.models.PhoneNumber
 import com.simplemobiletools.commons.models.contacts.Contact
 import com.simplemobiletools.commons.models.contacts.ContactSource
 import com.simplemobiletools.commons.models.contacts.Organization
-import com.simplemobiletools.commons.views.MyCompatRadioButton
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databases.MessagesDatabase
 import com.simplemobiletools.smsmessenger.helpers.AttachmentUtils.parseAttachmentNames
@@ -175,6 +173,7 @@ import com.simplemobiletools.smsmessenger.views.MyAppCompatCheckbox
 import com.simplemobiletools.smsmessenger.views.MyAppCompatSpinner
 import com.simplemobiletools.smsmessenger.views.MyAutoCompleteTextView
 import com.simplemobiletools.smsmessenger.views.MyButton
+import com.simplemobiletools.smsmessenger.views.MyCompatRadioButton
 import com.simplemobiletools.smsmessenger.views.MyEditText
 import com.simplemobiletools.smsmessenger.views.MyFloatingActionButton
 import com.simplemobiletools.smsmessenger.views.MySeekBar
@@ -1395,7 +1394,7 @@ fun Context.removeAllArchivedConversations(callback: (() -> Unit)? = null) {
             toast(R.string.archive_emptied_successfully)
             callback?.invoke()
         } catch (e: Exception) {
-            toast(com.simplemobiletools.commons.R.string.unknown_error_occurred)
+            toast(R.string.unknown_error_occurred)
         }
     }
 }
@@ -3956,10 +3955,10 @@ fun Context.getFileSize(treeUri: Uri, documentId: String): Long {
 fun Context.getHumanReadablePath(path: String): String {
     return getString(
         when (path) {
-            "/" -> commonsR.string.root
-            internalStoragePath -> commonsR.string.internal
-            otgPath -> commonsR.string.usb
-            else -> commonsR.string.sd_card
+            "/" -> R.string.root
+            internalStoragePath -> R.string.internal
+            otgPath -> R.string.usb
+            else -> R.string.sd_card
         }
     )
 }
@@ -4138,7 +4137,7 @@ fun Context.getTempFile(folderName: String, filename: String): File? {
     val folder = File(cacheDir, folderName)
     if (!folder.exists()) {
         if (!folder.mkdir()) {
-            toast(commonsR.string.unknown_error_occurred)
+            toast(R.string.unknown_error_occurred)
             return null
         }
     }
@@ -4150,7 +4149,7 @@ fun Context.getTempFile(filename: String = DEFAULT_FILE_NAME): File? {
     val folder = File(cacheDir, "contacts")
     if (!folder.exists()) {
         if (!folder.mkdir()) {
-            toast(commonsR.string.unknown_error_occurred)
+            toast(R.string.unknown_error_occurred)
             return null
         }
     }

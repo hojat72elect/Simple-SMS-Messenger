@@ -213,7 +213,7 @@ class AttachmentsAdapter(
         attachment: AttachmentSelection
     ) {
         val roundedCornersRadius =
-            resources.getDimension(com.simplemobiletools.commons.R.dimen.activity_margin).toInt()
+            resources.getDimension(R.dimen.activity_margin).toInt()
         val size = resources.getDimension(R.dimen.attachment_preview_size).toInt()
 
         val options = RequestOptions()
@@ -233,7 +233,7 @@ class AttachmentsAdapter(
                     isFirstResource: Boolean
                 ): Boolean {
                     removeAttachment(attachment)
-                    activity.toast(com.simplemobiletools.commons.R.string.unknown_error_occurred)
+                    activity.toast(R.string.unknown_error_occurred)
                     return false
                 }
 

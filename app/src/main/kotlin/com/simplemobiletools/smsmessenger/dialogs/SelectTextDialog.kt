@@ -1,5 +1,6 @@
 package com.simplemobiletools.smsmessenger.dialogs
 
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.extensions.getAlertDialogBuilder
 import com.simplemobiletools.smsmessenger.extensions.setupDialogStuff
@@ -13,7 +14,7 @@ class SelectTextDialog(val activity: BaseSimpleActivity, val text: String) {
         }
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(com.simplemobiletools.commons.R.string.ok) { _, _ -> { } }
+            .setPositiveButton(R.string.ok) { _, _ -> { } }
             .apply {
                 activity.setupDialogStuff(binding.root, this)
             }

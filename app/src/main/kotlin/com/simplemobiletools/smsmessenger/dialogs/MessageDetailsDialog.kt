@@ -25,7 +25,7 @@ class MessageDetailsDialog(val activity: BaseSimpleActivity, val message: Messag
         addProperty(message.getSentOrReceivedAtLabel(), message.getSentOrReceivedAt())
 
         activity.getAlertDialogBuilder()
-            .setPositiveButton(com.simplemobiletools.commons.R.string.ok) { _, _ -> }
+            .setPositiveButton(R.string.ok) { _, _ -> }
             .apply {
                 activity.setupDialogStuff(mDialogView.root, this, R.string.message_details)
             }
@@ -59,7 +59,7 @@ class MessageDetailsDialog(val activity: BaseSimpleActivity, val message: Messag
 
     private fun Message.getSIM(availableSIMs: List<SubscriptionInfo>): String {
         return availableSIMs.firstOrNull { it.subscriptionId == subscriptionId }?.displayName?.toString()
-            ?: activity.getString(com.simplemobiletools.commons.R.string.unknown)
+            ?: activity.getString(R.string.unknown)
     }
 
     private fun Message.getSentOrReceivedAtLabel(): Int {

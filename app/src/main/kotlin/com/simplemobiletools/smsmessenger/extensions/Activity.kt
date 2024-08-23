@@ -38,14 +38,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.simplemobiletools.commons.R
-import com.simplemobiletools.smsmessenger.databinding.DialogTitleBinding
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
-import com.simplemobiletools.smsmessenger.views.MyTextView
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.compose.extensions.DEVELOPER_PLAY_STORE_URL
+import com.simplemobiletools.smsmessenger.databinding.DialogTitleBinding
 import com.simplemobiletools.smsmessenger.dialogs.AppSideloadedDialog
 import com.simplemobiletools.smsmessenger.dialogs.ConfirmationAdvancedDialog
 import com.simplemobiletools.smsmessenger.dialogs.CustomIntervalPickerDialog
@@ -82,6 +81,7 @@ import com.simplemobiletools.smsmessenger.helpers.isRPlus
 import com.simplemobiletools.smsmessenger.models.AlarmSound
 import com.simplemobiletools.smsmessenger.models.SharedTheme
 import com.simplemobiletools.smsmessenger.models.SimpleContact
+import com.simplemobiletools.smsmessenger.views.MyTextView
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -99,7 +99,7 @@ fun Activity.dialNumber(phoneNumber: String, callback: (() -> Unit)? = null) {
             startActivity(this)
             callback?.invoke()
         } catch (e: ActivityNotFoundException) {
-            toast(com.simplemobiletools.commons.R.string.no_app_found)
+            toast(R.string.no_app_found)
         } catch (e: Exception) {
             showErrorToast(e)
         }
@@ -120,7 +120,7 @@ fun Activity.launchViewIntent(uri: Uri, mimetype: String, filename: String) {
             if (newMimetype.isNotEmpty() && mimetype != newMimetype) {
                 launchViewIntent(uri, newMimetype, filename)
             } else {
-                toast(com.simplemobiletools.commons.R.string.no_app_found)
+                toast(R.string.no_app_found)
             }
         } catch (e: Exception) {
             showErrorToast(e)
@@ -1158,6 +1158,7 @@ fun Activity.updateSharedTheme(sharedTheme: SharedTheme) {
     }
 }
 
+@SuppressLint("UseCompatLoadingForDrawables")
 fun Activity.setupDialogStuff(
     view: View,
     dialog: AlertDialog.Builder,
@@ -1404,6 +1405,7 @@ fun Activity.checkAppSideloading(): Boolean {
     return isSideloaded
 }
 
+@SuppressLint("UseCompatLoadingForDrawables")
 fun Activity.isAppSideloaded(): Boolean {
     return try {
         getDrawable(R.drawable.ic_camera_vector)

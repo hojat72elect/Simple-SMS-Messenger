@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
+import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.extensions.showErrorToast
 import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
 import com.simplemobiletools.smsmessenger.extensions.conversationsDB
@@ -65,7 +66,7 @@ class ScheduledMessageReceiver : BroadcastReceiver() {
         } catch (e: Error) {
             context.showErrorToast(
                 e.localizedMessage
-                    ?: context.getString(com.simplemobiletools.commons.R.string.unknown_error_occurred)
+                    ?: context.getString(R.string.unknown_error_occurred)
             )
         }
     }
