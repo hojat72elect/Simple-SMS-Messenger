@@ -12,7 +12,7 @@ import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.databinding.ActivityCustomizationBinding
 import com.simplemobiletools.smsmessenger.dialogs.ColorPickerDialog
 import com.simplemobiletools.smsmessenger.dialogs.PurchaseThankYouDialog
-import com.simplemobiletools.commons.models.MyTheme
+import com.simplemobiletools.smsmessenger.models.MyTheme
 import com.simplemobiletools.smsmessenger.models.RadioItem
 import com.simplemobiletools.smsmessenger.dialogs.ConfirmationAdvancedDialog
 import com.simplemobiletools.smsmessenger.dialogs.ConfirmationDialog

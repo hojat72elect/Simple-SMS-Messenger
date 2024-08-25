@@ -7,7 +7,7 @@ import android.provider.ContactsContract.CommonDataKinds.Im
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.provider.ContactsContract.CommonDataKinds.StructuredPostal
 import android.provider.MediaStore
-import com.simplemobiletools.commons.models.contacts.Contact
+import com.simplemobiletools.smsmessenger.models.contacts.Contact
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.extensions.getByteArray

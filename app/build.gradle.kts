@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.parcelize)
     base
 }
 
@@ -113,9 +114,9 @@ dependencies {
     implementation(libs.glide.compose)
     api(libs.glide)
     ksp(libs.glide.compiler)
-    implementation(libs.simple.mobile.tools.commons)
     implementation(libs.eventbus)
     implementation(libs.indicator.fast.scroll)
+    implementation(libs.fastscroller)
     implementation(libs.android.smsmms)
     implementation(libs.shortcut.badger)
     implementation(libs.androidx.swiperefreshlayout)
@@ -123,12 +124,14 @@ dependencies {
     implementation(libs.androidx.lifecycle.process)
     implementation(libs.ez.vcard)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.bundles.room)
+    api(libs.kotlin.immutable.collections)
+    api(libs.gson)
+    api(libs.bundles.room)
     implementation(libs.bundles.lifecycle)
     ksp(libs.androidx.room.compiler)
-
+    api(libs.material)
     implementation(libs.androidx.biometric.ktx)
-
+    api(libs.patternLockView)
     implementation(libs.bundles.compose)
     implementation(libs.compose.view.binding)
     debugImplementation(libs.bundles.compose.preview)

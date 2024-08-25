@@ -24,7 +24,7 @@ import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
-import com.simplemobiletools.commons.models.PhoneNumber
+import com.simplemobiletools.smsmessenger.models.PhoneNumber
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.extensions.applyColorFilter
 import com.simplemobiletools.smsmessenger.extensions.baseConfig

@@ -8,7 +8,7 @@ import android.os.Looper
 import android.provider.Telephony
 import com.simplemobiletools.smsmessenger.helpers.SimpleContactsHelper
 import com.simplemobiletools.smsmessenger.helpers.ensureBackgroundThread
-import com.simplemobiletools.commons.models.PhoneNumber
+import com.simplemobiletools.smsmessenger.models.PhoneNumber
 import com.simplemobiletools.smsmessenger.models.SimpleContact
 import com.simplemobiletools.smsmessenger.extensions.baseConfig
 import com.simplemobiletools.smsmessenger.extensions.config

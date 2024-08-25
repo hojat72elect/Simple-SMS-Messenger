@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.interfaces.MyActionModeCallback
-import com.simplemobiletools.commons.models.RecyclerSelectionPayload
+import com.simplemobiletools.smsmessenger.models.RecyclerSelectionPayload
 import com.simplemobiletools.smsmessenger.views.MyRecyclerView
 import com.simplemobiletools.smsmessenger.activities.BaseSimpleActivity
 import com.simplemobiletools.smsmessenger.extensions.applyColorFilter

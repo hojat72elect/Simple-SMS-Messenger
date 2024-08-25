@@ -74,7 +74,7 @@ import com.simplemobiletools.smsmessenger.compose.menus.OverflowMode
 import com.simplemobiletools.smsmessenger.compose.settings.SettingsCheckBoxComponent
 import com.simplemobiletools.smsmessenger.compose.settings.SettingsHorizontalDivider
 import com.simplemobiletools.smsmessenger.compose.system_ui_controller.rememberSystemUiController
-import com.simplemobiletools.commons.models.BlockedNumber
+import com.simplemobiletools.smsmessenger.models.BlockedNumber
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.compose.components.SimpleDropDownMenuItem
 import com.simplemobiletools.smsmessenger.compose.extensions.BooleanPreviewParameterProvider

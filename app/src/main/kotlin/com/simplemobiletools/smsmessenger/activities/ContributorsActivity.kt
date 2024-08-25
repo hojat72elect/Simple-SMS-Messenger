@@ -8,7 +8,7 @@ import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.compose.extensions.enableEdgeToEdgeSimple
 import com.simplemobiletools.smsmessenger.compose.screens.ContributorsScreen
 import com.simplemobiletools.smsmessenger.compose.theme.AppThemeSurface
-import com.simplemobiletools.commons.models.LanguageContributor
+import com.simplemobiletools.smsmessenger.models.LanguageContributor
 import kotlinx.collections.immutable.toImmutableList
 
 class ContributorsActivity : AppCompatActivity() {

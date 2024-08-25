@@ -5,14 +5,14 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Event
 import android.provider.MediaStore
+import com.simplemobiletools.smsmessenger.models.contacts.Contact
+import com.simplemobiletools.smsmessenger.models.contacts.Group
+import com.simplemobiletools.smsmessenger.models.contacts.Organization
 import com.simplemobiletools.smsmessenger.extensions.contactsDB
 import com.simplemobiletools.smsmessenger.extensions.getByteArray
 import com.simplemobiletools.smsmessenger.extensions.getEmptyContact
 import com.simplemobiletools.smsmessenger.models.SimpleContact
-import com.simplemobiletools.commons.models.contacts.Contact
-import com.simplemobiletools.commons.models.contacts.Group
-import com.simplemobiletools.commons.models.contacts.LocalContact
-import com.simplemobiletools.commons.models.contacts.Organization
+import com.simplemobiletools.smsmessenger.models.contacts.LocalContact
 
 class LocalContactsHelper(val context: Context) {
     fun getAllContacts(favoritesOnly: Boolean = false): ArrayList<Contact> {

@@ -7,9 +7,9 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.smsmessenger.extensions.getIntValue
 import com.simplemobiletools.smsmessenger.extensions.getStringValue
-import com.simplemobiletools.commons.models.PhoneNumber
+import com.simplemobiletools.smsmessenger.models.PhoneNumber
 import com.simplemobiletools.smsmessenger.models.SimpleContact
-import com.simplemobiletools.commons.models.contacts.Contact
+import com.simplemobiletools.smsmessenger.models.contacts.Contact
 
 /**
  * used for sharing privately stored contacts in Simple Contacts with

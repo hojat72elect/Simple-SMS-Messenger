@@ -23,7 +23,7 @@ import androidx.lifecycle.viewModelScope
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.extensions.getTempFile
 import com.simplemobiletools.smsmessenger.helpers.BlockedNumbersImporter
-import com.simplemobiletools.commons.models.BlockedNumber
+import com.simplemobiletools.smsmessenger.models.BlockedNumber
 import com.simplemobiletools.smsmessenger.compose.alert_dialog.rememberAlertDialogState
 import com.simplemobiletools.smsmessenger.compose.extensions.enableEdgeToEdgeSimple
 import com.simplemobiletools.smsmessenger.compose.extensions.onEventValue

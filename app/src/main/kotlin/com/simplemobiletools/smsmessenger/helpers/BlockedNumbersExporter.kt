@@ -1,6 +1,6 @@
 package com.simplemobiletools.smsmessenger.helpers
 
-import com.simplemobiletools.commons.models.BlockedNumber
+import com.simplemobiletools.smsmessenger.models.BlockedNumber
 import java.io.OutputStream
 
 object BlockedNumbersExporter {

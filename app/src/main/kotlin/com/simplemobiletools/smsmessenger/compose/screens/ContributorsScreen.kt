@@ -19,7 +19,7 @@ import com.simplemobiletools.smsmessenger.compose.settings.SettingsGroupTitle
 import com.simplemobiletools.smsmessenger.compose.settings.SettingsHorizontalDivider
 import com.simplemobiletools.smsmessenger.compose.settings.SettingsListItem
 import com.simplemobiletools.smsmessenger.compose.settings.SettingsTitleTextComponent
-import com.simplemobiletools.commons.models.LanguageContributor
+import com.simplemobiletools.smsmessenger.models.LanguageContributor
 import com.simplemobiletools.smsmessenger.R
 import com.simplemobiletools.smsmessenger.compose.components.LinkifyTextComponent
 import com.simplemobiletools.smsmessenger.compose.extensions.MyDevices

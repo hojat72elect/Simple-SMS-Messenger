@@ -2,8 +2,9 @@
 #jetbrains
 kotlin = "1.9.10"
 kotlinxSerializationJson = "1.5.1"
+kotlin-immutable-collections = "0.3.6"
 #KSP
-ksp = "1.9.0-1.0.12"
+ksp = "1.9.10-1.0.13"
 #AndroidX
 androidx-constraintlayout = "2.1.4"
 androidx-swiperefreshlayout = "1.1.0"
@@ -12,12 +13,18 @@ androidx-customView = "1.2.0-alpha02"
 androidx-customViewPooling = "1.0.0"
 androidx-biometricKtx = "1.2.0-alpha05"
 androidx-lifecycle = "2.7.0-alpha02"
+#recyclerviewFastscroller
+recyclerviewFastscroller = "5a95285b1f"
+#Material
+material = "1.10.0"
+#patternLockView
+patternLockView = "a90b0d4bf0"
 #Eventbus
 eventbus = "3.3.1"
 #Room
 room = "2.6.0-alpha03"
-#Simple Mobile Tools
-simple-commons = "b72ded2a75"
+#gson
+gson = "2.10.1"
 android-smsmms = "c3e678befd"
 indicator-fast-scroll = "4524cd0b61"
 #Compose
@@ -77,17 +84,22 @@ compose-view-binding = { module = "androidx.compose.ui:ui-viewbinding", version.
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-compose = { module = "com.github.bumptech.glide:compose", version.ref = "glideCompose" }
 glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
-#Simple Mobile Tools
-simple-mobile-tools-commons = { module = "com.github.SimpleMobileTools:Simple-Commons", version.ref = "simple-commons" }
+#Material
+material = { module = "com.google.android.material:material", version.ref = "material" }
+fastscroller = { module = "com.github.tibbi:RecyclerView-FastScroller", version.ref = "recyclerviewFastscroller" }
 indicator-fast-scroll = { module = "com.github.tibbi:IndicatorFastScroll", version.ref = "indicator-fast-scroll" }
 android-smsmms = { module = "com.github.tibbi:android-smsmms", version.ref = "android-smsmms" }
+#Gson
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 #EventBus
 eventbus = { module = "org.greenrobot:eventbus", version.ref = "eventbus" }
 #Helpers
+patternLockView = { module = "com.github.aritraroy:patternLockView", version.ref = "patternLockView" }
 ez-vcard = { module = "com.googlecode.ez-vcard:ez-vcard", version.ref = "ez-vcard" }
 shortcut-badger = { module = "me.leolin:ShortcutBadger", version.ref = "shortcut-badger" }
 #Kotlin
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+kotlin-immutable-collections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlin-immutable-collections" }
 [bundles]
 compose = [
     "compose-activity",
@@ -120,3 +132,4 @@ android = { id = "com.android.application", version.ref = "gradlePlugins-agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }

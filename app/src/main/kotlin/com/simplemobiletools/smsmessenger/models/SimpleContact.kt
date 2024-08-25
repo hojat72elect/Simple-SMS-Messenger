@@ -1,7 +1,6 @@
 package com.simplemobiletools.smsmessenger.models
 
 import android.telephony.PhoneNumberUtils
-import com.simplemobiletools.commons.models.PhoneNumber
 import com.simplemobiletools.smsmessenger.extensions.normalizePhoneNumber
 import com.simplemobiletools.smsmessenger.extensions.normalizeString
 import com.simplemobiletools.smsmessenger.helpers.SORT_BY_FULL_NAME
